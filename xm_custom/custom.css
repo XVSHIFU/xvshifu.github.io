@@ -1,0 +1,107 @@
+/* ===== 全局渐变动画 ===== */
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== 亮色模式导航栏 ===== */
+.navbar {
+  background: linear-gradient(45deg,
+    rgba(107, 115, 255, 0.85),   /* 紫蓝 */
+    rgba(65, 80, 220, 0.85),     /* 深海蓝 */
+    rgba(0, 180, 240, 0.85),     /* 湖蓝 */
+    rgba(60, 200, 255, 0.85),    /* 霓虹蓝 */
+    rgba(120, 220, 255, 0.85),   /* 冰蓝 */
+    rgba(180, 120, 255, 0.85),   /* 薰衣草紫 */
+    rgba(220, 100, 255, 0.85),   /* 粉紫 */
+    rgba(255, 110, 230, 0.85),   /* 樱花粉 */
+    rgba(140, 100, 255, 0.85),   /* 紫晶色 */
+    rgba(100, 150, 255, 0.85),   /* 蓝宝石色 */
+    rgba(70, 200, 220, 0.85),    /* 碧海青 */
+    rgba(107, 115, 255, 0.85)    /* 回归紫蓝 */
+  );
+  background-size: 800% 800%;
+  animation: gradientFlow 18s ease infinite;
+  color: var(--navbar_text_color);
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(80, 90, 230, 0.15);
+}
+
+/* ===== 暗色模式导航栏 (修复后的专属渐变) ===== */
+body.dark .navbar {
+  background: linear-gradient(45deg,
+    rgba(70, 50, 90, 0.9),      /* 深紫晶 */
+    rgba(90, 65, 100, 0.9),     /* 紫檀色 */
+    rgba(120, 70, 80, 0.9),     /* 红木色 */
+    rgba(90, 65, 53, 0.9),      /* 深咖啡 */
+    rgba(110, 80, 60, 0.9),     /* 古铜色 */
+    rgba(75, 62, 54, 0.9),      /* 暖炭黑 */
+    rgba(130, 100, 70, 0.9),    /* 琥珀金 */
+    rgba(70, 50, 90, 0.9)       /* 回归深紫 */
+  );
+  background-size: 800% 800%;
+  animation: gradientFlow 35s ease infinite;
+  color: var(--navbar_text_color_dark);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* ===== 其他元素保持不变... ===== */
+
+/* ===== 滚动条优化 ===== */
+::-webkit-scrollbar {
+  width: 10px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar_color);
+  border-radius: 6px;
+  border: 2px solid var(--board_color);
+}
+
+body.dark ::-webkit-scrollbar-thumb {
+  border-color: var(--board_color_dark);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar_hover_color);
+}
+
+/* ===== 链接悬停效果增强 ===== */
+a {
+  transition: all 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+a:hover {
+  color: var(--link_hover_color);
+  background-color: var(--link_hover_bg_color);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+body.dark a:hover {
+  color: var(--link_hover_color_dark);
+}
+
+/* ===== 卡片悬浮效果 ===== */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 16px rgba(125, 154, 255, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(80, 90, 230, 0.2);
+}
+
+body.dark .card {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .card:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+}
+
+
+

