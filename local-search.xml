@@ -8,7 +8,7 @@
     <link href="/2025/10/29/xss_lab/"/>
     <url>/2025/10/29/xss_lab/</url>
     
-    <content type="html"><![CDATA[<p><code>&lt;script&gt;while(true){alert(1);}&lt;/script&gt;</code></p><script>console.log("Hello");document.body.innerHTML = "被修改了";fetch("https://zhz0177.github.io/"); </script>]]></content>
+    <content type="html"><![CDATA[<p><code>&lt;script&gt;while(true){alert(1);}&lt;/script&gt;</code></p><!-- <script>console.log("Hello");fetch("https://zhz0177.github.io/"); </script> --><!doctype html><html><body>  <span id="hello" style="cursor:pointer; text-decoration:underline;">Hello</span>  <script>    console.log("Hello");    document.getElementById('hello').addEventListener('click', function() {      window.location.href = "https://zhz0177.github.io/";    });  </script></body></html>]]></content>
     
     
     <categories>
