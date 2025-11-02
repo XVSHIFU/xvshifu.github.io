@@ -117,7 +117,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511022020843.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511022020505.png">
 <meta property="article:published_time" content="2025-11-02T06:00:00.000Z">
-<meta property="article:modified_time" content="2025-11-02T13:23:56.996Z">
+<meta property="article:modified_time" content="2025-11-02T13:37:29.983Z">
 <meta property="article:author" content="Xvsf">
 <meta property="article:tag" content="sqlmap命令详解">
 <meta property="article:tag" content="转载">
@@ -422,7 +422,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          9.4k 字
+          8.6k 字
         
       </span>
     
@@ -433,7 +433,7 @@
         
         
         
-          79 分钟
+          72 分钟
         
       </span>
     
@@ -495,173 +495,9 @@
                 <h1 id="sqlmap命令详解"><a href="#sqlmap命令详解" class="headerlink" title="sqlmap命令详解"></a>sqlmap命令详解</h1><blockquote>
 <p>转载自： <a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/user/8223537">全栈程序员站长</a>      原文：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2148285">https://cloud.tencent.com/developer/article/2148285</a></p>
 </blockquote>
-<h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><ul>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">0x01 sqlmap 确定目标</a></li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">1.1 直连数据库</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">1.2 URL探测</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">1.3 文件读取目标</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">1.4 Google 批量扫描注入</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">0x02 sqlmap 请求参数设置（一）</a></li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">2.1 设置 HTTP 方法</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">2.2 设置 POST 提交参数</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">2.3 设置参数分割符</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">2.4 设置Cookie 头</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">2.5 设置 User-Agent 头</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">2.6 设置 Host 头</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">2.7 设置 Referer 头</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">2.8 设置 额外 HTTP 头</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">2.9 设置 HTTP 协议认证</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">2.10 设置 HTTP 代理</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">0x03 sqlmap 请求参数设置（二）</a></li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">3.1 设置Tor隐藏网络</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">3.2 设置延时</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">3.3 设置超时</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">3.4 设置重传次数</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">3.5 设置随机化参数</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">3.6 设置日志过滤目标</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">3.7 设置忽略 401</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">3.8 设置 HTTP 协议私钥</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">3.9 设置安全模式</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">3.10 设置忽略URL编码</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">0x04 sqlmap 性能优化</a></li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">4.1 设置持久 HTTP 连接</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">4.2 设置 HTTP 空连接</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">4.3 设置多线程</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">4.5 设置预测输出</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">0x05 sqlmap 注入位置介绍</a></li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">5.0 注入介绍</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">5.1 设置指定注入参数</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">5.2 设置URL注入位置</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">5.3 设置任意注入位置</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">0x06 sqlmap 注入参数</a></li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">6.1 强制设置 DBMS</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">6.2 强制设置 OS</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">6.3 关闭负载转换机制</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">6.4 关闭字符转义机制</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">6.5 强制设置无效值替换</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">6.6 自定义注入负载位置</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">6.7 设置 Tamper 脚本</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">6.8 设置 DBMS 认证</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">0x07 sqlmap 自定义检测参数</a></li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">7.1 设置探测等级</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">7.2 设置风险参数</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">7.3 设置页面比较参数</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">7.4 设置内容比较参数</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">0x08 sqlmap 注入技术参数</a></li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">8.1 设置具体 SQL 注入技术</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">8.2 设置时间盲注延迟时间</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">8.3 设置 UNION 字段数</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">8.4 设置 UNION 字符</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">8.5 设置 UNION 查询表</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">8.6 设置 DNS 露出攻击</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">8.7 设置二次注入</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">8.8 识别指纹</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">0x09 sqlmap 检索 DBMS 信息</a></li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">9.1 检索 DBMS Banner 信息</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">9.2 检索 DBMS 当前用户</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">9.3 检索 DBMS 当前数据库</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">9.4 检索 DBMS 当前主机名</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">0x0A sqlmap 枚举 DBMS 信息</a></li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">10.1 探测当前用户 DBA</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">10.2 枚举 DBMS 用户</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">10.3 枚举 DBMS 用户密码</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">10.4 枚举 DBMS 权限</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">10.5 枚举数据库名</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">10.6 枚举数据库表</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">10.7 枚举数据库表的列名</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">10.8 枚举数据值</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">0x0B sqlmap 枚举信息</a></li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">11.1 枚举 schema 信息</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">11.2 枚举数据表数量</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">11.3 获取数据信息</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">11.4 设置条件获取信息</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">11.5 暴力激活成功教程数据</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">11.6 读取文件</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">11.7 写入文件</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">11.8 检索所有信息</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">0x0C sqlmap 系统参数</a></li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">12.1 执行系统命令</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">12.2 结合Metasploit</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">12.3 注册表介绍</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">12.4 注册表操作</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">0x0D sqlmap 通用参数（一）</a></li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">13.1 加载 sqlite 会话文件</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">13.2 加载 http 文本文件</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">13.3 设置默认选择选项</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">13.4 执行系统命令</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">13.5 设置盲注字符集</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">13.6 爬取 URL</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">13.7 在 CSV 输入中使用的分割字符</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">13.8 设置输出格式</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">13.9 探测之前检测 Internet 连接</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">13.10 解析和测试表单的输入字段</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">0x0E sqlmap 通用参数（二）</a></li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">14.1 设置预计完成时间</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">14.2 刷新会话文件</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">14.3 忽略会话中的存储结果</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">14.4 使用 Hex 函数检索数据</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">14.5 设置自定义输出路径</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">14.6 从响应页面解析错误</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">14.7 强制设置 DBMS 编码</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">14.8 存储 HTTP 流量到 HAR</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">14.9 筛选具体 Payload</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">14.10 过滤具体 Payload</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">0x0F sqlmap 杂项参数</a></li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">15.1 使用缩写助记符</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">15.2 设置探测预警</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">15.3 设置问题答案</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">15.4 发现 SQL 注入预警</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">15.5 其他</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer?from_column=20421&from=20421">0x10 常用 Tamper 脚本</a></li>
-</ul>
 <h2 id="0x01-sqlmap-确定目标"><a href="#0x01-sqlmap-确定目标" class="headerlink" title="0x01 sqlmap 确定目标"></a>0x01 sqlmap 确定目标</h2><h3 id="1-1-直连数据库"><a href="#1-1-直连数据库" class="headerlink" title="1.1 直连数据库"></a>1.1 直连数据库</h3><p>sqlmap支持直接连接数据库，通过以下命令来直连</p>
 <p>服务型数据库（前提知道数据库用户名和密码） DBMS:&#x2F;&#x2F;USER:PASSWORD@DBMS_PORT&#x2F;DATABASE_NAME （MySQL，Oracle，Microsoft SQL Server，PostgreSQL，etc）</p>
-<p>例如： python sqlmap.py -d “mysql:&#x2F;&#x2F;admin:<a href="mailto:&#97;&#100;&#109;&#x69;&#x6e;&#x40;&#x31;&#x39;&#50;&#x2e;&#x31;&#54;&#56;&#x2e;&#49;&#46;&#50;">admin@192.168.1.2</a>:3306&#x2F;security” -f –banner </p>
+<p>例如： python sqlmap.py -d “mysql:&#x2F;&#x2F;admin:<a href="mailto:&#x61;&#100;&#x6d;&#105;&#x6e;&#64;&#49;&#57;&#50;&#x2e;&#49;&#x36;&#56;&#x2e;&#x31;&#x2e;&#x32;">admin@192.168.1.2</a>:3306&#x2F;security” -f –banner </p>
 <p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511022020546.png" srcset="/img/loading.gif" lazyload alt="img"></p>
 <p>文件型数据库（前提知道数据库的绝对路径） DBMS:&#x2F;&#x2F;DATABASE_FILEPATH (SQLite，Microsoft Access，Fire bird，etc)</p>
 <h3 id="1-2-URL探测"><a href="#1-2-URL探测" class="headerlink" title="1.2 URL探测"></a>1.2 URL探测</h3><p>sqlmap直接对单一URL探测，使用参数 -u 或 –url URL格式：http(s): &#x2F;&#x2F;targeturl [:port] &#x2F;[…]</p>
