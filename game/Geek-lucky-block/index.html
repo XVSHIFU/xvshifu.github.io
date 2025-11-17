@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的世界幸运方块</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #87CEEB, #98FB98);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Minecraft', monospace;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        /* 史蒂夫手臂光标 */
+        .steve-cursor {
+            position: fixed;
+            width: 48px;
+            height: 48px;
+            background: #8B4513;
+            border: 2px solid #654321;
+            z-index: 9999;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            box-shadow: 
+                0 0 0 2px #8B4513,
+                0 0 0 4px #654321,
+                inset 0 -8px 0 #A0522D,
+                inset 0 8px 0 #D2691E;
+        }
+
+        .steve-cursor::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 10px;
+            background: #FDBCB4;
+            border: 1px solid #E8A088;
+        }
+
+        /* 游戏容器 */
+        .game-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 幸运方块 */
+        .lucky-block {
+            width: 200px;
+            height: 200px;
+            background: #FFD700;
+            border: 4px solid #B8860B;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            box-shadow: 
+                0 0 20px rgba(255, 215, 0, 0.5),
+                inset 0 0 40px rgba(255, 255, 255, 0.2);
+        }
+
+        /* 幸运方块的?号 */
+        .lucky-block::before {
+            content: '?';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            font-weight: bold;
+            color: #8B4513;
+            text-shadow: 2px 2px 0 #654321;
+        }
+
+        /* 摧毁进度条 */
+        .destroy-progress {
+            position: absolute;
+            top: -30px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #333;
+            border-radius: 10px;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .destroy-progress.active {
+            opacity: 1;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff0000, #ff8800, #ffff00);
+            transition: width 0.1s ease;
+        }
+
+        /* 摧毁动画效果 */
+        .lucky-block.destroying {
+            animation: shake 0.1s infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-2px, -2px) rotate(-1deg); }
+            50% { transform: translate(2px, -2px) rotate(1deg); }
+            75% { transform: translate(-2px, 2px) rotate(-1deg); }
+        }
+
+        /* 爆裂动画 */
+        .lucky-block.exploding {
+            animation: explode 0.5s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* 粒子效果 */
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #FFD700;
+            pointer-events: none;
+        }
+
+        /* 奖品展示 */
+        .reward-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            transition: all 0.5s ease;
+            text-align: center;
+            z-index: 100;
+        }
+
+        .reward-container.show {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .reward-item {
+            width: 150px;
+            height: 150px;
+            background: #4169E1;
+            border: 4px solid #1E90FF;
+            margin: 0 auto 20px;
+            position: relative;
+            box-shadow: 
+                0 0 30px rgba(65, 105, 225, 0.8),
+                inset 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .reward-item::before {
+            content: '💎';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 60px;
+        }
+
+        .reward-text {
+            color: #FFD700;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 0 #B8860B;
+            margin-bottom: 20px;
+        }
+
+        /* 背景变暗效果 */
+        .game-container.reward-mode {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .game-container.reward-mode .lucky-block {
+            filter: brightness(0.3);
+        }
+
+        /* 重置按钮 */
+        .reset-btn {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            background: #8B4513;
+            color: white;
+            border: 3px solid #654321;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            text-shadow: 1px 1px 0 #000;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .reset-btn.show {
+            opacity: 1;
+        }
+
+        .reset-btn:hover {
+            background: #A0522D;
+            transform: translateX(-50%) scale(1.05);
+        }
+
+        /* 音效提示 */
+        .sound-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 14px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="steve-cursor" id="steveCursor"></div>
+    
+    <div class="game-container" id="gameContainer">
+        <div class="lucky-block" id="luckyBlock">
+            <div class="destroy-progress" id="destroyProgress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+        
+        <div class="reward-container" id="rewardContainer">
+            <div class="reward-item"></div>
+            <div class="reward-text">恭喜获得钻石！</div>
+            <button class="reset-btn" id="resetBtn">再来一次</button>
+        </div>
+        
+        <div class="sound-indicator">
+            🔊 建议开启音效以获得更好体验
+        </div>
+    </div>
+
+    <script>
+        class LuckyBlockGame {
+            constructor() {
+                this.luckyBlock = document.getElementById('luckyBlock');
+                this.gameContainer = document.getElementById('gameContainer');
+                this.destroyProgress = document.getElementById('destroyProgress');
+                this.progressBar = document.getElementById('progressBar');
+                this.rewardContainer = document.getElementById('rewardContainer');
+                this.resetBtn = document.getElementById('resetBtn');
+                this.steveCursor = document.getElementById('steveCursor');
+                
+                this.isDestroying = false;
+                this.destroyProgress_value = 0;
+                this.destroySpeed = 2; // 每100ms增加的进度
+                this.destroyInterval = null;
+                
+                this.rewards = [
+                    { icon: '💎', name: '钻石', color: '#4169E1' },
+                    { icon: '👑', name: '皇冠', color: '#FFD700' },
+                    { icon: '⚔️', name: '钻石剑', color: '#C0C0C0' },
+                    { icon: '🛡️', name: '盾牌', color: '#8B4513' },
+                    { icon: '🏹', name: '弓箭', color: '#8B4513' },
+                    { icon: '💰', name: '金币', color: '#FFD700' },
+                    { icon: '🔥', name: '火焰', color: '#FF4500' },
+                    { icon: '⭐', name: '星星', color: '#FFD700' }
+                ];
+                
+                this.init();
+            }
+            
+            init() {
+                this.setupEventListeners();
+                this.setupCursor();
+                this.createAudioContext();
+            }
+            
+            setupEventListeners() {
+                // 鼠标按下开始摧毁
+                this.luckyBlock.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    this.startDestroying();
+                });
+                
+                // 鼠标松开停止摧毁
+                document.addEventListener('mouseup', () => {
+                    this.stopDestroying();
+                });
+                
+                // 鼠标离开方块停止摧毁
+                this.luckyBlock.addEventListener('mouseleave', () => {
+                    this.stopDestroying();
+                });
+                
+                // 重置按钮
+                this.resetBtn.addEventListener('click', () => {
+                    this.resetGame();
+                });
+                
+                // 防止右键菜单
+                document.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                });
+            }
+            
+            setupCursor() {
+                document.addEventListener('mousemove', (e) => {
+                    this.steveCursor.style.left = e.clientX + 'px';
+                    this.steveCursor.style.top = e.clientY + 'px';
+                });
+            }
+            
+            createAudioContext() {
+                // 创建音效（使用Web Audio API模拟我的世界音效）
+                this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            
+            playSound(frequency, duration, type = 'square') {
+                if (!this.audioContext) return;
+                
+                const oscillator = this.audioContext.createOscillator();
+                const gainNode = this.audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(this.audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
+                oscillator.type = type;
+                
+                gainNode.gain.setValueAtTime(0.1, this.audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + duration);
+                
+                oscillator.start(this.audioContext.currentTime);
+                oscillator.stop(this.audioContext.currentTime + duration);
+            }
+            
+            startDestroying() {
+                if (this.isDestroying) return;
+                
+                this.isDestroying = true;
+                this.luckyBlock.classList.add('destroying');
+                this.destroyProgress.classList.add('active');
+                
+                // 播放挖掘音效
+                this.playSound(200, 0.1);
+                
+                this.destroyInterval = setInterval(() => {
+                    this.destroyProgress_value += this.destroySpeed;
+                    this.progressBar.style.width = this.destroyProgress_value + '%';
+                    
+                    // 播放挖掘音效
+                    if (this.destroyProgress_value % 10 === 0) {
+                        this.playSound(180 + Math.random() * 40, 0.05);
+                    }
+                    
+                    if (this.destroyProgress_value >= 100) {
+                        this.destroyBlock();
+                    }
+                }, 100);
+            }
+            
+            stopDestroying() {
+                if (!this.isDestroying) return;
+                
+                this.isDestroying = false;
+                this.luckyBlock.classList.remove('destroying');
+                this.destroyProgress.classList.remove('active');
+                
+                if (this.destroyInterval) {
+                    clearInterval(this.destroyInterval);
+                    this.destroyInterval = null;
+                }
+                
+                // 进度回退
+                const fadeOut = setInterval(() => {
+                    this.destroyProgress_value -= 5;
+                    if (this.destroyProgress_value <= 0) {
+                        this.destroyProgress_value = 0;
+                        clearInterval(fadeOut);
+                    }
+                    this.progressBar.style.width = this.destroyProgress_value + '%';
+                }, 50);
+            }
+            
+            destroyBlock() {
+                this.isDestroying = false;
+                this.luckyBlock.classList.remove('destroying');
+                this.destroyProgress.classList.remove('active');
+                
+                if (this.destroyInterval) {
+                    clearInterval(this.destroyInterval);
+                    this.destroyInterval = null;
+                }
+                
+                // 播放爆炸音效
+                this.playSound(100, 0.3, 'sawtooth');
+                setTimeout(() => this.playSound(150, 0.2, 'triangle'), 100);
+                
+                // 创建粒子效果
+                this.createParticles();
+                
+                // 方块爆炸动画
+                this.luckyBlock.classList.add('exploding');
+                
+                setTimeout(() => {
+                    this.showReward();
+                }, 500);
+            }
+            
+            createParticles() {
+                const blockRect = this.luckyBlock.getBoundingClientRect();
+                const centerX = blockRect.left + blockRect.width / 2;
+                const centerY = blockRect.top + blockRect.height / 2;
+                
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = centerX + 'px';
+                    particle.style.top = centerY + 'px';
+                    particle.style.background = ['#FFD700', '#FF8C00', '#FF6347'][Math.floor(Math.random() * 3)];
+                    
+                    document.body.appendChild(particle);
+                    
+                    const angle = (Math.PI * 2 * i) / 20;
+                    const speed = 100 + Math.random() * 100;
+                    const gravity = 500;
+                    
+                    let startTime = Date.now();
+                    
+                    const animate = () => {
+                        const elapsed = (Date.now() - startTime) / 1000;
+                        
+                        const x = centerX + Math.cos(angle) * speed * elapsed;
+                        const y = centerY + Math.sin(angle) * speed * elapsed + 0.5 * gravity * elapsed * elapsed;
+                        
+                        particle.style.left = x + 'px';
+                        particle.style.top = y + 'px';
+                        particle.style.opacity = Math.max(0, 1 - elapsed * 2);
+                        
+                        if (elapsed < 1) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            document.body.removeChild(particle);
+                        }
+                    };
+                    
+                    requestAnimationFrame(animate);
+                }
+            }
+            
+            showReward() {
+                // 背景变暗
+                this.gameContainer.classList.add('reward-mode');
+                
+                // 随机选择奖品
+                const reward = this.rewards[Math.floor(Math.random() * this.rewards.length)];
+                
+                // 更新奖品显示
+                const rewardItem = this.rewardContainer.querySelector('.reward-item');
+                const rewardText = this.rewardContainer.querySelector('.reward-text');
+                
+                rewardItem.style.background = reward.color;
+                rewardItem.querySelector('::before') || (rewardItem.innerHTML = `<span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 60px;">${reward.icon}</span>`);
+                rewardText.textContent = `恭喜获得${reward.name}！`;
+                
+                // 播放奖励音效
+                this.playSound(523, 0.2); // C5
+                setTimeout(() => this.playSound(659, 0.2), 200); // E5
+                setTimeout(() => this.playSound(784, 0.4), 400); // G5
+                
+                // 显示奖品
+                setTimeout(() => {
+                    this.rewardContainer.classList.add('show');
+                    this.resetBtn.classList.add('show');
+                }, 200);
+            }
+            
+            resetGame() {
+                // 重置所有状态
+                this.destroyProgress_value = 0;
+                this.progressBar.style.width = '0%';
+                this.isDestroying = false;
+                
+                // 隐藏奖品
+                this.rewardContainer.classList.remove('show');
+                this.resetBtn.classList.remove('show');
+                this.gameContainer.classList.remove('reward-mode');
+                
+                // 重置方块
+                this.luckyBlock.classList.remove('exploding', 'destroying');
+                this.destroyProgress.classList.remove('active');
+                
+                // 播放重置音效
+                this.playSound(440, 0.1);
+            }
+        }
+        
+        // 初始化游戏
+        document.addEventListener('DOMContentLoaded', () => {
+            new LuckyBlockGame();
+        });
+        
+        // 处理音频上下文（某些浏览器需要用户交互）
+        document.addEventListener('click', function initAudio() {
+            if (window.AudioContext || window.webkitAudioContext) {
+                document.removeEventListener('click', initAudio);
+            }
+        });
+    </script>
+</body>
+</html>
