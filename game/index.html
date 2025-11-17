@@ -19,15 +19,15 @@
   <meta name="author" content="Xvsf">
   <meta name="keywords" content="">
   
-    <meta name="description" content="我的小游戏集合 扫雷游戏 2048游戏 五子棋 打字游戏 魔方 我的世界幸运方块">
+    <meta name="description" content=".page-game-wrap {   position: relative;   overflow: hidden;   padding: 24px 12px 40px;   background-color: var(--page-bg, #fefefe); }  .game-content {   position: relative;   z-index: 1;   max-width:">
 <meta property="og:type" content="website">
 <meta property="og:title" content="游戏中心">
 <meta property="og:url" content="http://xvshifu.github.io/game/index.html">
 <meta property="og:site_name" content="Xvsf blogs">
-<meta property="og:description" content="我的小游戏集合 扫雷游戏 2048游戏 五子棋 打字游戏 魔方 我的世界幸运方块">
+<meta property="og:description" content=".page-game-wrap {   position: relative;   overflow: hidden;   padding: 24px 12px 40px;   background-color: var(--page-bg, #fefefe); }  .game-content {   position: relative;   z-index: 1;   max-width:">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-11-17T10:46:43.581Z">
-<meta property="article:modified_time" content="2025-11-17T10:46:43.581Z">
+<meta property="article:published_time" content="2025-11-17T14:40:11.733Z">
+<meta property="article:modified_time" content="2025-11-17T14:40:11.733Z">
 <meta property="article:author" content="Xvsf">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -252,14 +252,273 @@
                 
 
 <article class="page-content">
-  <h2 id="我的小游戏集合"><a href="#我的小游戏集合" class="headerlink" title="我的小游戏集合"></a>我的小游戏集合</h2><ul>
-<li><a href="/game/sl/">扫雷游戏</a></li>
-<li><a href="/game/2048/">2048游戏</a></li>
-<li><a href="/game/wzq/">五子棋</a></li>
-<li><a href="/game/dblk/">打字游戏</a></li>
-<li><a href="/game/mf/">魔方</a></li>
-<li><a href="/game/Geek-lucky-block">我的世界幸运方块</a></li>
-</ul>
+  <style>
+.page-game-wrap {
+  position: relative;
+  overflow: hidden;
+  padding: 24px 12px 40px;
+  background-color: var(--page-bg, #fefefe);
+}
+
+.game-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.game-stats {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  margin-bottom:18px;
+  color:var(--text-color, #555);
+  font-size:14px;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+.game-card {
+  display: block;
+  padding: 20px;
+  border-radius: 18px;
+  color: #111;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  display:flex;
+  flex-direction: column;
+  justify-content:center;
+  will-change: transform, box-shadow;
+  cursor: pointer;
+}
+
+.game-card:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+}
+
+.game-title {
+  margin-top:12px;
+  font-weight:600;
+  font-size:16px;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+
+.game-meta {
+  margin-top:6px;
+  font-size:13px;
+  opacity:0.85;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.game-icon {
+  width:48px;
+  height:48px;
+  margin:0 auto;
+  filter: grayscale(100%) contrast(90%);
+  transition: transform 0.4s ease, filter 0.4s ease;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* 浮动动画 */
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* 悬停随机晃动动画 */
+@keyframes hoverShake {
+  0%, 100% { transform: translate(0,0) rotate(0deg); }
+  25% { transform: translate(var(--dx1), var(--dy1)) rotate(var(--r1)); }
+  50% { transform: translate(var(--dx2), var(--dy2)) rotate(var(--r2)); }
+  75% { transform: translate(var(--dx3), var(--dy3)) rotate(var(--r3)); }
+}
+
+.game-card:hover .game-icon {
+  animation: hoverShake 0.35s ease;
+  filter: grayscale(0%) contrast(100%);
+}
+
+[data-theme="dark"] .game-card,
+.dark .game-card {
+  background: #1e1e1e;
+  color: #eee;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+[data-theme="dark"] .game-meta,
+.dark .game-meta {
+  color: #aaa;
+}
+
+@media (max-width:640px) {
+  .game-grid { gap:14px; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+  .game-icon { width:40px; height:40px; }
+}
+</style>
+
+<div class="page-game-wrap">
+  <div class="game-content">
+    <div id="stats" class="game-stats" aria-live="polite">
+      <span id="stat-total">游戏加载中…</span>
+      <span id="stat-top" style="opacity:0.85"></span>
+    </div>
+    <div class="game-grid" id="gameList" role="list"></div>
+  </div>
+</div>
+
+<script>
+const games = [
+  { name: "2048", key: "2048", path: "/game/2048/" },
+  { name: "围住小猫", key: "catch", path: "/game/catch-the-cat-master/" },
+  { name: "扫雷", key: "sl", path: "/game/sl/" },
+  { name: "躲避绿块", key: "dblk", path: "/game/dblk/" },
+  { name: "幸运方块", key: "lucky", path: "/game/Geek-lucky-block/" },
+  { name: "魔方", key: "mf", path: "/game/mf/" },
+  { name: "五子棋", key: "wzq", path: "/game/wzq/" },
+  { name: "推箱子", key: "txz", path: "/game/txz/" },
+  { name: "时钟0", key: "clock0", path: "/game/clock/0" },
+  { name: "时钟1", key: "clock1", path: "/game/clock/1" }
+];
+
+const LS_PREFIX = "fluid_game_visits:";
+
+function randomColor() {
+  const r = 180 + Math.floor(Math.random()*50);
+  const g = 180 + Math.floor(Math.random()*50);
+  const b = 180 + Math.floor(Math.random()*50);
+  return `rgb(${r},${g},${b})`;
+}
+
+const iconMap = {
+  "2048": `<svg class="game-icon" viewBox="0 0 48 48"><rect rx="8" width="48" height="48" fill="#ddd"/><text x="24" y="30" font-size="14" text-anchor="middle" fill="#111" font-weight="700">2048</text></svg>`,
+  "mf": `<svg class="game-icon" viewBox="0 0 48 48"><rect rx="8" width="48" height="48" fill="#ddd"/><path d="M12 12 L24 24 L36 12" stroke="#111" stroke-width="2" fill="none"/></svg>`,
+  "sl": `<svg class="game-icon" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="#ddd"/><text x="24" y="30" font-size="14" text-anchor="middle">💣</text></svg>`,
+  "wzq": `<svg class="game-icon" viewBox="0 0 48 48"><rect rx="8" width="48" height="48" fill="#ddd"/><circle cx="16" cy="16" r="6" fill="#111"/><circle cx="32" cy="32" r="6" fill="#fff"/></svg>`,
+"catch": `<svg class="game-icon" viewBox="0 0 48 48">
+  <!-- 头部 -->
+  <circle cx="24" cy="26" r="14" fill="#FFD966"/>
+  <!-- 耳朵（缩小） -->
+  <polygon points="12,18 20,7 24,18" fill="#FFD966"/>
+  <polygon points="36,18 28,7 24,18" fill="#FFD966"/>
+  <!-- 耳朵内侧 -->
+  <polygon points="14,16 20,9 23,16" fill="#FFB366"/>
+  <polygon points="34,16 28,9 25,16" fill="#FFB366"/>
+  <!-- 眼睛 -->
+  <circle cx="18" cy="26" r="3" fill="#111"/>
+  <circle cx="30" cy="26" r="3" fill="#111"/>
+  <!-- 鼻子 -->
+  <circle cx="24" cy="30" r="1.5" fill="#E75480"/>
+  <!-- 嘴巴 -->
+  <path d="M22 32 Q24 34 26 32" stroke="#E75480" stroke-width="1.2" fill="none"/>
+  <!-- 颊红 -->
+  <circle cx="18" cy="32" r="1" fill="#FFA0A0"/>s
+  <circle cx="30" cy="32" r="1" fill="#FFA0A0"/>
+  <!-- 微浮动动画 -->
+  <animateTransform attributeName="transform" type="translate" values="0 0;0 -1.5;0 0" dur="2.5s" repeatCount="indefinite"/>
+</svg>`,
+
+
+
+  "txz": `<svg class="game-icon" viewBox="0 0 48 48">
+            <rect x="14" y="16" width="20" height="16" fill="#A0522D" stroke="#333" stroke-width="2"/>
+            <line x1="14" y1="24" x2="34" y2="24" stroke="#333" stroke-width="2"/>
+            <polygon points="18,14 30,14 24,8" fill="#A0522D"/>
+          </svg>`,
+  "dblk": `<svg class="game-icon" viewBox="0 0 48 48">
+            <rect x="12" y="12" width="24" height="24" rx="4" fill="#32CD32"/>
+            <circle cx="20" cy="20" r="3" fill="#fff"/>
+            <circle cx="28" cy="28" r="3" fill="#fff"/>
+            <path d="M20 28 Q24 32 28 28" stroke="#fff" stroke-width="2" fill="none"/>
+          </svg>`,
+  "lucky": `<svg class="game-icon" viewBox="0 0 48 48"><rect rx="8" width="48" height="48" fill="#ddd"/><text x="24" y="30" font-size="12" text-anchor="middle">🎲</text></svg>`,
+  "clock0": `<svg class="game-icon" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="#ddd"/><line x1="24" y1="24" x2="24" y2="12" stroke="#111" stroke-width="2"/></svg>`,
+  "clock1": `<svg class="game-icon" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="#ddd"/><line x1="24" y1="24" x2="34" y2="24" stroke="#111" stroke-width="2"/></svg>`
+};
+
+function readVisits(path){ 
+  try { return parseInt(localStorage.getItem(LS_PREFIX+path)||"0"); } 
+  catch(e){ return 0; } 
+}
+
+function addVisit(path){ 
+  try{ 
+    const key = LS_PREFIX+path; 
+    localStorage.setItem(key, String(readVisits(path)+1)); 
+  } catch(e){}
+}
+
+// 给每个图标设置随机晃动方向
+function setRandomShake(icon) {
+  const dx1 = (Math.random()*4-2) + "px";
+  const dy1 = (Math.random()*4-2) + "px";
+  const r1  = (Math.random()*6-3) + "deg";
+  const dx2 = (Math.random()*4-2) + "px";
+  const dy2 = (Math.random()*4-2) + "px";
+  const r2  = (Math.random()*6-3) + "deg";
+  const dx3 = (Math.random()*4-2) + "px";
+  const dy3 = (Math.random()*4-2) + "px";
+  const r3  = (Math.random()*6-3) + "deg";
+
+  icon.style.setProperty('--dx1', dx1);
+  icon.style.setProperty('--dy1', dy1);
+  icon.style.setProperty('--r1', r1);
+  icon.style.setProperty('--dx2', dx2);
+  icon.style.setProperty('--dy2', dy2);
+  icon.style.setProperty('--r2', r2);
+  icon.style.setProperty('--dx3', dx3);
+  icon.style.setProperty('--dy3', dy3);
+  icon.style.setProperty('--r3', r3);
+}
+
+function renderGameGrid(){
+  const container = document.getElementById("gameList");
+  const decorated = games.map((g,idx)=>{
+    return Object.assign({}, g, {visits:readVisits(g.path), idx, bg: randomColor()});
+  }).sort((a,b)=>b.visits - a.visits || a.idx - b.idx);
+
+  container.innerHTML="";
+  decorated.forEach(g=>{
+    const a=document.createElement("a");
+    a.href=g.path;
+    a.className="game-card";
+    a.style.background=g.bg;
+    a.setAttribute("role","listitem");
+    a.innerHTML=`${iconMap[g.key]||iconMap["2048"]}
+                 <div class="game-title">${g.name}</div>
+                 <div class="game-meta">热度：<b>${g.visits}</b> 次</div>`;
+    const iconElem = a.querySelector('.game-icon');
+    setRandomShake(iconElem);
+    a.addEventListener("click",ev=>{
+      ev.preventDefault(); addVisit(g.path); renderStats();
+      setTimeout(()=>location.href=g.path,60);
+    });
+    container.appendChild(a);
+  });
+  renderStats();
+}
+
+function renderStats(){
+  const total=games.length;
+  const ranked=games.map(g=>({name:g.name,visits:readVisits(g.path)}))
+                    .sort((a,b)=>b.visits-a.visits);
+  const top=ranked.slice(0,3).filter(x=>x.visits>0).map(x=>`${x.name}(${x.visits})`).join(" / ");
+  document.getElementById("stat-total").innerHTML=`🎮 共 <b>${total}</b> 款小游戏`;
+  document.getElementById("stat-top").innerHTML=top?`｜ 热门：<b>${top}</b>`:"｜ 热门：暂无";
+}
+
+renderGameGrid();
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible") renderGameGrid(); });
+</script>
 
 
   
