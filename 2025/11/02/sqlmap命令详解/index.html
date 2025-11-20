@@ -421,7 +421,7 @@
 </blockquote>
 <h2 id="0x01-sqlmap-确定目标"><a href="#0x01-sqlmap-确定目标" class="headerlink" title="0x01 sqlmap 确定目标"></a>0x01 sqlmap 确定目标</h2><h3 id="1-1-直连数据库"><a href="#1-1-直连数据库" class="headerlink" title="1.1 直连数据库"></a>1.1 直连数据库</h3><p>sqlmap支持直接连接数据库，通过以下命令来直连</p>
 <p>服务型数据库（前提知道数据库用户名和密码） DBMS:&#x2F;&#x2F;USER:PASSWORD@DBMS_PORT&#x2F;DATABASE_NAME （MySQL，Oracle，Microsoft SQL Server，PostgreSQL，etc）</p>
-<p>例如： python sqlmap.py -d “mysql:&#x2F;&#x2F;admin:<a href="mailto:&#97;&#100;&#x6d;&#x69;&#110;&#64;&#x31;&#x39;&#x32;&#x2e;&#49;&#54;&#56;&#x2e;&#49;&#x2e;&#x32;">admin@192.168.1.2</a>:3306&#x2F;security” -f –banner </p>
+<p>例如： python sqlmap.py -d “mysql:&#x2F;&#x2F;admin:<a href="mailto:&#x61;&#x64;&#x6d;&#105;&#110;&#64;&#x31;&#x39;&#50;&#x2e;&#49;&#x36;&#x38;&#46;&#49;&#x2e;&#x32;">admin@192.168.1.2</a>:3306&#x2F;security” -f –banner </p>
 <p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511022020546.png" srcset="/img/loading.gif" lazyload alt="img"></p>
 <p>文件型数据库（前提知道数据库的绝对路径） DBMS:&#x2F;&#x2F;DATABASE_FILEPATH (SQLite，Microsoft Access，Fire bird，etc)</p>
 <h3 id="1-2-URL探测"><a href="#1-2-URL探测" class="headerlink" title="1.2 URL探测"></a>1.2 URL探测</h3><p>sqlmap直接对单一URL探测，使用参数 -u 或 –url URL格式：http(s): &#x2F;&#x2F;targeturl [:port] &#x2F;[…]</p>
