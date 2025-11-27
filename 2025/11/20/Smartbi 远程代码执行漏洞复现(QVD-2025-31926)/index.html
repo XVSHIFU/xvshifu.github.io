@@ -52,7 +52,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511201435287.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511201435816.png">
 <meta property="article:published_time" content="2025-11-20T06:00:00.000Z">
-<meta property="article:modified_time" content="2025-11-20T06:38:22.603Z">
+<meta property="article:modified_time" content="2025-11-24T00:56:50.280Z">
 <meta property="article:author" content="Xvsf">
 <meta property="article:tag" content="Java 代码审计">
 <meta name="twitter:card" content="summary_large_image">
@@ -342,7 +342,7 @@
               <p id="updated-time" class="note note-info" style="">
                 
                   
-                    本文最后更新于 2025年11月20日 下午
+                    本文最后更新于 2025年11月24日 早上
                   
                 
               </p>
@@ -378,7 +378,7 @@
 
 <p>找到漏洞路径<code>/vision/share.jsp</code>以及对应补丁代码</p>
 <p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511201432716.png" srcset="/img/loading.gif" lazyload></p>
-<h1 id="4、漏洞源码分析"><a href="#4、漏洞源码分析" class="headerlink" title="4、漏洞源码分析"></a>4、漏洞源码分析</h1><p>这里获取一个资源ID <code>&lt;font style=&quot;color:#080808;background-color:#ffffff;&quot;&gt;resid&lt;/font&gt;</code>，如果这个资源ID符合<code>&lt;font style=&quot;color:#080808;background-color:#ffffff;&quot;&gt;isPublicShareResourceByShareType&lt;/font&gt;</code><font style="color:#080808;background-color:#ffffff;"> </font>，不管当前会话是否已登录，都将当前用户切换为<code>public</code>用户</p>
+<h1 id="4、漏洞源码分析"><a href="#4、漏洞源码分析" class="headerlink" title="4、漏洞源码分析"></a>4、漏洞源码分析</h1><p>这里获取一个资源ID <code>resid</code>，如果这个资源ID符合<code>isPublicShareResourceByShareType</code><font style="color:#080808;background-color:#ffffff;"> </font>，不管当前会话是否已登录，都将当前用户切换为<code>public</code>用户</p>
 <p>也就是说未登录的用户，访问资源时，会获得 <code>public</code>的权限。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511201432463.png" srcset="/img/loading.gif" lazyload>	</p>
 <h2 id="注："><a href="#注：" class="headerlink" title="注："></a>注：</h2><blockquote>
@@ -386,13 +386,13 @@
 <p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511201432807.png" srcset="/img/loading.gif" lazyload></p>
 <p>如果要看到完整的代码，需要把 lib 库添加到项目结构中：</p>
 <p>具体要添加的库：</p>
-<p>**E:\Smartbi\Tomcat\lib	**</p>
+<p><strong>E:\Smartbi\Tomcat\lib</strong></p>
 <p><strong>E:\Smartbi\Tomcat\webapps\smartbi\WEB-INF\lib</strong></p>
 <p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511201432631.png" srcset="/img/loading.gif" lazyload></p>
 <p>这样就可以看到完整的源码了</p>
 <p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511201432918.png" srcset="/img/loading.gif" lazyload></p>
 </blockquote>
-<p>接着上文，跟进 <code>&lt;font style=&quot;color:#080808;background-color:#ffffff;&quot;&gt;autoLoginByPublicUser&lt;/font&gt;</code></p>
+<p>接着上文，跟进 <code>autoLoginByPublicUser</code></p>
 <p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511201432458.png" srcset="/img/loading.gif" lazyload></p>
 <p>该方法的作用： 如果系统允许匿名访问，则使用内部 SERVICE 账户临时授权，把当前用户切换为 public 用户。  </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//表示该方法不可通过远程 RMI 调用，只能内部调用</span><br><span class="hljs-meta">@NotRMI</span><br><span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">autoLoginByPublicUser</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">//必须有一个 public 用户，否则登录失败</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">userName</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;public&quot;</span>;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.getUserByName(userName) == <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">//若本次会话没有，系统 ID，则设置为默认值</span><br>        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.stateModule.getSystemId() == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-built_in">this</span>.stateModule.setSystemId(<span class="hljs-string">&quot;DEFAULT_SYS&quot;</span>);<br>        &#125;<br><br>        <span class="hljs-comment">// SERVICE 是内部保留的系统用户</span><br>        <span class="hljs-type">IUser</span> <span class="hljs-variable">serviceUser</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">this</span>.getUserById(<span class="hljs-string">&quot;SERVICE&quot;</span>);<br>        <span class="hljs-keyword">if</span> (serviceUser == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">throw</span> (<span class="hljs-keyword">new</span> <span class="hljs-title class_">SmartbiException</span>(UserManagerErrorCode.NOT_EXIST_USER)).setDetail(<span class="hljs-string">&quot;SERVICE&quot;</span>);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">//如果当前用户已经是 public ，不再进行切换操作</span><br>            <span class="hljs-type">IUser</span> <span class="hljs-variable">currentUser</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">this</span>.safeGetCurrentUser();<br>            <span class="hljs-keyword">if</span> (currentUser != <span class="hljs-literal">null</span> &amp;&amp; <span class="hljs-string">&quot;PUBLIC&quot;</span>.equals(currentUser.getId())) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-comment">//将当前用户强制设置为 SERVICE</span><br>                <span class="hljs-built_in">this</span>.stateModule.setCurrentUser(serviceUser);<br>                <span class="hljs-built_in">this</span>.stateModule.removeSessionAttribute(<span class="hljs-string">&quot;SMARTBIX_STATE&quot;</span>);<br>                <span class="hljs-type">boolean</span> <span class="hljs-variable">ret</span> <span class="hljs-operator">=</span> <span class="hljs-literal">false</span>;<br><br>                <span class="hljs-type">boolean</span> var5;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    <span class="hljs-comment">//switchUser 执行真正的用户切换</span><br>                    ret = <span class="hljs-built_in">this</span>.switchUser(userName);<br>                    var5 = ret;<br>                &#125; <span class="hljs-keyword">finally</span> &#123;<br>                    <span class="hljs-keyword">if</span> (!ret) &#123;<br>                        <span class="hljs-built_in">this</span>.stateModule.setCurrentUser(currentUser);<br>                    &#125;<br><br>                &#125;<br><br>                <span class="hljs-keyword">return</span> var5;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -556,6 +556,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2025/11/27/CVE-2022-22947%E2%80%94%E2%80%94Spring%20Cloud%20Gateway%20%E5%AD%A6%E4%B9%A0%20&amp;%20SpEL%20%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%B3%A8%E5%85%A5/" title="CVE-2022-22947——Spring Cloud Gateway 学习 &amp; SpEL 的多种注入">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CVE-2022-22947——Spring Cloud Gateway 学习 &amp; SpEL 的多种注入</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
