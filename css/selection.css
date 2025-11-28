@@ -40,7 +40,7 @@ pre::selection, pre ::selection {
 }
 
 /* 标题,目录...不可选中 */
-h1, h2, h3, h4, h5, h6, .line, footer, #toc, time, #subtitle.h2, .nav-link, .post-meta.mr-2, #busuanzi_container_page_pv, .note, .hover-with-bg {
+/* h1, h2, h3, h4, h5, h6, .line, footer, #toc, time, #subtitle.h2, .nav-link, .post-meta.mr-2, #busuanzi_container_page_pv, .note, .hover-with-bg {
   moz-user-select: -moz-none;
   -moz-user-select: none;
   -o-user-select:none;
@@ -48,4 +48,4 @@ h1, h2, h3, h4, h5, h6, .line, footer, #toc, time, #subtitle.h2, .nav-link, .pos
   -webkit-user-select:none;
   -ms-user-select:none;
   user-select:none;
-}
+} */
