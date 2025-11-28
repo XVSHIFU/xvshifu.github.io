@@ -5,17 +5,21 @@
 
 /* ===== 选中通用 ===== */
 ::selection {
+  background: #ffffff00;
   color: #e53935;                     /* Material 红 */
 }
 ::-moz-selection {
+  background: #ffffff00;
   color: #e53935;
 }
 
 /* ===== 暗色模式 ===== */
 [data-user-color-scheme='dark'] ::selection {
+  background: #ffffff00;
   color: #ffab91;                      /* 暖橙红，柔和不刺眼 */
 }
 [data-user-color-scheme='dark'] ::-moz-selection {
+  background: #ffffff00;
   color: #ffab91;
 }
 

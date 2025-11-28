@@ -1,0 +1,52 @@
+/* ========= 折纸·可见侧条 ========= */
+figure.highlight {
+  --radius: 8px;
+  position: relative;
+  margin: 1.4em 0;
+  border-radius: var(--radius);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .1);
+  overflow: hidden;
+  background: #ffffff; /* 亮模式纸色 */
+}
+
+/* 1. 宽侧条 + 轻微渐变 */
+figure.highlight::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 10px; /* 够宽 */
+  background: linear-gradient(
+    to bottom,
+    var(--lang-color, #42b883) 0%,
+    color-mix(in srgb, var(--lang-color, #42b883) 70%, #000) 100%
+  );
+}
+
+/* 2. 折角高光 */
+figure.highlight::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 16px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 0 6px 6px;
+  border-color: transparent transparent transparent #fff; /* 纸色 */
+  filter: drop-shadow(2px 0 2px rgba(0, 0, 0, .15)); /* 折痕阴影 */
+}
+
+/* 暗模式：纸色变深，侧条更亮 */
+[data-user-color-scheme='dark'] figure.highlight {
+  background: #1e1e1e;
+}
+[data-user-color-scheme='dark'] figure.highlight::after {
+  border-left-color: #1e1e1e;
+}
+
+/* 语言色变量（沿用上一版即可） */
+figure.highlight[data-type="js"]   { --lang-color: #f7df1e; }
+figure.highlight[data-type="ts"]   { --lang-color: #3178c6; }
+figure.highlight[data-type="vue"]  { --lang-color: #42b883; }
+figure.highlight[data-type="css"]  { --lang-color: #26d0ce; }
+figure.highlight[data-type="html"] { --lang-color: #ff5e5e; }
+/* …继续追加… */
