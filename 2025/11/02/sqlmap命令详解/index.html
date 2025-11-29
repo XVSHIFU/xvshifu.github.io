@@ -8,6 +8,22 @@
 <head>
   <meta charset="UTF-8">
 
+  <!-- 中文字体：霞鹜文楷 Screen -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont/style.css">
+   
+  <!-- 英文字体：Inter -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+
+
+  <!-- 英文字体 Roboto Mono
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet"> -->
+
+  <!-- 中文字体 霞鹜文楷 -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet"> --> -->
+
   <link rel="apple-touch-icon" sizes="76x76" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
   <link rel="icon" href="/img/0-11-%E6%AC%A7%E6%B6%A6%E5%90%89.png">
   
@@ -167,13 +183,14 @@
 <link rel="stylesheet" href="/css/selection.css">
 <link rel="stylesheet" href="/css/scrollAnimation.css">
 <link rel="stylesheet" href="/css/border.css">
+<link rel="stylesheet" href="/css/custom.css">
 
 
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"xvshifu.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","app_key":"p527aBaA4G01EJdMOVMGXsHR","server_url":"https://0wmntqqc.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"xvshifu.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":false,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"0wmNTqqCOUst92FKToSXxgvQ-gzGzoHsz","app_key":"p527aBaA4G01EJdMOVMGXsHR","server_url":"https://0wmntqqc.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -200,6 +217,9 @@
 
   
 <meta name="generator" content="Hexo 8.0.0"></head>
+
+
+
 
 
 <body>
@@ -424,7 +444,7 @@
 </blockquote>
 <h2 id="0x01-sqlmap-确定目标"><a href="#0x01-sqlmap-确定目标" class="headerlink" title="0x01 sqlmap 确定目标"></a>0x01 sqlmap 确定目标</h2><h3 id="1-1-直连数据库"><a href="#1-1-直连数据库" class="headerlink" title="1.1 直连数据库"></a>1.1 直连数据库</h3><p>sqlmap支持直接连接数据库，通过以下命令来直连</p>
 <p>服务型数据库（前提知道数据库用户名和密码） DBMS:&#x2F;&#x2F;USER:PASSWORD@DBMS_PORT&#x2F;DATABASE_NAME （MySQL，Oracle，Microsoft SQL Server，PostgreSQL，etc）</p>
-<p>例如： python sqlmap.py -d “mysql:&#x2F;&#x2F;admin:<a href="mailto:&#x61;&#x64;&#x6d;&#105;&#110;&#x40;&#49;&#x39;&#50;&#x2e;&#x31;&#x36;&#56;&#x2e;&#49;&#46;&#x32;">admin@192.168.1.2</a>:3306&#x2F;security” -f –banner </p>
+<p>例如： python sqlmap.py -d “mysql:&#x2F;&#x2F;admin:<a href="mailto:&#97;&#100;&#x6d;&#x69;&#110;&#64;&#x31;&#x39;&#x32;&#x2e;&#x31;&#x36;&#x38;&#46;&#x31;&#46;&#x32;">admin@192.168.1.2</a>:3306&#x2F;security” -f –banner </p>
 <p><img src="https://cdn.jsdelivr.net/gh/XVSHIFU/Picture-bed@img/img/202511022020546.png" srcset="/img/loading.gif" lazyload alt="img"></p>
 <p>文件型数据库（前提知道数据库的绝对路径） DBMS:&#x2F;&#x2F;DATABASE_FILEPATH (SQLite，Microsoft Access，Fire bird，etc)</p>
 <h3 id="1-2-URL探测"><a href="#1-2-URL探测" class="headerlink" title="1.2 URL探测"></a>1.2 URL探测</h3><p>sqlmap直接对单一URL探测，使用参数 -u 或 –url URL格式：http(s): &#x2F;&#x2F;targeturl [:port] &#x2F;[…]</p>
@@ -922,9 +942,6 @@
 
 
 
-  
-
-
 
   
 
@@ -1116,44 +1133,6 @@
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 
   <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
 
 
   
