@@ -201,7 +201,7 @@ html[data-user-color-scheme="dark"] h3 {
   height: 100%;
   object-fit: cover;     /* 填满屏幕并保持比例 */
   z-index: -1;           /* 内容在视频上方 */
-  filter: brightness(0.6); /* 可适当暗化，去掉 blur 让视频清晰 */
+  filter: brightness(1); /* 可适当暗化，去掉 blur 让视频清晰 */
 }
 
 /* 让 header-inner 内容覆盖视频 */
@@ -218,3 +218,6 @@ html[data-user-color-scheme="dark"] h3 {
     display: none; /* 移动端隐藏视频，节省流量 */
   }
 }
+
+
+
