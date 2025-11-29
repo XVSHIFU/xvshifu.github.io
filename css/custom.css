@@ -188,3 +188,33 @@ html[data-user-color-scheme="dark"] h3 {
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
+
+
+
+
+/* 背景视频 */
+#bg-video {
+  position: fixed;       /* 固定在屏幕，不随滚动 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;     /* 填满屏幕并保持比例 */
+  z-index: -1;           /* 内容在视频上方 */
+  filter: brightness(0.6); /* 可适当暗化，去掉 blur 让视频清晰 */
+}
+
+/* 让 header-inner 内容覆盖视频 */
+.header-inner .navigation,
+.header-inner .banner {
+  position: relative;
+  z-index: 1;
+  color: #fff; 
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  #bg-video {
+    display: none; /* 移动端隐藏视频，节省流量 */
+  }
+}

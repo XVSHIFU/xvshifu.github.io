@@ -199,3 +199,13 @@
 
 
 
+document.addEventListener("DOMContentLoaded", function() {
+  const video = document.getElementById("bg-video");
+  if (video) {
+    video.style.opacity = 0;
+    video.style.transition = "opacity 2s ease-in-out";
+    video.oncanplay = () => { video.style.opacity = 1; };
+  }
+});
+
+
